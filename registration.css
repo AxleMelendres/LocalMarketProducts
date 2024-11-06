@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Nunito", serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #4E6A4A;
+    position: relative;
+}
+
+/* Style for the top-left "Market Alchemy" link */
+.brand {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    font-size: 20px;
+    color: wheat;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.brand:hover {
+    color: #ffffff;
+}
+
+.wrapper {
+    width: 100%;
+    max-width: 500px;
+    background: wheat;
+    border-radius: 10px;
+    color: #4E6A4A;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.wrapper h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.input-box {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.input-box .input-field {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    margin: 13px 0;
+}
+
+.input-box .input-field input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #4E6A4A;
+}
+
+.input-box .input-field i {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    color: #4E6A4A;
+}
+
+label {
+    display: block;
+    margin: 15px 0;
+    font-size: 14px;
+    color: #4E6A4A;
+}
+
+.btn {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px;
+    background-color: #4E6A4A;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.btn:hover {
+    background-color: #3a5337;
+}

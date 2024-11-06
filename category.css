@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: #4E6A4A;
+    color: #4E6A4A;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+header {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.market-alchemy {
+    font-size: 32px;
+    font-weight: 600;
+    text-decoration: none;
+    color: wheat;
+}
+
+.categories-wrapper {
+    width: 100%;
+    max-width: 1200px;
+    padding: 40px;
+    background-color: wheat;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 80px; /* Adds space between logo and categories */
+}
+
+.categories-wrapper h2 {
+    font-size: 24px;
+    font-weight: 700; /* Make text bold */
+    color: #4E6A4A;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 20px;
+    justify-items: center;
+}
+
+.category-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: #4E6A4A;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.category-item:hover {
+    transform: scale(1.05);
+}
+
+.icon-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #4E6A4A;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.icon-circle img {
+    width: 50%;
+    height: auto;
+}
+
+.category-item p {
+    font-size: 14px;
+    font-weight: 400;
+    margin-top: 8px;
+    color: #4E6A4A;
+}

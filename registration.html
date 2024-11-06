@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="registration.css">
+    <script src="https://kit.fontawesome.com/89e47c0436.js" crossorigin="anonymous"></script>
+    <script src="registration.js" defer></script> <!-- Link to the external JS file -->
+    <title>Registration for Market Alchemy</title>
+</head>
+<body>
+    
+    <a href="index.html" class="brand">Market Alchemy</a>
+
+    <div class="wrapper">
+        <h1 id="registration-title">Registration</h1>
+        
+        <div class="registration-options">
+            <button class="btn" id="customer-registration">Customer Registration</button>
+            <button class="btn" id="seller-registration">Seller Registration</button>
+        </div>
+
+        <form id="registration-form" action="" style="display: none;"> <!-- Hide form by default -->
+            <div class="input-box">
+                <div class="input-field">
+                    <input type="text" placeholder="Full Name" required>
+                    <i class="fa-solid fa-user"></i>
+                </div>
+            </div>
+
+            <div class="input-box">
+                <div class="input-field">
+                    <input type="text" placeholder="Username" required>
+                    <i class="fa-solid fa-user"></i>
+                </div>
+            </div>
+
+            <div class="input-box">
+                <div class="input-field">
+                    <input type="email" placeholder="Email" required>
+                    <i class="fa-solid fa-envelope-open"></i>
+                </div>
+            </div>
+
+            <div class="input-box">
+                <div class="input-field">
+                    <input type="number" placeholder="Phone Number" required>
+                    <i class="fa-solid fa-phone"></i>
+                </div>
+            </div>
+
+            <div class="input-box">
+                <div class="input-field">
+                    <input type="password" placeholder="Password" required>
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+            </div>
+
+            <div class="input-box">
+                <div class="input-field">
+                    <input type="password" placeholder="Confirm Password" required>
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+            </div>
+
+            <label> 
+                <input type="checkbox" required> I hereby declare that the above information provided is true and correct.
+            </label>
+
+            <button type="submit" class="btn">Register</button>
+        </form>
+    </div>
+    <script>
+
+        // JavaScript to toggle registration form based on user selection and change title
+document.getElementById('customer-registration').onclick = function() {
+    document.getElementById('registration-form').style.display = 'block'; // Show the registration form
+    document.getElementById('registration-title').textContent = 'Customer Registration'; // Change title
+    hideRegistrationOptions(); // Hide the registration options
+};
+
+document.getElementById('seller-registration').onclick = function() {
+    document.getElementById('registration-form').style.display = 'block'; // Show the registration form
+    document.getElementById('registration-title').textContent = 'Seller Registration'; // Change title
+    hideRegistrationOptions(); // Hide the registration options
+};
+
+// Function to hide registration options
+function hideRegistrationOptions() {
+    document.querySelector('.registration-options').style.display = 'none'; // Hide the buttons
+}
+
+
+    </script>
+</body>
+</html>
