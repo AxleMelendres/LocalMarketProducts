@@ -32,3 +32,20 @@ let sidebarMenu = document.querySelector('.sidebarMenu');
             });
         });
         
+        document.addEventListener('DOMContentLoaded', function() {
+            const districtButton = document.getElementById('district-button');
+            const dropdownContent = document.querySelector('.dropdown-content');
+        
+            districtButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                dropdownContent.classList.toggle('show');
+            });
+        
+            window.addEventListener('click', function(e) {
+                if (!e.target.matches('#district-button')) {
+                    if (dropdownContent.classList.contains('show')) {
+                        dropdownContent.classList.remove('show');
+                    }
+                }
+            });
+        });
