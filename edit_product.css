@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+/* Reset some default styles */
+>>>>>>> 4df0f5af2c9ae2175ea419fc1d7880e8401f2575
 * {
     margin: 0;
     padding: 0;
@@ -116,4 +120,9 @@ button:active {
     border-radius: 5px;
     border: 1px solid wheat;
     font-size: 16px;
+<<<<<<< HEAD
 }
+=======
+}
+
+>>>>>>> 4df0f5af2c9ae2175ea419fc1d7880e8401f2575
