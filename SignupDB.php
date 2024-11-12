@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['signUP'])) {
     $stmt->bind_param("ssssss", $fullName, $userName, $email, $phoneNumber, $password, $userType);
 
     if ($stmt->execute()) {
-        echo "Registration successful!";
+        echo "Registration successfully!";
     } else {
         echo "Error: " . $stmt->error;
     }
