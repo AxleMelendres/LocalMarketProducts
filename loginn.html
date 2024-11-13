@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="loginn.css">
+    <title>Login</title>
+</head>
+<body>
+    <a href="index.html" class="brand">Market Alchemy</a>
+
+    <div class="login-container">
+        <div class="login-box">
+            <h2>Log In</h2>
+            <form action="submit_login.php" method="POST">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required placeholder="Enter your email or username">
+
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required placeholder="Enter your password">
+
+                <button type="submit">Sign-In</button>
+
+                <p class="note">By continuing, you agree to our <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.</p>
+            </form>
+            <div class="create-account">
+                <p>Don't have an account? </p>
+                <a href="register.html">Click here!</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
