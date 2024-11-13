@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="register.css">
+    <title>Registration Page</title>
+</head>
+<body>
+    <a href="index.html" class="brand">Market Alchemy</a>
+
+    <form action="submit.php" method="POST">
+        <h2>Register </h2>
+        <label for="name">Full Name: </label>
+        <input type="text" name="name" id="name" required>
+
+        <label for="username">Username: </label>
+        <input type="text" name="username" id="username" required>
+
+        <label for="email">Email: </label>
+        <input type="email" name="email" id="email" required>
+
+        <label for="contact">Contact Number: </label>
+        <input type="number" name="contact" id="contact" required pattern="\d{11}" maxlength="11" title="Contact number must be exactly 11 digits">
+
+        <label for="">Password: </label>
+        <input type="password" name="password" id="password" required>
+
+        <div class="dropdown-container">
+        <label for="purpose">Purpose: </label>
+            <select name="purpose" id="purpose" required>
+                <option value="">Select </option>
+                <option value="buyer">Buyer</option>
+                <option value="seller">Seller</option>
+            </select>
+        </div>
+
+        <div class="dropdown-container"> 
+            <label for="district">District: </label>
+                <select name="district" id="district" required>
+                    <option value="">Select</option>
+                    <option value="south">South District</option>
+                    <option value="north">North District</option>
+                    <option value="west">West District</option>
+                    <option value="east">East District</option>
+                    <option value="urban">Urban District</option>
+                </select>
+            </div>
+        
+        <div class="checkbox-container">
+            <input type="checkbox" id="terms" name="terms" value="accepted" required>
+            <label for="terms">The Information I Provised are All Correct and Valid !!!</label>
+        </div>
+        
+
+    <button type="submit">Submit</button>
+
+    <p class="privacy-note">By creating an account, you agree to our <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.</p>
+
+    <div class="log-in-account">
+        <p>Already have an account? </p>
+        <a href="loginn.html">Click here!</a>
+    </div>
+    
+    </form>
+</body>
+</html>

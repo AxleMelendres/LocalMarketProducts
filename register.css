@@ -1,0 +1,156 @@
+
+        /* Reset some default browser styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            min-height: 100vh;
+            background-color: #4E6A4A;
+            color: #030303;
+            font-family: "Nunito", serif;
+        }
+        /* body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f3f3f3;
+        } */
+        .brand {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 20px;
+            color: wheat;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .brand:hover {
+            color: #ffffff;
+        }
+
+        h2 {
+            padding-top: 10px;
+            padding-bottom: 20px;
+            padding-left: 0px;
+        }
+
+        /* Form container styling */
+        form {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            width: 300px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        form input[type="text"],
+        form input[type="email"],
+        form input[type="number"],
+        form input[type="password"],
+        form input[type="purpose"]{ 
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+
+        .dropdown-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .dropdown-container label {
+            margin-right: 10px; /* Space between label and dropdown */
+            white-space: nowrap; /* Prevents label from wrapping */
+        }
+
+        select {
+            padding: 5px;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            color: #323131;
+            font-size: 12px;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            margin-right: 8px; /* Space between checkbox and label */
+        }
+
+        /* Submit button styling */
+        form button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #f0c14b;
+            border: 1px solid #a88734;
+            border-radius: 3px;
+            color: #111;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        form button[type="submit"]:hover {
+            background-color: #ddb347;
+        }
+
+        /* Additional styling for header */
+        h1 {
+            font-size: 24px;
+            color: #111;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Privacy note and terms */
+        .privacy-note {
+            font-size: 12px;
+            color: #555;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .log-in-account {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .log-in-account p {
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .log-in-account a {
+            font-size: 14px;
+            color: #0066c0;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .log-in-accountt a:hover {
+            text-decoration: underline;
+        }
