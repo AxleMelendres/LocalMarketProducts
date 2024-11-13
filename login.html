@@ -3,51 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login for Market Alchemy</title>
     <link rel="stylesheet" href="login.css">
-    <script src="https://kit.fontawesome.com/89e47c0436.js" crossorigin="anonymous"></script>
+    <title>Login</title>
 </head>
 <body>
-
     <a href="index.html" class="brand">Market Alchemy</a>
 
-    <div class="container">
-        <h1 id="login-title">Login</h1>
-        <div class="login-options">
-            <button class="btn" id="customer-login">Customer Login</button>
-            <button class="btn" id="seller-login">Seller Login</button>
-        </div>
+    <div class="login-container">
+        <div class="login-box">
+            <h2>Log In</h2>
+            <form action="submit_login.php" method="POST">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required placeholder="Enter your email or username">
 
-        <div id="login-form" class="login-form">
-            <div class="input-box">
-                <input type="text" placeholder="Username" required>
-                <i class="fa-solid fa-user"></i>
-            </div>
-            <div class="input-box">
-                <input type="password" placeholder="Password" required>
-                <i class="fa-solid fa-lock"></i>
-            </div>
-            <div class="user-remember">
-                <label><input type="checkbox"> Remember Me</label>
-                <a href="#">Forget Password?</a>
-            </div>
-            <button class="btn-login" type="submit">Login</button>
-            <div class="user-account">
-                <p>Don't have an account? <a href="registration.html">Register</a></p>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required placeholder="Enter your password">
+
+                <button type="submit">Sign-In</button>
+
+                <p class="note">By continuing, you agree to our <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.</p>
+            </form>
+            <div class="create-account">
+                <p>Don't have an account? </p>
+                <a href="register.html">Click here!</a>
             </div>
         </div>
     </div>
-
-    <script>
-        document.getElementById('customer-login').onclick = function() {
-            document.getElementById('login-form').style.display = 'block';
-            document.getElementById('login-title').textContent = 'Customer Login'; 
-        };
-        document.getElementById('seller-login').onclick = function() {
-            document.getElementById('login-form').style.display = 'block';
-            document.getElementById('login-title').textContent = 'Seller Login'; 
-        };
-    </script>
-
 </body>
 </html>
