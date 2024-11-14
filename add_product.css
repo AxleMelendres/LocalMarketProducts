@@ -90,3 +90,7 @@ button:active {
 .user-account a:active {
     color: #2d3b2d;
 }
+
+#back-button {
+    background-color: #f44336; /* Red color for "Back" button */
+}
