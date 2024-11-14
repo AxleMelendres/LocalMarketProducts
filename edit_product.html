@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Product</title>
     <link rel="stylesheet" href="edit_product.css">
+    <script src="edit_product.js" defer></script>
 </head>
 <body>
     <header>
@@ -14,28 +15,91 @@
     <div class="container">
         <form id="edit-product-form">
             <div class="input-box">
-                <label for="new-product-name">Product Name:</label>
-                <input type="text" id="product-name" required>
+                <label for="edit-product-name">Edit Product Name:</label>
+                <input type="text" id="product-name" disabled>
+                <label><input type="checkbox" id="edit-product-name-checkbox"> Edit this field</label>
             </div>
+
             <div class="input-box">
-                <label for="new-product-image">New Product Image URL:</label>
-                <input type="text" id="new-product-image" required>
+                <label for="edit-product-image">Edit Product Image URL:</label>
+                <input type="text" id="new-product-image" disabled>
+                <label><input type="checkbox" id="edit-product-image-checkbox"> Edit this field</label>
             </div>
+
             <div class="input-box">
-                <label for="new-product-stock">New Product Stock:</label>
-                <input type="number" id="new-product-stock" required min="0">
+                <label for="edit-product-stock">Edit Product Stock:</label>
+                <input type="number" id="new-product-stock" disabled min="0">
+                <label><input type="checkbox" id="edit-product-stock-checkbox"> Edit this field</label>
             </div>
+
+            <div class="input-box">
+                <label for="edit-product-price">Edit Product Price:</label>
+                <input type="number" id="new-product-price" disabled min="0">
+                <label><input type="checkbox" id="edit-product-price-checkbox"> Edit this field</label>
+            </div>
+
+            <div class="input-box">
+                <label for="edit-product-description">Edit Product Description:</label>
+                <input type="text" id="new-product-description" disabled>
+                <label><input type="checkbox" id="edit-product-description-checkbox"> Edit this field</label>
+            </div>
+
             <button type="submit" class="btn">Edit Product</button>
         </form>
     </div>
-    <div class="remove-product">
-        <h2>Remove Product</h2>
-        <div class="input-box">
-            <label for="remove-product-id">Product Name to Remove:</label>
-            <input type="number" id="remove-product-name">
-        </div>
-        <button type="button" id="remove-product-btn" class="btn">Remove Product</button>
-    </div>
-</div>
+
+    <button id="back-button" class="btn">Back</button>
+
+    <script>
+        // Enable or disable fields based on checkbox selection
+        const nameCheckbox = document.getElementById('edit-product-name-checkbox');
+        const nameField = document.getElementById('product-name');
+        
+        const imageCheckbox = document.getElementById('edit-product-image-checkbox');
+        const imageField = document.getElementById('new-product-image');
+        
+        const stockCheckbox = document.getElementById('edit-product-stock-checkbox');
+        const stockField = document.getElementById('new-product-stock');
+        
+        const priceCheckbox = document.getElementById('edit-product-price-checkbox');
+        const priceField = document.getElementById('new-product-price');
+        
+        const descriptionCheckbox = document.getElementById('edit-product-description-checkbox');
+        const descriptionField = document.getElementById('new-product-description');
+        
+        // Function to toggle the enabled/disabled state of input fields
+        function toggleEditField(checkbox, field) {
+            field.disabled = !checkbox.checked;
+        }
+
+        // Add event listeners to each checkbox to toggle input fields
+        nameCheckbox.addEventListener('change', function() {
+            toggleEditField(nameCheckbox, nameField);
+        });
+
+        imageCheckbox.addEventListener('change', function() {
+            toggleEditField(imageCheckbox, imageField);
+        });
+
+        stockCheckbox.addEventListener('change', function() {
+            toggleEditField(stockCheckbox, stockField);
+        });
+
+        priceCheckbox.addEventListener('change', function() {
+            toggleEditField(priceCheckbox, priceField);
+        });
+
+        descriptionCheckbox.addEventListener('change', function() {
+            toggleEditField(descriptionCheckbox, descriptionField);
+        });
+
+        // Back button functionality
+        const backButton = document.getElementById('back-button');
+        backButton.addEventListener('click', function() {
+            window.history.back();  // Go back to the previous page
+            // Or, if you prefer, redirect to a specific page:
+            // window.location.href = 'product_list.html';
+        });
+    </script>
 </body>
 </html>
