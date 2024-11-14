@@ -1,0 +1,128 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: #4E6A4A;
+    color: wheat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 20px;
+}
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+h1 {
+    color: #4E6A4A;
+    font-size: 2.5rem;
+}
+.container {
+    background-color: wheat;
+    width: 100%;
+    max-width: 600px;
+    border-radius: 8px;
+    padding: 40px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+form {
+    display: flex;
+    flex-direction: column;
+}
+.input-box {
+    margin-bottom: 20px;
+}
+.input-box label {
+    display: block;
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 5px;
+}
+.input-box input {
+    padding: 12px;
+    font-size: 1rem;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+.input-box input:focus {
+    border-color: #4E6A4A;
+    box-shadow: 0 0 5px rgba(78, 106, 74, 0.6);
+}
+button {
+    padding: 12px;
+    background-color: #4E6A4A;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+button:hover {
+    background-color: #3b4d3b;
+}
+button:active {
+    background-color: #2d3b2d;
+}
+.user-account {
+    text-align: center;
+    margin-top: 20px;
+}
+.user-account p {
+    font-size: 1rem;
+}
+.user-account a {
+    color: #4E6A4A;
+    text-decoration: none;
+}
+.user-account a:hover {
+    text-decoration: underline;
+}
+.user-account a:active {
+    color: #2d3b2d;
+}
+
+.remove-product {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: wheat;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.remove-product h2 {
+    color: #d9534f;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+
+.remove-product .input-box {
+    margin-bottom: 20px;
+}
+
+.remove-product .input-box label {
+    font-weight: bold;
+    color: #d9534f; 
+}
+
+.remove-product .input-box input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid wheat;
+    font-size: 16px;
+}
+
+#back-button {
+    background-color: #f44336; /* Red color for "Back" button */
+}
