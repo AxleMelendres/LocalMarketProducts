@@ -1,29 +1,29 @@
 <?php 
-
     require_once 'MainDataBase.php';
+    session_start();
 
-    if (isset ($_POST['registration-form'])){
-        $full_name = $_POST ['fName'];
-        $username = $_POST ['userName'];
-        $email = $_POST ['email'];
-        $phone_number = $_POST['pNumber'];
-        $password = $_POST ['password'];
-        $password = md5($password);
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
 
-        $checkEmail = "SELECT * FROM users where email = '$email' ";
-        $result = $connect->query($checkEmail);
-        if ($result->num_rows>0){
-            echo '<h1> The email already exists. Choose another one! <h1>';
-        } else {
-            $insertQuery = "INSERT INTO Users (fName, userName, email, pNumber, password)
-            VALUES('$full_name', '$username', '$email', '$phone_number', '$password')";
-            if($connect->query($insertQuery)==TRUE){
+
+        $sql = "SELECT * FROM users WHERE email = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            if (password_verify($password, $row['password'])) {
+                $_SESSION['email'] = $row['email'];
                 header("Location: index.html");
-            }else {
-                echo 'Connection Error: ' .$connect->connect_error;
+                exit();
+            } else {
+                echo '<h1>Incorrect password!</h1>';
             }
+        } else {
+            echo '<h1>Account not found, Incorrect email or password!</h1>';
         }
-
     }
-
 ?>

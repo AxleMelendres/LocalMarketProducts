@@ -1,7 +1,7 @@
 <?php
 
     require_once 'MainDataBase.php';
-    
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['signUP'])) {
 
     $fullName = $_POST['fName'];
@@ -17,14 +17,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['signUP'])) {
     $stmt->bind_param("ssssss", $fullName, $userName, $email, $phoneNumber, $password, $userType);
 
     if ($stmt->execute()) {
-        echo "Registration successfully!";
+        
+        header("Location: login.html");
+        exit();
     } else {
         echo "Error: " . $stmt->error;
     }
 
-
-
     $stmt->close();
     $conn->close();
 }
-?>
