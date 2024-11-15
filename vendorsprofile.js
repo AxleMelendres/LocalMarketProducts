@@ -15,3 +15,4 @@ editProductButton.addEventListener('click', function() {
 deleteProductButton.addEventListener('click', function() {
     window.location.href = "delete_product.html"; 
 });
+

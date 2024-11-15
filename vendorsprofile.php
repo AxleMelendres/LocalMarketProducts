@@ -1,3 +1,21 @@
+<?php
+// Include database connection
+require_once 'dbConnection.php';
+require_once 'product.php';
+
+// Connect to the database
+$database = new Database();
+$conn = $database->getConnection();
+
+// Get all products from the products table
+$productQuery = "SELECT * FROM products";
+$stmt = $conn->prepare($productQuery);
+$stmt->execute();
+$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$conn = null;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +31,6 @@
     </header>
 
     <div class="container">
-
         <div class="profile">
             <img src="https://via.placeholder.com/150" alt="Vendor Profile Picture">
             <div class="profile-info">
@@ -33,7 +50,18 @@
         <div class="products-offered">
             <h3>Products</h3>
             <ul class="product-list" id="product-list">
+                <?php
 
+                foreach ($products as $product) {
+                    echo "<li class='product-item'>";
+                    echo "<img src='" . $product['product_image'] . "' alt='" . $product['product_name'] . "'>";
+                    echo "<h4>" . $product['product_name'] . "</h4>";
+                    echo "<p><strong>Price:</strong> ₱" . $product['product_price'] . "</p>";
+                    echo "<p><strong>Quantity:</strong> " . $product['product_quantity'] . " items</p>";
+                    echo "<p>" . $product['product_description'] . "</p>";
+                    echo "</li>";
+                }
+                ?>
             </ul>
         </div>
 
@@ -43,6 +71,5 @@
             <button class="btn" id="delete-products">Delete Products</button>
         </div>
     </div>
-
 </body>
 </html>

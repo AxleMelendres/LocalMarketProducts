@@ -1,0 +1,59 @@
+<?php
+
+require_once 'dbConnection.php';
+require_once 'product.php';
+
+
+$database = new Database();
+$conn = $database->getConnection();
+
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+ 
+    $productName = htmlspecialchars($_POST['product-name']);
+    $productQuantity = intval($_POST['new-product-quantity']);
+    $productPrice = floatval($_POST['product-price']);
+    $productDescription = htmlspecialchars($_POST['product-description']);
+    
+    // Handle file upload (image)
+    if (isset($_FILES['product-image']) && $_FILES['product-image']['error'] == 0) {
+        $imageTmpName = $_FILES['product-image']['tmp_name'];
+        $imageName = $_FILES['product-image']['name'];
+        $imageType = $_FILES['product-image']['type'];
+        $imageSize = $_FILES['product-image']['size'];
+
+
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        if (in_array($imageType, $allowedTypes)) {
+
+            $uploadDir = 'uploads/'; 
+            $imagePath = $uploadDir . basename($imageName);
+
+            if (move_uploaded_file($imageTmpName, $imagePath)) {
+
+                $product = new Product($conn);
+                $product->product_name = $productName;
+                $product->product_image = $imagePath;
+                $product->product_quantity = $productQuantity;
+                $product->product_price = $productPrice;
+                $product->product_description = $productDescription;
+
+                if ($product->create()) {
+                    echo "Product added successfully!";
+                    header('Location: vendorsprofile.php');  
+    exit;
+                } else {
+                    echo "Error: Could not add product.";
+                }
+            } else {
+                echo "Failed to upload image.";
+            }
+        } else {
+            echo "Invalid image type. Only JPG, PNG, and GIF are allowed.";
+        }
+    } else {
+        echo "No image uploaded or error during upload.";
+    }
+}
+
+?>
