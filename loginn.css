@@ -15,13 +15,7 @@ body {
     color: #030303;
     font-family: "Nunito", serif;
 }
-/* body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f3f3f3;
-} */
+
 .brand {
     position: fixed;
     top: 20px;
