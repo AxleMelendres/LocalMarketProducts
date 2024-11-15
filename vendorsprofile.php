@@ -24,11 +24,69 @@ $conn = null;
     <title>Vendor Profile</title>
     <link rel="stylesheet" href="vendorsprofile.css">
     <script src="vendorsprofile.js" defer></script>
+    <script src="https://kit.fontawesome.com/89e47c0436.js" crossorigin="anonymous"></script>
+    <script src="main.js" defer></script>
 </head>
 <body>
-    <header>
-        <h1>Vendor Profile</h1>
+
+    <header class="header">
+        <a href="#" class="logo">Market Alchemy</a>
+
+        <nav>
+            <a class="link" href="mainn.php">Home</a>
+            <a class="link" href="about.html">About</a>
+        </nav>
+
+        <form class="search-bar" action="search.php" method="GET">
+            <input type="text" name="query" placeholder="Search...">
+            <button type="submit">Search</button>
+
+            <select name="district" id="district">
+            <option value="">Select</option>
+                <option value="South District">South District</option>
+                <option value="North District">North District</option>
+                <option value="West District">West District</option>
+                <option value="East District">East District</option>
+                <option value="Urban District">Urban District</option>
+            </select>
+
+            <select name="category" id="category">
+                <option value="">Select Category</option>
+                <option value="electronics">Electronics</option>
+                <option value="clothing">Clothing</option>
+                <option value="books">Books</option>
+                <!-- Add more categories as needed -->
+            </select>
+        </form>
+
+        <div class="icons">
+            <a href="login.html" style="color: #3a5a40;"><i class="fa-solid fa-user"></i> </a>
+            <div class="sidebarMenu">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </div>
+
     </header>
+
+    <div class="sidebar">
+        <div class="info-sidebar">
+            <a href="#" class="logo">Market Alchemy</a>
+            <i class="fa-solid fa-x closeSidebar"></i>
+        </div>
+        <hr>
+        <div class="social-sidebar">
+            <a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a>
+            <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
+            <a href="#"><i class="fa-brands fa-x-twitter"></i> Twitter</a>
+            <a href="#"><i class="fa-brands fa-github"></i> Github</a>
+        </div>
+        <hr>
+        <div class="call">
+            <h2>Contact</h2>
+            <h5>+63 912 345 678 03</h5>
+            <h5>Market Alchemy</h5>
+        </div>
+    </div>
 
     <div class="container">
         <div class="profile">
@@ -57,7 +115,7 @@ $conn = null;
                     echo "<img src='" . $product['product_image'] . "' alt='" . $product['product_name'] . "'>";
                     echo "<h4>" . $product['product_name'] . "</h4>";
                     echo "<p><strong>Price:</strong> ₱" . $product['product_price'] . "</p>";
-                    echo "<p><strong>Quantity:</strong> " . $product['product_quantity'] . " items</p>";
+                    echo "<p><strong>Quantity:</strong> " . $product['product_quantity']  ;
                     echo "<p>" . $product['product_description'] . "</p>";
                     echo "</li>";
                 }

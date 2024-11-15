@@ -1,21 +1,22 @@
-body {
-    font-family: 'Nunito', sans-serif;
-    background-color: #4E6A4A;
-    color: #4E6A4A;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
+* {
+    padding: 0px;
+    margin: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none ;
+    font-family: "Nunito Sans", sans-serif;
 }
-header {
-    color: wheat;
-    position: absolute;
-    top: 5px;
-    left: 5px;
+
+
+body{
+    background-color:#FAF9F6 ;
+    overflow-x: hidden;
 }
+
 .container {
     width: 80%;
-    margin: 20px;
+    max-width: 1200px; /* Max width to prevent stretching too much on large screens */
+    margin: 0 auto; /* This will center the container horizontally */
     padding: 20px;
 }
 
@@ -23,8 +24,9 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: wheat;
+    background-color:#4E6A4A;
     padding: 20px;
+    color: wheat;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
@@ -47,8 +49,9 @@ header {
 }
 
 .contact-info {
-    background-color: wheat;
+    background-color:#4E6A4A ;
     padding: 15px;
+    color: wheat;
     margin-top: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -59,10 +62,10 @@ header {
 }
 
 .products-offered {
-    background-color: wheat;
+    background-color: #4E6A4A;
     padding: 20px;  
     text-align: center;
-    color: #4E6A4A;
+    color: wheat;
     font-size: 24px; 
     margin-top: 20px; 
     margin-bottom: 20px; 
@@ -83,12 +86,12 @@ header {
     display: flex;
     flex-direction: column; 
     align-items: center;
-    background-color: #4E6A4A;
+    background-color: wheat;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     font-size: 18px;
-    color: wheat;
+    color: #4E6A4A;
     width: 140px; 
     text-align: center; 
 }
@@ -120,3 +123,144 @@ header {
     right: 10px;
 }
 
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px;
+    background-color:#4E6A4A;
+    color: #fff;
+    min-width: 7%;
+}
+
+.logo {
+    font-size: 25px;
+    color: wheat;
+    text-decoration: none;
+    font-weight: bold;
+    margin-right: 30px;
+}
+
+.logo:hover {
+    color:  rgba(236, 206, 149, 0.837);
+}
+
+.link {
+    font-size: 15px;
+    color:wheat;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 10px 3px;
+}
+
+.link:hover {
+    color: rgba(236, 206, 149, 0.837);
+}
+
+.search-bar input[type="text"] {
+    width: 100px; 
+    padding: 8px;
+    margin-left: 10px;
+    margin-right: 0px;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+}
+
+.search-bar button {
+    padding: 8px 12px;
+    margin-left: 0px;
+    background-color:wheat;
+    border: none;
+    color: #132a13;
+    cursor: pointer;
+    border-radius: 0 4px 4px 0;
+}
+
+.search-bar select {
+    margin-left: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+}
+
+/* side bar */
+
+.icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    color: wheat;
+    margin-left: 10px;
+}
+
+.icons i {
+    width: 25px;
+    cursor: pointer;
+    color: wheat;
+}
+
+.sidebar {
+    background-color: #4E6A4A;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100vh;
+    padding: 40px 20px;
+    display: none;
+    z-index: 1000;
+
+}
+
+.sidebar.active{
+    display: block;
+}
+
+
+.info-sidebar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 100px;
+    cursor: pointer;
+}
+
+.info-sidebar .logo{
+    font-size: 22px;
+    color: wheat;
+    font-weight: bold;
+}
+
+.info-sidebar i {
+    color: wheat;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.sidebar .social-sidebar {
+    margin: 100px 0px;
+}
+
+.sidebar .social-sidebar a{
+    display: block;
+    color: wheat;
+    padding: 10px;
+    font-size: 18px;
+}
+
+.call {
+    margin-top: 100px;
+}
+
+.call h2 {
+    color: wheat;
+    padding: 10px 0px;
+}
+
+.call h5 {
+    color: wheat;
+    font-size: 15px;
+}
