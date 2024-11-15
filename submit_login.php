@@ -27,8 +27,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (password_verify($password, $hashedPassword)) {
             $_SESSION['username'] = $username;
-            echo "Login successful! Redirecting...";
-            header("Location: welcome.php"); // Redirect to a welcome page
+
+            if ($purpose === "Seller") {
+                header("Location: seller_profile.php");
+            } elseif ($purpose === "Buyer") {
+                header("Location: buyer_profile.php");
+            } else {
+                echo "Invalid account type.";
+            }
             exit;
         } else {
             echo "Invalid password. Please try again.";
