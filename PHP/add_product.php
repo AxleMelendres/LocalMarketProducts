@@ -1,7 +1,7 @@
 <?php
 
-require_once 'dbConnection.php';
-require_once 'product.php';
+require_once '../PHP/dbConnection.php';
+require_once '../PHP/product.php';
 
 
 $database = new Database();
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
         if (in_array($imageType, $allowedTypes)) {
 
-            $uploadDir = 'uploads/'; 
+            $uploadDir = '../uploads/'; 
             $imagePath = $uploadDir . basename($imageName);
 
             if (move_uploaded_file($imageTmpName, $imagePath)) {

@@ -1,7 +1,7 @@
 <?php
 // Include database connection
-require_once 'dbConnection.php';
-require_once 'product.php';
+require_once '../PHP/dbConnection.php';
+require_once '../PHP/product.php';
 
 // Connect to the database
 $database = new Database();
@@ -22,19 +22,19 @@ $conn = null;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vendor Profile</title>
-    <link rel="stylesheet" href="vendorsprofile.css">
-    <script src="vendorsprofile.js" defer></script>
+    <link rel="stylesheet" href="../CSS/vendorsprofile.css">
+    <script src="../JS/vendorsprofile.js" defer></script>
     <script src="https://kit.fontawesome.com/89e47c0436.js" crossorigin="anonymous"></script>
     <script src="main.js" defer></script>
 </head>
 <body>
 
     <header class="header">
-        <a href="mainn.php" class="logo">Market Alchemy</a>
+        <a href="/JS/" class="logo">Market Alchemy</a>
 
         <nav>
-            <a class="link" href="mainn.php">Home</a>
-            <a class="link" href="about.html">About</a>
+            <a class="link" href="../PHP/mainn.php">Home</a>
+            <a class="link" href="../HTML/about.html">About</a>
         </nav>
 
         <form class="search-bar" action="search.php" method="GET">
@@ -42,7 +42,7 @@ $conn = null;
             <button type="submit">Search</button>
 
             <select name="district" id="district">
-            <option value="">Select</option>
+                <option value="">Select</option>
                 <option value="South District">South District</option>
                 <option value="North District">North District</option>
                 <option value="West District">West District</option>
@@ -60,7 +60,7 @@ $conn = null;
         </form>
 
         <div class="icons">
-            <a href="login.html" style="color: #3a5a40;"><i class="fa-solid fa-user"></i> </a>
+            <a href="../HTML/login.html" style="color: #3a5a40;"><i class="fa-solid fa-user"></i> </a>
             <div class="sidebarMenu">
                 <i class="fa-solid fa-bars"></i>
             </div>
@@ -106,22 +106,23 @@ $conn = null;
         </div>
 
         <div class="products-offered">
-            <h3>Products</h3>
-            <ul class="product-list" id="product-list">
-                <?php
+    <h3>Products</h3>
+    <ul class="product-list" id="product-list">
+        <?php
+        foreach ($products as $product) {
+            echo "<li class='product-item'>";
+            // Ensure the image path is relative to the public directory
+            echo "<img src='../" . $product['product_image'] . "' alt='" . $product['product_name'] . "'>";
+            echo "<h4>" . $product['product_name'] . "</h4>";
+            echo "<p><strong>Price:</strong> ₱" . $product['product_price'] . "</p>";
+            echo "<p><strong>Quantity:</strong> " . $product['product_quantity'] . "</p>";
+            echo "<p>" . $product['product_description'] . "</p>";
+            echo "</li>";
+        }
+        ?>
+    </ul>
+</div>
 
-                foreach ($products as $product) {
-                    echo "<li class='product-item'>";
-                    echo "<img src='" . $product['product_image'] . "' alt='" . $product['product_name'] . "'>";
-                    echo "<h4>" . $product['product_name'] . "</h4>";
-                    echo "<p><strong>Price:</strong> ₱" . $product['product_price'] . "</p>";
-                    echo "<p><strong>Quantity:</strong> " . $product['product_quantity']  ;
-                    echo "<p>" . $product['product_description'] . "</p>";
-                    echo "</li>";
-                }
-                ?>
-            </ul>
-        </div>
 
         <div class="actions">
             <button class="btn" id="add-products">Add Products</button>
