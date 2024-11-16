@@ -43,7 +43,7 @@
         </form>
 
         <div class="icons">
-            <a href="login.html" style="color: #3a5a40;"><i class="fa-solid fa-user"></i> </a>
+            <a href="loginn.html" style="color: #3a5a40;"><i class="fa-solid fa-user"></i> </a>
             <div class="sidebarMenu">
                 <i class="fa-solid fa-bars"></i>
             </div>
@@ -88,7 +88,7 @@
     }
 
     // Adjust SQL query to include 'id' for product links
-    $sql = "SELECT id, name, price, picture FROM product";
+    $sql = "SELECT id, product_name, product_price, product_image FROM products";
     $result = $conn->query($sql);
 
     if ($result === false) {
@@ -101,11 +101,11 @@
             echo "<div class='product-box'>";
 
             // Convert BLOB data to base64 for image display
-            $imageData = base64_encode($row['picture']);
-            echo "<img src='data:image/jpeg;base64,{$imageData}' alt='{$row['name']}' class='product-image'>";
-
-            echo "<h3>" . htmlspecialchars($row['name']) . "</h3>";
-            echo "<p>$" . htmlspecialchars($row['price']) . "</p>";
+            $imagePath = "uploads/" . htmlspecialchars($row['product_image']);
+            echo "<img src='{$imagePath}' alt='" . htmlspecialchars($row['product_name']) . "' class='product-image'>";
+            
+            echo "<h3>" . htmlspecialchars($row['product_name']) . "</h3>";
+            echo "<p>$" . htmlspecialchars($row['product_price']) . "</p>";
             echo "<a href='view_product.php?id=" . urlencode($row['id']) . "' class='view-button'>View</a>";
             echo "<a href='reserve_product.php?id=" . urlencode($row['id']) . "' class='reserve-button'>Reserve</a>";
 
