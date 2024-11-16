@@ -26,7 +26,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     $purpose = $_POST['purpose'];
     $district = $_POST['district'];
 
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);//add
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     $txt = $conn->prepare("INSERT INTO account (`Full Name`, Username, Email, `Contact Number`, Password, Purpose, District) VALUES (?, ?, ?, ?, ?, ?, ?)");
    
@@ -36,7 +36,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     $txt->bind_param("sssssss", $name, $uname, $email, $contact, $hashedPassword, $purpose, $district);
 
     if ($txt->execute()) {
-         echo "Record created successfully"; 
+        header("Location: loginn.html");
+        exit; 
         }else {
          echo "Error: " . $txt->error;
         }

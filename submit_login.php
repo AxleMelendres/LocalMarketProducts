@@ -16,19 +16,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = trim($_POST['username']);
     $password = trim($_POST['password']);
 
-    $stmt = $conn->prepare("SELECT password FROM account WHERE username = ? ");
+    $stmt = $conn->prepare("SELECT password, purpose FROM account WHERE username = ?");
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $stmt->store_result();
     
     if ($stmt->num_rows > 0) {
-        $stmt->bind_result($hashedPassword);
+        $stmt->bind_result($hashedPassword, $purpose);
         $stmt->fetch();
 
         if (password_verify($password, $hashedPassword)) {
             $_SESSION['username'] = $username;
-            echo "Login successful! Redirecting...";
-            header("Location: welcome.php"); // Redirect to a welcome page
+
+            if ($purpose === "Seller") {
+                header("Location: vendorsprofile.php");
+            } elseif ($purpose === "Buyer") {
+                header("Location: customerprofile.php");
+            } else {
+                echo "Invalid account type.";
+            }
             exit;
         } else {
             echo "Invalid password. Please try again.";
