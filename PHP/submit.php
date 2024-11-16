@@ -36,7 +36,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     $txt->bind_param("sssssss", $name, $uname, $email, $contact, $hashedPassword, $purpose, $district);
 
     if ($txt->execute()) {
-        header("Location: loginn.html");
+        header("Location: ../HTML/loginn.html");
         exit; 
         }else {
          echo "Error: " . $txt->error;

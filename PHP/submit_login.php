@@ -29,9 +29,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['username'] = $username;
 
             if ($purpose === "Seller") {
-                header("Location: vendorsprofile.php");
+                header("Location: ../PHP/vendorsprofile.php");
             } elseif ($purpose === "Buyer") {
-                header("Location: customerprofile.php");
+                header("Location: ../PHP/customerprofile.php");
             } else {
                 echo "Invalid account type.";
             }
