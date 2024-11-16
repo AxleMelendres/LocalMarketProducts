@@ -1,0 +1,221 @@
+* {
+    padding: 0px;
+    margin: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none ;
+    font-family: "Nunito Sans", sans-serif;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px;
+    background-color:#4E6A4A;
+    color: #fff;
+    min-width: 7%;
+}
+
+.logo {
+    font-size: 25px;
+    color: wheat;
+    text-decoration: none;
+    font-weight: bold;
+    margin-right: 30px;
+}
+
+.logo:hover {
+    color:rgba(236, 206, 149, 0.837);
+}
+
+.link {
+    font-size: 15px;
+    color: wheat;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 10px 3px;
+}
+
+.link:hover {
+    color: rgba(236, 206, 149, 0.837);
+}
+
+.search-bar input[type="text"] {
+    width: 100px; 
+    padding: 8px;
+    margin-left: 10px;
+    margin-right: 0px;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+}
+
+.search-bar button {
+    padding: 8px 12px;
+    margin-left: 0px;
+    background-color:wheat;
+    border: none;
+    color: #132a13;
+    cursor: pointer;
+    border-radius: 0 4px 4px 0;
+}
+
+.search-bar select {
+    margin-left: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+}
+
+
+.icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    color: wheat;
+    margin-left: 10px;
+}
+
+.icons i {
+    width: 25px;
+    cursor: pointer;
+    color: wheat;
+}
+
+.sidebar {
+    background-color: #4E6A4A;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100vh;
+    padding: 40px 20px;
+    display: none;
+    z-index: 1000;
+
+}
+
+.sidebar.active{
+    display: block;
+}
+
+
+.info-sidebar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 100px;
+    cursor: pointer;
+}
+
+.info-sidebar .logo{
+    font-size: 22px;
+    color: wheat;
+    font-weight: bold;
+}
+
+.info-sidebar i {
+    color: wheat;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.sidebar .social-sidebar {
+    margin: 100px 0px;
+}
+
+.sidebar .social-sidebar a{
+    display: block;
+    color: wheat;
+    padding: 10px;
+    font-size: 18px;
+}
+
+.call {
+    margin-top: 100px;
+}
+
+.call h2 {
+    color: wheat;
+    padding: 10px 0px;
+}
+
+.call h5 {
+    color: wheat;
+    font-size: 15px;
+}
+
+section {
+    padding: 2em;
+    text-align: center;
+}
+
+.about-section, .mission-section, .values-section, .team-section {
+    background-color: #babd8d;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    padding: 2em 1em;
+}
+
+h2 {
+    font-size: 1.8em;
+    margin-bottom: 0.5em;
+    color: #273c25;
+}
+
+.content p {
+    max-width: 600px;
+    margin: 0 auto;
+    font-size: 1.1em;
+    color:  #273c25;
+}
+
+.values-section ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+    font-size: 1.2em;
+}
+
+.team-section .team-photos {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    margin-top: 1em;
+}
+
+.team-section .team-photos .team-member {
+    text-align: center;
+}
+
+.team-section .team-photos img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.team-section .team-photos p {
+    margin-top: 0.5em;
+    font-size: 1em;
+    color: #273c25;
+}
+
+
+footer {
+    background-color: #4E6A4A;
+    color: #fff;
+    text-align: center;
+    padding: 1em 0;
+}
