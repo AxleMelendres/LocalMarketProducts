@@ -5,22 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Market Alchemy</title>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="../CSS/main.css">
     <script src="https://kit.fontawesome.com/89e47c0436.js" crossorigin="anonymous"></script>
-    <script src="main.js" defer></script>
+    <script src="../JS/main.js" defer></script>
 
 </head>
 
 <body>
     <header class="header">
-        <a href="#" class="logo">Market Alchemy</a>
+        <a href="../PHP/mainn.php" class="logo">Market Alchemy</a>
 
         <nav>
-            <a class="link" href="mainn.php">Home</a>
-            <a class="link" href="about.html">About</a>
+            <a class="link" href="../PHP/mainn.php">Home</a>
+            <a class="link" href="../HTML/about.html">About</a>
         </nav>
 
-        <form class="search-bar" action="search.php" method="GET">
+        <form class="search-bar" action="../PHP/search.php" method="GET">
             <input type="text" name="query" placeholder="Search...">
             <button type="submit">Search</button>
 
@@ -43,7 +43,7 @@
         </form>
 
         <div class="icons">
-            <a href="loginn.html" style="color: #3a5a40;"><i class="fa-solid fa-user"></i> </a>
+            <a href="../HTML/loginn.html" style="color: #3a5a40;"><i class="fa-solid fa-user"></i> </a>
             <div class="sidebarMenu">
                 <i class="fa-solid fa-bars"></i>
             </div>
