@@ -30,7 +30,7 @@ $conn = null;
 <body>
 
     <header class="header">
-        <a href="#" class="logo">Market Alchemy</a>
+        <a href="mainn.php" class="logo">Market Alchemy</a>
 
         <nav>
             <a class="link" href="mainn.php">Home</a>
