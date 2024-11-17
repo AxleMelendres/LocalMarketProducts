@@ -1,49 +1,17 @@
 <?php
 
-$hostname = 'localhost';
-$dbname = 'dbgroup1';
-$username = 'root';
-$password = '';
+require_once '../PHP/dbConnection.php';
+require_once '../DB/accountTB.php';
 
-$conn = new mysqli($hostname, $username, $password, $dbname);
+$database = new Database();
+$conn = $database->getConnection();
 
-if($conn->connect_error){
-    die("Connection Failed" .$conn->connect_error);
-} 
-
-if($_SERVER["REQUEST_METHOD"] == "POST")
-{
-
-    if (!isset($_POST['terms']) || $_POST['terms'] !== 'accepted') {
-        die("You must agree that the information you provided are valid and correct.");
-    }
-
-    $name = $_POST['name'];
-    $uname = $_POST['username'];
-    $email = $_POST['email'];
-    $contact = $_POST['contact'] ?? '';
-    $password = $_POST['password'];
-    $purpose = $_POST['purpose'];
-    $district = $_POST['district'];
-
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-    $txt = $conn->prepare("INSERT INTO account (`Full Name`, Username, Email, `Contact Number`, Password, Purpose, District) VALUES (?, ?, ?, ?, ?, ?, ?)");
-   
-    if ($txt === false) {
-        die("Prepare failed: " . $conn->error);
-    }
-    $txt->bind_param("sssssss", $name, $uname, $email, $contact, $hashedPassword, $purpose, $district);
-
-    if ($txt->execute()) {
-        header("Location: ../HTML/loginn.html");
-        exit; 
-        }else {
-         echo "Error: " . $txt->error;
-        }
-        $txt->close();
+$account = new Account($conn);
+if ($account->register()) {
+    header("Location: ../HTML/loginn.html");
+    exit;
+} else {
+    echo "Registration failed!";
 }
-
-$conn->close();
 
 ?>
