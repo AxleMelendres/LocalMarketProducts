@@ -66,7 +66,7 @@ class Product {
                 echo "<p>$" . htmlspecialchars($row['product_price'], ENT_QUOTES, 'UTF-8') . "</p>";
                 
                 // Add buttons with safe URLs
-                echo "<a href='view_product.php?id=" . urlencode($row['id']) . "' class='view-button'>View</a>";
+                echo "<a href='../DISPLAY/view.php?id=" . urlencode($row['id']) . "' class='view-button'>View</a>";
                 echo "<a href='reserve_product.php?id=" . urlencode($row['id']) . "' class='reserve-button'>Reserve</a>";
 
                 echo "</div>";
@@ -80,6 +80,23 @@ class Product {
             // Handle execution error
             echo "Error: " . $stmt->errorInfo()[2];
         }
+    }
+
+    public function view(){
+        $product_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+
+        $query = "SELECT * FROM products WHERE id = :id";
+        $stmt = $this->conn->prepare($query);;
+        $stmt->bindParam(':id', $product_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $product = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$product) {
+            echo "Product not found.";
+            exit;
+        }
+        return $product;
     }
 }
 ?>
