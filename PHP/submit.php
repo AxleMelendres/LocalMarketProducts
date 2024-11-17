@@ -8,7 +8,7 @@ $conn = $database->getConnection();
 
 $account = new Account($conn);
 if ($account->register()) {
-    header("Location: ../HTML/loginn.html");
+    header("Location: ../HTML/login.html");
     exit;
 } else {
     echo "Registration failed!";
