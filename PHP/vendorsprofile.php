@@ -7,9 +7,22 @@ require_once '../PHP/product.php';
 $database = new Database();
 $conn = $database->getConnection();
 
-// Get all products from the products table
+// Get the selected category from the search form (if any)
+$categoryFilter = isset($_GET['category']) ? htmlspecialchars($_GET['category']) : '';
+
+// Prepare the query to fetch products based on selected category (if provided)
 $productQuery = "SELECT * FROM products";
+if ($categoryFilter) {
+    $productQuery .= " WHERE product_category = :category";
+}
+
 $stmt = $conn->prepare($productQuery);
+
+// Bind the category parameter if there's a filter
+if ($categoryFilter) {
+    $stmt->bindParam(':category', $categoryFilter);
+}
+
 $stmt->execute();
 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -29,45 +42,7 @@ $conn = null;
 </head>
 <body>
 
-    <header class="header">
-        <a href="/JS/" class="logo">Market Alchemy</a>
-
-        <nav>
-            <a class="link" href="../PHP/mainn.php">Home</a>
-            <a class="link" href="../HTML/about.html">About</a>
-        </nav>
-
-        <form class="search-bar" action="search.php" method="GET">
-            <input type="text" name="query" placeholder="Search...">
-            <button type="submit">Search</button>
-
-            <select name="district" id="district">
-                <option value="">Select</option>
-                <option value="South District">South District</option>
-                <option value="North District">North District</option>
-                <option value="West District">West District</option>
-                <option value="East District">East District</option>
-                <option value="Urban District">Urban District</option>
-            </select>
-
-            <select name="category" id="category">
-                <option value="">Select Category</option>
-                <option value="electronics">Electronics</option>
-                <option value="clothing">Clothing</option>
-                <option value="books">Books</option>
-                <!-- Add more categories as needed -->
-            </select>
-        </form>
-
-        <div class="icons">
-            <a href="../HTML/login.html" style="color: #3a5a40;"><i class="fa-solid fa-user"></i> </a>
-            <div class="sidebarMenu">
-                <i class="fa-solid fa-bars"></i>
-            </div>
-        </div>
-
-    </header>
-
+    <?php  require "../HEADER/header.html" ?>
     <div class="sidebar">
         <div class="info-sidebar">
             <a href="#" class="logo">Market Alchemy</a>
@@ -106,23 +81,23 @@ $conn = null;
         </div>
 
         <div class="products-offered">
-    <h3>Products</h3>
-    <ul class="product-list" id="product-list">
-        <?php
-        foreach ($products as $product) {
-            echo "<li class='product-item'>";
-            // Ensure the image path is relative to the public directory
-            echo "<img src='../" . $product['product_image'] . "' alt='" . $product['product_name'] . "'>";
-            echo "<h4>" . $product['product_name'] . "</h4>";
-            echo "<p><strong>Price:</strong> ₱" . $product['product_price'] . "</p>";
-            echo "<p><strong>Quantity:</strong> " . $product['product_quantity'] . "</p>";
-            echo "<p>" . $product['product_description'] . "</p>";
-            echo "</li>";
-        }
-        ?>
-    </ul>
-</div>
-
+            <h3>Products</h3>
+            <ul class="product-list" id="product-list">
+                <?php
+                foreach ($products as $product) {
+                    echo "<li class='product-item'>";
+                    // Ensure the image path is relative to the public directory
+                    echo "<img src='../" . $product['product_image'] . "' alt='" . $product['product_name'] . "'>";
+                    echo "<h4>" . $product['product_name'] . "</h4>";
+                    echo "<p><strong>Category:</strong> " . $product['product_category'] . "</p>"; // Display the product category
+                    echo "<p><strong>Price:</strong> ₱" . $product['product_price'] . "</p>";
+                    echo "<p><strong>Quantity:</strong> " . $product['product_quantity'] . "</p>";
+                    echo "<p>" . $product['product_description'] . "</p>";
+                    echo "</li>";
+                }
+                ?>
+            </ul>
+        </div>
 
         <div class="actions">
             <button class="btn" id="add-products">Add Products</button>
