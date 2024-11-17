@@ -1,48 +1,19 @@
 <?php
 session_start();
 
-$hostname = 'localhost';
-$dbname = 'dbgroup1';
-$username = 'root';
-$password = '';
+require_once '../PHP/dbConnection.php';
+require_once '../DB/accountTB.php';
 
-$conn = new mysqli($hostname, $username, $password, $dbname);
+$database = new Database();
+$conn = $database->getConnection();
 
-if ($conn->connect_error) {
-    die("Connection Failed: " . $conn->connect_error);
-}
-
+$account = new account($conn);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get the username and password from the POST request
     $username = trim($_POST['username']);
     $password = trim($_POST['password']);
-
-    $stmt = $conn->prepare("SELECT password, purpose FROM account WHERE username = ?");
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $stmt->store_result();
     
-    if ($stmt->num_rows > 0) {
-        $stmt->bind_result($hashedPassword, $purpose);
-        $stmt->fetch();
-
-        if (password_verify($password, $hashedPassword)) {
-            $_SESSION['username'] = $username;
-
-            if ($purpose === "Seller") {
-                header("Location: ../PHP/vendorsprofile.php");
-            } elseif ($purpose === "Buyer") {
-                header("Location: ../PHP/customerprofile.php");
-            } else {
-                echo "Invalid account type.";
-            }
-            exit;
-        } else {
-            echo "Invalid password. Please try again.";
-        }
-    } else {
-        echo "No account found with that username.";
-    }
-    $stmt->close();
+    // Call the login method of the account class
+    $account->login($username, $password);
 }
-$conn->close();
 ?>
