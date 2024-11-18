@@ -62,46 +62,7 @@
             }
         }
 
-        public function login(){
-            $this->uname = trim($_POST['username']);
-            $password = trim($_POST['password']);
 
-            // Prepare the query to fetch user data
-            $query = "SELECT password, purpose FROM " . $this->tbl_name . " WHERE Username = :username";
-            
-            // Prepare the statement
-            $stmt = $this->conn->prepare($query);
-
-            // Bind the parameters to the placeholders
-            $stmt->bindParam(':username', $this->uname);
-
-            // Execute the query
-            if ($stmt->execute()) {
-                // Check if user exists
-                if ($stmt->rowCount() > 0) {
-                    $hashedPassword = '';
-                    $purpose = '';
-                    $stmt->bindColumn('password', $hashedPassword);
-                    $stmt->bindColumn('purpose', $purpose);
-                    $stmt->fetch(PDO::FETCH_ASSOC);
-
-                    // Verify the password
-                    if (password_verify($password, $hashedPassword)) {
-                        $_SESSION['username'] = $this->uname;
-
-                        // Redirect based on the purpose
-                        if ($purpose === "Seller") {
-                            $_SESSION['username'] = $this->uname;
-                            $_SESSION['purpose'] = 'Seller';  // Store 'Seller' in session to identify seller users
-                            header("Location: vendorsprofile.php");
-                        } elseif ($purpose === "Buyer") {
-                            $_SESSION['username'] = $this->uname;
-                            $_SESSION['purpose'] = 'Buyer';  // Store 'Buyer' in session for buyer users
-                            header("Location: customerprofile.php");
-                        } else {
-                            echo "Invalid account type.";
-                        }
-                        exit;
                     } else {
                         echo "Invalid password. Please try again.";
                     }
