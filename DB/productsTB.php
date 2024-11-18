@@ -3,7 +3,7 @@ class Product {
     private $conn;
     private $tbl_name = "products"; 
 
-    public $id;
+    public $product_id;
     public $product_name;
     public $product_image;
     public $product_quantity;
@@ -35,7 +35,7 @@ class Product {
     }
 
     public function displayAll(){
-        $query = "SELECT id, product_name, product_price, product_image FROM " . $this->tbl_name;
+        $query = "SELECT product_id, product_name, product_price, product_image FROM " . $this->tbl_name;
 
         // Prepare the statement
         $stmt = $this->conn->prepare($query);
@@ -66,8 +66,8 @@ class Product {
                 echo "<p>$" . htmlspecialchars($row['product_price'], ENT_QUOTES, 'UTF-8') . "</p>";
                 
                 // Add buttons with safe URLs
-                echo "<a href='../DISPLAY/view.php?id=" . urlencode($row['id']) . "' class='view-button'>View</a>";
-                echo "<a href='reserve_product.php?id=" . urlencode($row['id']) . "' class='reserve-button'>Reserve</a>";
+                echo "<a href='../DISPLAY/view.php?product_id=" . urlencode($row['product_id']) . "' class='view-button'>View</a>";
+                echo "<a href='reserve_product.php?product_id=" . urlencode($row['product_id']) . "' class='reserve-button'>Reserve</a>";
 
                 echo "</div>";
             }
@@ -83,11 +83,11 @@ class Product {
     }
 
     public function view(){
-        $product_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+        $product_id = isset($_GET['product_id']) ? intval($_GET['product_id']) : 0;
 
-        $query = "SELECT * FROM products WHERE id = :id";
+        $query = "SELECT * FROM products WHERE product_id = :product_id";
         $stmt = $this->conn->prepare($query);;
-        $stmt->bindParam(':id', $product_id, PDO::PARAM_INT);
+        $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
         $stmt->execute();
 
         $product = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -105,7 +105,7 @@ class Product {
         $category = $queryParams['category'] ?? '';
     
         // SQL query with placeholders to prevent SQL injection
-        $sql = "SELECT id, product_name, product_price, product_image FROM " . $this->tbl_name . " WHERE product_name LIKE :query";
+        $sql = "SELECT product_id, product_name, product_price, product_image FROM " . $this->tbl_name . " WHERE product_name LIKE :query";
     
         if (!empty($district)) {
             $sql .= " AND district = :district";
@@ -151,8 +151,8 @@ class Product {
                     echo "<p>$" . htmlspecialchars($row['product_price'], ENT_QUOTES, 'UTF-8') . "</p>";
     
                     // Add buttons with safe URLs
-                    echo "<a href='../DISPLAY/view.php?id=" . urlencode($row['id']) . "' class='view-button'>View</a>";
-                    echo "<a href='reserve_product.php?id=" . urlencode($row['id']) . "' class='reserve-button'>Reserve</a>";
+                    echo "<a href='../DISPLAY/view.php?product_id=" . urlencode($row['product_id']) . "' class='view-button'>View</a>";
+                    echo "<a href='reserve_product.php?product_id=" . urlencode($row['product_id']) . "' class='reserve-button'>Reserve</a>";
     
                     echo "</div>";
                 }
