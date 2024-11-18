@@ -38,15 +38,15 @@
         <p>"We’re a team of three 2nd-year BSIT students coming together to tackle our final project with a shared passion for technology and creativity."</p>
         <div class="team-photos">
             <div class="team-member">
-                <img src="../WebsiteImages/T1.jpg" alt="Axle Melendres">
+                <img src="../uploads/T1.jpg" alt="Axle Melendres">
                 <p>Axle Melendres</p>
             </div>
             <div class="team-member">
-                <img src="../WebsiteImages/T2.jpg" alt="Alex Denise Capute">
+                <img src="../uploads/T2.jpg" alt="Alex Denise Capute">
                 <p>Alex Capute</p>
             </div>
             <div class="team-member">
-                <img src="../WebsiteImages/T3.jpg" alt="Ralph Emmerson Lucero">
+                <img src="../uploads/T3.jpg" alt="Ralph Emmerson Lucero">
                 <p>Ralph Lucero</p>
             </div>
         </div>
