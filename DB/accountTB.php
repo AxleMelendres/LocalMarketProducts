@@ -93,7 +93,7 @@ class account {
                     if ($purpose === "Seller") {
                         header("Location: ../PHP/vendorsprofile.php");
                     } elseif ($purpose === "Buyer") {
-                        header("Location: ../PHP/customerprofile.php");
+                        header("Location: ../HTML/customerInterface.html");
                     } else {
                         echo "Invalid account type.";
                     }
