@@ -95,9 +95,13 @@ class account {
                         $_SESSION['purpose'] = 'Seller';  // Store 'Seller' in session to identify seller users
                         header("Location: vendorsprofile.php");
                     } elseif ($purpose === "Buyer") {
+
+                        header("Location: ../PHP/customerInterface.php");
+
                         $_SESSION['username'] = $this->uname;
                         $_SESSION['purpose'] = 'Buyer';  // Store 'Buyer' in session for buyer users
-                        header("Location: customerprofile.php");
+                        header("Location: ../PHP/customerProfile.php");
+
                     } else {
                         echo "Invalid account type.";
                     }
