@@ -5,17 +5,18 @@
 </head>
 <body>
 
-    <?php  require "../HEADER/header.html" ?>
-    
+    <?php  require "../ConnectedVendor/HEADER/header.html" ?>
+
     <section class="product-section">
-    <?php    
-    require_once "../PHP/dbConnection.php"; 
+    <?php
+    require_once "../PHP/dbConnection.php";
+
     $database = new Database();
     $conn = $database->getConnection();
 
-    require_once "../DB/productsTB.php"; 
+    require_once "../DB/productsTB.php";
     $product = new Product($conn);
-    $product->search($_GET);
+    $product->displayAll();
     ?>
     </section>
     <?php  require "../HEADER/footer.html" ?>

@@ -38,8 +38,8 @@ class account {
 
         // Prepare the query with named placeholders
         $query = "INSERT INTO " . $this->tbl_name . " 
-                  (`Full Name`, Username, Email, `Contact Number`, Password, Purpose, District) 
-                  VALUES (:name, :username, :email, :contact, :password, :purpose, :district)";
+                (`Full Name`, Username, Email, `Contact Number`, Password, Purpose, District) 
+                VALUES (:name, :username, :email, :contact, :password, :purpose, :district)";
         
         // Prepare the statement
         $stmt = $this->conn->prepare($query);
@@ -91,9 +91,16 @@ class account {
 
                     // Redirect based on the purpose
                     if ($purpose === "Seller") {
-                        header("Location: ../PHP/vendorsprofile.php");
+                        $_SESSION['username'] = $this->uname;
+                        $_SESSION['purpose'] = 'Seller';  // Store 'Seller' in session to identify seller users
+                        header("Location: vendorsprofile.php");
                     } elseif ($purpose === "Buyer") {
+
                         header("Location: ../PHP/customerInterface.php");
+
+                        $_SESSION['username'] = $this->uname;
+                        $_SESSION['purpose'] = 'Buyer';  // Store 'Buyer' in session for buyer users
+                        header("Location: ../PHP/customerProfile.php");
                     } else {
                         echo "Invalid account type.";
                     }

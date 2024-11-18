@@ -4,7 +4,7 @@
         <link rel="stylesheet" href="../CSS/about.css">
     </head>
 <body>
-    <?php  require "../HEADER/header.html" ?>
+    <?php  require "../ConnectedVendor/HEADER/header.html" ?>
     
     <section class="about-section">
         <div class="content">
