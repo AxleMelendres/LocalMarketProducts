@@ -12,9 +12,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $productQuantity = intval($_POST['new-product-quantity']);
     $productPrice = floatval($_POST['product-price']);
     $productDescription = htmlspecialchars($_POST['product-description']);
-    $productCategory = htmlspecialchars($_POST['product-category']); // Capture the selected category
+    $productCategory = htmlspecialchars($_POST['product-category']); 
 
-    // Handle file upload (image)
     if (isset($_FILES['product-image']) && $_FILES['product-image']['error'] == 0) {
         $imageTmpName = $_FILES['product-image']['tmp_name'];
         $imageName = $_FILES['product-image']['name'];
@@ -36,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $product->product_quantity = $productQuantity;
                 $product->product_price = $productPrice;
                 $product->product_description = $productDescription;
-                $product->product_category = $productCategory; // Store the category directly in the table
+                $product->product_category = $productCategory; 
 
                 if ($product->create()) {
                     echo "Product added successfully!";

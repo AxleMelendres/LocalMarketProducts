@@ -5,7 +5,7 @@
 </head>
 <body>
 
-    <?php  require "../HEADER/header.html" ?>
+    <?php  require "../ConnectedVendor/HEADER/header.html" ?>
     
     <section class="product-section">
     <?php    
