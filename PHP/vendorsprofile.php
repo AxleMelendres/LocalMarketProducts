@@ -44,7 +44,7 @@ $conn = null; // Close the connection
 </head>
 <body>
 
-    <?php require "../HEADER/header.html"; ?>
+    <?php require "../ConnectedVendor/HEADER/header.html"; ?>
     <div class="container">
         <div class="profile">
             <img src="<?php echo $vendorDetails['vendor_image'] ? htmlspecialchars($vendorDetails['vendor_image']) : 'https://via.placeholder.com/150'; ?>" alt="Vendor Profile Picture">
