@@ -1,19 +1,20 @@
 <?php
-session_start();
+session_start();  // Start the session
 
-require_once '../PHP/dbConnection.php';
-require_once '../DB/accountTB.php';
+require_once '../PHP/dbConnection.php';  // Database connection
+require_once '../DB/accountTB.php';  // Account logic
 
 $database = new Database();
 $conn = $database->getConnection();
 
-$account = new account($conn);
+$account = new Account($conn);
+
+// Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get the username and password from the POST request
-    $username = trim($_POST['username']);
-    $password = trim($_POST['password']);
-    
-    // Call the login method of the account class
-    $account->login($username, $password);
+    // Call the login method directly without parameters
+    $account->login();
+
+    // No need to check login success here, as login method handles the redirection
 }
+
 ?>
