@@ -40,21 +40,64 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer Profile</title>
-    <link rel="stylesheet" href="../CSS/customerProfile.css">
+    <link rel="stylesheet" href="../CSS/customerprofile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <div class="profile-container">
-        <header>
-            <h1>Welcome, <?php echo htmlspecialchars($user['Full Name']); ?>!</h1>
-        </header>
-        <div class="profile-details">
-            <p><strong>Username:</strong> <?php echo htmlspecialchars($user['Username']); ?></p>
-            <p><strong>Email:</strong> <?php echo htmlspecialchars($user['Email']); ?></p>
-            <p><strong>Contact Number:</strong> <?php echo htmlspecialchars($user['Contact Number']); ?></p>
-            <p><strong>Purpose:</strong> <?php echo htmlspecialchars($user['Purpose']); ?></p>
-            <p><strong>District:</strong> <?php echo htmlspecialchars($user['District']); ?></p>
-        </div>
-        <a href="logout.php" class="logout-button">Logout</a>
-    </div>
+    <header class="navbar">
+        <h1 class="logo"> Market Alchemy </h1>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="../PHP/customerInterface.php" style="color: wheat;">Home</a></li>
+                <li><a href="../PHP/reservedProduct.php" style="color: wheat;"><i class="fas fa-shopping-cart"></i></a></li>
+                <li><a href="../PHP/customerLogout.php" class="logout-button" style="color: wheat;">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="profile-container">
+        <aside class="sidebar">
+            <div class="profile-section">
+                <img src="https://via.placeholder.com/100" alt="Profile Picture" class="profile-img">
+                <h2 class="profile-name"><?php echo htmlspecialchars($user['Full Name']); ?></h2>
+                <p class="profile-username">@<?php echo htmlspecialchars($user['Username']); ?></p>
+                <a href="#" class="edit-button">Edit Profile</a>
+            </div>
+            <ul class="sidebar-links">
+                <li><a href="#">Order History</a></li>
+                <li><a href="../PHP/reservedProduct.php">Reserved Items</a></li>
+                <li><a href="../PHP/accountSettings.php">Account Settings</a></li>
+                <li><a href="#">Help & Support</a></li>
+            </ul>
+        </aside>
+
+        <section class="main-content">
+            <div class="profile-details">
+                <h2>Profile Details</h2>
+                <p><strong>Email:</strong> <?php echo htmlspecialchars($user['Email']); ?></p>
+                <p><strong>Contact Number:</strong> <?php echo htmlspecialchars($user['Contact Number']); ?></p>
+                <p><strong>Purpose:</strong> <?php echo htmlspecialchars($user['Purpose']); ?></p>
+                <p><strong>District:</strong> <?php echo htmlspecialchars($user['District']); ?></p>
+            </div>
+
+            <div class="order-history">
+                <h2>Order History</h2>
+                <div class="order-card">
+                    <h3>Order #12345</h3>
+                    <p>Items: 3</p>
+                    <p>Total: $120.50</p>
+                    <p>Status: Delivered</p>
+                    <button class="details-button">View Details</button>
+                </div>
+                <div class="order-card">
+                    <h3>Order #12346</h3>
+                    <p>Items: 1</p>
+                    <p>Total: $35.00</p>
+                    <p>Status: In Transit</p>
+                    <button class="details-button">View Details</button>
+                </div>
+            </div>
+        </section>
+    </main>
 </body>
 </html>
