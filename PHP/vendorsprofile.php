@@ -1,32 +1,29 @@
 <?php
 
 require_once '../PHP/dbConnection.php';
-require_once '../PHP/vendorConnection.php'; // Assuming this contains the Vendor class
+require_once '../PHP/vendorConnection.php'; 
+require_once '../PHP/product.php'; 
 
 $database = new Database();
 $conn = $database->getConnection();
 
 session_start();
+
+// Check if vendor_id is set in session
+if (!isset($_SESSION['vendor_id'])) {
+    die("Vendor ID is not set in session. Please log in.");
+}
+
+// Retrieve vendor_id from the session
+$vendor_id = $_SESSION['vendor_id']; 
 $vendor_uname = $_SESSION['username'];
 
+
 $vendor = new Vendor($conn);
-$vendorDetails = $vendor->getVendor($vendor_uname); 
+$vendorDetails = $vendor->getVendor($vendor_uname);
 
-$categoryFilter = isset($_GET['category']) ? htmlspecialchars($_GET['category']) : '';
-
-$productQuery = "SELECT * FROM products";
-if ($categoryFilter) {
-    $productQuery .= " WHERE product_category = :category";
-}
-
-$stmt = $conn->prepare($productQuery);
-
-if ($categoryFilter) {
-    $stmt->bindParam(':category', $categoryFilter);
-}
-
-$stmt->execute();
-$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$product = new Product($conn);
+$products = $product->getProductsByVendor($vendor_id);
 
 $conn = null; // Close the connection
 ?>
@@ -39,8 +36,6 @@ $conn = null; // Close the connection
     <title>Vendor Profile</title>
     <link rel="stylesheet" href="../CSS/vendorsprofile.css">
     <script src="../JS/vendorsprofile.js" defer></script>
-    <script src="https://kit.fontawesome.com/89e47c0436.js" crossorigin="anonymous"></script>
-    <script src="main.js" defer></script>
 </head>
 <body>
 
@@ -64,7 +59,7 @@ $conn = null; // Close the connection
 
         <div class="products-offered">
             <h3>Products</h3>
-            <ul class="product-list" id="product-list">
+            <ul class="product-list">
                 <?php
                 if ($products) {
                     foreach ($products as $product) {
