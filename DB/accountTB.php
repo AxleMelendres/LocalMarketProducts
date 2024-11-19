@@ -106,10 +106,54 @@ class account {
                     }
                     exit;
                 } else {
-                    echo "Invalid password. Please try again.";
+                    echo "<!DOCTYPE html>
+                    <html lang='en'>
+                    <head>
+                        <meta charset='UTF-8'>
+                        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+                        <title>Error Login</title>
+                        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+                    </head>
+                    <body>
+                    <script>
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Incorrect password. Please try again!',
+                        icon: 'error',
+                        confirmButtonText: 'Okay'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = '../HTML/login.html';
+                        }
+                    });
+                    </script>
+                    </body>
+                    </html>";
                 }
             } else {
-                echo "No account found with that username.";
+                echo "<!DOCTYPE html>
+                    <html lang='en'>
+                    <head>
+                        <meta charset='UTF-8'>
+                        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+                        <title>Error Login</title>
+                        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+                    </head>
+                    <body>
+                    <script>
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'No account found with this username. Please try again!',
+                        icon: 'error',
+                        confirmButtonText: 'Okay'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = '../HTML/login.html';
+                        }
+                    });
+                    </script>
+                    </body>
+                    </html>";
             }
         } else {
             echo "Error: " . $stmt->errorInfo()[2];
