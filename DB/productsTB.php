@@ -9,15 +9,17 @@ class Product {
     public $product_quantity;
     public $product_price;
     public $product_description;
+    public $vendor_id;
 
     public function __construct($db) {
         $this->conn = $db;
     }
 
     public function create() {
-        $query = "INSERT INTO " . $this->tbl_name . " (product_name, product_image, product_quantity, product_price, product_description) 
-                  VALUES (:product_name, :product_image, :product_quantity, :product_price, :product_description)";
-    
+        $query = "INSERT INTO products 
+                    (product_name, product_image, product_quantity, product_price, product_description, product_category, vendor_id)
+                  VALUES 
+                    (:product_name, :product_image, :product_quantity, :product_price, :product_description, :product_category, :vendor_id)";
         $stmt = $this->conn->prepare($query);
     
         $stmt->bindParam(':product_name', $this->product_name);
@@ -25,14 +27,12 @@ class Product {
         $stmt->bindParam(':product_quantity', $this->product_quantity);
         $stmt->bindParam(':product_price', $this->product_price);
         $stmt->bindParam(':product_description', $this->product_description);
+        $stmt->bindParam(':product_category', $this->product_category);
+        $stmt->bindParam(':vendor_id', $this->vendor_id);
     
-        if ($stmt->execute()) {
-            return true;
-        } else {
-            echo "Error: " . $stmt->errorInfo()[2];
-            return false;
-        }
+        return $stmt->execute();
     }
+    
 
     public function displayAll(){
         $query = "SELECT product_id, product_name, product_price, product_image FROM " . $this->tbl_name;

@@ -12,6 +12,9 @@ $vendor_uname = $_SESSION['username'];
 $vendor = new Vendor($conn);
 $vendorDetails = $vendor->getVendor($vendor_uname); 
 
+// Get vendor_id from vendor details
+$vendor_id = $vendorDetails['vendor_id'];
+
 $categoryFilter = isset($_GET['category']) ? htmlspecialchars($_GET['category']) : '';
 
 $productQuery = "SELECT * FROM products";
