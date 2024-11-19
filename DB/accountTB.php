@@ -166,17 +166,16 @@ class account {
                         $_SESSION['vendor_id'] = $vendorDetails['vendor_id'];  // Store vendor_id in session
                         header("Location: vendorsprofile.php");  // Redirect to vendor profile
                     } elseif ($purpose === "Buyer") {
-<<<<<<< HEAD
+
 
                         header("Location: ../PHP/customerInterface.php");
 
                         $_SESSION['username'] = $this->uname;
                         $_SESSION['purpose'] = 'Buyer';  // Store 'Buyer' in session for buyer users
                         header("Location: ../PHP/customerProfile.php");
-=======
+
                         $_SESSION['purpose'] = 'Buyer';  // Store 'Buyer' in session
                         header("Location: ../PHP/customerProfile.php"); 
->>>>>>> 1caae13569d1724b58f9974cfa2c4232a43d665d
                     } else {
                         echo "Invalid account type.";
                     }
