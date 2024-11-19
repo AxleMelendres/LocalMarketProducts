@@ -1,4 +1,5 @@
 <?php
+session_start();  
 
 require_once '../PHP/dbConnection.php';
 require_once '../PHP/product.php';
@@ -7,7 +8,14 @@ $database = new Database();
 $conn = $database->getConnection();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Check if vendor_id is set in session
+    if (!isset($_SESSION['vendor_id'])) {
+        die("Vendor ID is not set in session. Please log in.");
+    }
 
+    $vendor_id = $_SESSION['vendor_id']; // Retrieve vendor_id from session
+
+    // Collect product details from the form
     $productName = htmlspecialchars($_POST['product-name']);
     $productQuantity = intval($_POST['new-product-quantity']);
     $productPrice = floatval($_POST['product-price']);
@@ -36,10 +44,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $product->product_price = $productPrice;
                 $product->product_description = $productDescription;
                 $product->product_category = $productCategory; 
+                $product->vendor_id = $vendor_id; // Assign vendor_id from session
+
+                // Debugging line to check vendor_id
+                echo "Vendor ID: " . $vendor_id; 
 
                 if ($product->create()) {
                     echo "Product added successfully!";
-                    header('Location: vendorsprofile.php');
+                    header('Location: vendorsprofile.php'); // Redirect to the vendor profile page after success
                     exit;
                 } else {
                     echo "Error: Could not add product.";
