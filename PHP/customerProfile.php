@@ -20,7 +20,7 @@ if (!isset($_SESSION['username'])) {
 
 $username = $_SESSION['username'];
 
-$stmt = $conn->prepare("SELECT `Full Name`, Username, Email, `Contact Number`, Purpose, District FROM account WHERE Username = ?");
+$stmt = $conn->prepare("SELECT `Full Name`, Username, Email, `Contact Number`, Purpose, District, buyer_image FROM account LEFT JOIN buyer ON account.account_id = buyer.account_id WHERE Username = ?");
 $stmt->bind_param("s", $username);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -32,6 +32,7 @@ if ($result->num_rows === 0) {
 $user = $result->fetch_assoc();
 $stmt->close();
 $conn->close();
+
 ?>
 
 <!DOCTYPE html>
@@ -42,6 +43,8 @@ $conn->close();
     <title>Customer Profile</title>
     <link rel="stylesheet" href="../CSS/customerprofile.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Include SweetAlert2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 </head>
 <body>
     <header class="navbar">
@@ -58,10 +61,15 @@ $conn->close();
     <main class="profile-container">
         <aside class="sidebar">
             <div class="profile-section">
-                <img src="https://via.placeholder.com/100" alt="Profile Picture" class="profile-img">
+                <!-- Display the profile picture -->
+                <?php if (!empty($user['buyer_image'])): ?>
+                    <img src="<?php echo htmlspecialchars($user['buyer_image']); ?>" alt="Profile Picture" class="profile-img">
+                <?php else: ?>
+                    <img src="https://via.placeholder.com/100" alt="Profile Picture" class="profile-img">
+                <?php endif; ?>
                 <h2 class="profile-name"><?php echo htmlspecialchars($user['Full Name']); ?></h2>
                 <p class="profile-username">@<?php echo htmlspecialchars($user['Username']); ?></p>
-                <a href="#" class="edit-button">Edit Profile</a>
+                <a href="accountSettings.php" class="edit-button">Edit Profile</a>
             </div>
             <ul class="sidebar-links">
                 <li><a href="#">Order History</a></li>
@@ -99,5 +107,8 @@ $conn->close();
             </div>
         </section>
     </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../JS/logout.js"></script>
 </body>
 </html>

@@ -9,5 +9,17 @@
 </head>
 <body>
     <?php  require "../HEADER/customerHeader.html" ?>
+    <section class="product-section">
+    <?php
+    require_once "../PHP/dbConnection.php";
+
+    $database = new Database();
+    $conn = $database->getConnection();
+
+    require_once "../DB/productsTB.php";
+    $product = new Product($conn);
+    $product->displayAll();
+    ?>
+    </section>
 </body>
 </html>

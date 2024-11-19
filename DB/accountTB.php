@@ -166,17 +166,70 @@ class account {
                         $_SESSION['vendor_id'] = $vendorDetails['vendor_id'];  // Store vendor_id in session
                         header("Location: vendorsprofile.php");  // Redirect to vendor profile
                     } elseif ($purpose === "Buyer") {
+<<<<<<< HEAD
+
+                        header("Location: ../PHP/customerInterface.php");
+
+                        $_SESSION['username'] = $this->uname;
+                        $_SESSION['purpose'] = 'Buyer';  // Store 'Buyer' in session for buyer users
+                        header("Location: ../PHP/customerProfile.php");
+=======
                         $_SESSION['purpose'] = 'Buyer';  // Store 'Buyer' in session
                         header("Location: ../PHP/customerProfile.php"); 
+>>>>>>> 1caae13569d1724b58f9974cfa2c4232a43d665d
                     } else {
                         echo "Invalid account type.";
                     }
                     exit;
                 } else {
-                    echo "Invalid password. Please try again.";
+                    echo "<!DOCTYPE html>
+                    <html lang='en'>
+                    <head>
+                        <meta charset='UTF-8'>
+                        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+                        <title>Error Login</title>
+                        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+                    </head>
+                    <body>
+                    <script>
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Incorrect password. Please try again!',
+                        icon: 'error',
+                        confirmButtonText: 'Okay'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = '../HTML/login.html';
+                        }
+                    });
+                    </script>
+                    </body>
+                    </html>";
                 }
             } else {
-                echo "No account found with that username.";
+                echo "<!DOCTYPE html>
+                    <html lang='en'>
+                    <head>
+                        <meta charset='UTF-8'>
+                        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+                        <title>Error Login</title>
+                        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+                    </head>
+                    <body>
+                    <script>
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'No account found with this username. Please try again!',
+                        icon: 'error',
+                        confirmButtonText: 'Okay'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = '../HTML/login.html';
+                        }
+                    });
+                    </script>
+                    </body>
+                    </html>";
             }
         } else {
             echo "Error: " . $stmt->errorInfo()[2];
