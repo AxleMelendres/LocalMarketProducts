@@ -172,8 +172,7 @@ class account {
                         $_SESSION['username'] = $this->uname;
                         $_SESSION['purpose'] = 'Buyer';  // Store 'Buyer' in session for buyer users
                         header("Location: ../PHP/customerProfile.php");
-                        $_SESSION['purpose'] = 'Buyer';  // Store 'Buyer' in session
-                        header("Location: ../PHP/customerProfile.php"); 
+                      
                     } else {
                         echo "Invalid account type.";
                     }
