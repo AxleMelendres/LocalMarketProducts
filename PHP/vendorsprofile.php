@@ -39,12 +39,12 @@ $conn = null; // Close the connection
 </head>
 <body>
 
-    <?php require "../ConnectedVendor/HEADER/header.html"; ?>
+    <?php require "../HEADER/header.html"; ?>
     <div class="container">
         <div class="profile">
             <img src="<?php echo $vendorDetails['vendor_image'] ? htmlspecialchars($vendorDetails['vendor_image']) : 'https://via.placeholder.com/150'; ?>" alt="Vendor Profile Picture">
             <div class="profile-info">
-                <h2><?php echo htmlspecialchars($vendorDetails['vendor_name']); ?></h2>
+            <h2><?php echo htmlspecialchars($vendorDetails['vendor_name']) . " (" . htmlspecialchars($vendor_uname) . ")"; ?></h2>
                 <p><?php echo $vendorDetails['vendor_description'] ? htmlspecialchars($vendorDetails['vendor_description']) : 'We offer a variety of top quality products.'; ?></p>
             </div>
         </div>

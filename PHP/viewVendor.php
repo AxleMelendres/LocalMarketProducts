@@ -7,21 +7,17 @@ require_once '../PHP/product.php';
 $database = new Database();
 $conn = $database->getConnection();
 
-// Get the selected category from the search form (if any)
-$categoryFilter = isset($_GET['category']) ? htmlspecialchars($_GET['category']) : '';
+// Assuming the vendor's profile is being viewed by the customer
+// Retrieve vendor_id from GET or another method if necessary
+$vendor_id = isset($_GET['vendor_id']) ? $_GET['vendor_id'] : 0; // Change this logic to your actual method of getting vendor_id
 
-// Prepare the query to fetch products based on selected category (if provided)
-$productQuery = "SELECT * FROM products";
-if ($categoryFilter) {
-    $productQuery .= " WHERE product_category = :category";
-}
+// Prepare the query to fetch products based on the selected vendor_id
+$productQuery = "SELECT * FROM products WHERE vendor_id = :vendor_id";
 
 $stmt = $conn->prepare($productQuery);
 
-// Bind the category parameter if there's a filter
-if ($categoryFilter) {
-    $stmt->bindParam(':category', $categoryFilter);
-}
+// Bind the vendor_id parameter
+$stmt->bindParam(':vendor_id', $vendor_id);
 
 $stmt->execute();
 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -43,48 +39,12 @@ $conn = null;
 <body>
 
     <?php require "../HEADER/header.html" ?>
-
-    <div class="sidebar">
-        <div class="info-sidebar">
-            <a href="#" class="logo">Market Alchemy</a>
-            <i class="fa-solid fa-x closeSidebar"></i>
-        </div>
-        <hr>
-        <div class="social-sidebar">
-            <a href="#"><i class="fa-brands fa-facebook"></i> Facebook</a>
-            <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
-            <a href="#"><i class="fa-brands fa-x-twitter"></i> Twitter</a>
-            <a href="#"><i class="fa-brands fa-github"></i> Github</a>
-        </div>
-        <hr>
-        <div class="call">
-            <h2>Contact</h2>
-            <h5>+63 912 345 678 03</h5>
-            <h5>Market Alchemy</h5>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="profile">
-            <img src="https://via.placeholder.com/150" alt="Vendor Profile Picture">
-            <div class="profile-info">
-                <h2>John Doe</h2>
-                <p>We offer a variety of top quality products.</p>
-            </div>
-        </div>
-
-        <div class="contact-info">
-            <h3>Contact Information</h3>
-            <p><strong>Email:</strong> john.doe@example.com</p>
-            <p><strong>Phone:</strong> +123456789</p>
-            <p><strong>Location:</strong> 123 Home St City</p>
-            <p><strong>District:</strong> District 1</p>
-        </div>
-
-        <div class="products-offered">
-            <h3>Products</h3>
-            <ul class="product-list" id="product-list">
-                <?php
+    
+    <div class="products-offered">
+        <h3>Products</h3>
+        <ul class="product-list" id="product-list">
+            <?php
+            if ($products) {
                 foreach ($products as $product) {
                     echo "<li class='product-item'>";
                     // Ensure the image path is relative to the public directory
@@ -96,9 +56,11 @@ $conn = null;
                     echo "<p>" . $product['product_description'] . "</p>";
                     echo "</li>";
                 }
-                ?>
-            </ul>
-        </div>
+            } else {
+                echo "<li>No products available for this vendor.</li>";
+            }
+            ?>
+        </ul>
     </div>
 
 </body>

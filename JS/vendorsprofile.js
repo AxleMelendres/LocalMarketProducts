@@ -8,11 +8,11 @@ addProductButton.addEventListener('click', function() {
 });
 
 editProductButton.addEventListener('click', function() {
-    window.location.href = "../HTML/edit_product.html";  
+    window.location.href = "../PHP/edit_product.php";  
 });
 
 deleteProductButton.addEventListener('click', function() {
-    window.location.href = "../HTML/delete_product.html"; 
+    window.location.href = "../PHP/delete_product.php"; 
 });
 
 editProfileButton.addEventListener('click', function() {

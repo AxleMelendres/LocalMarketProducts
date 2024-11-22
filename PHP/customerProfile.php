@@ -51,7 +51,7 @@ $conn->close();
         <h1 class="logo"> Market Alchemy </h1>
         <nav>
             <ul class="nav-links">
-                <li><a href="../PHP/customerInterface.php" style="color: wheat;">Home</a></li>
+                <li><a href="../ConnectedBuyer/main.php" style="color: wheat;">Home</a></li>
                 <li><a href="../PHP/reservedProduct.php" style="color: wheat;"><i class="fas fa-shopping-cart"></i></a></li>
                 <li><a href="../PHP/customerLogout.php" class="logout-button" style="color: wheat;">Logout</a></li>
             </ul>
