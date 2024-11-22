@@ -38,8 +38,11 @@ $conn = null; // Close the connection
     <script src="../JS/vendorsprofile.js" defer></script>
 </head>
 <body>
-
-    <?php require "../HEADER/header.html"; ?>
+        <header>
+            <nav>
+            <?php require "../HEADER/vendorHeader.html"; ?>
+            </nav>
+        </header>
     <div class="container">
         <div class="profile">
             <img src="<?php echo $vendorDetails['vendor_image'] ? htmlspecialchars($vendorDetails['vendor_image']) : 'https://via.placeholder.com/150'; ?>" alt="Vendor Profile Picture">
