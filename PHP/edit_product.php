@@ -141,7 +141,7 @@ $products = $product->getProductsByVendor($vendor_id); // Get all products for t
                 <option value="Grocery" <?php if ($productDetails['product_category'] == 'Grocery') echo 'selected'; ?>>Grocery</option>
                 <option value="Clothing" <?php if ($productDetails['product_category'] == 'Clothing') echo 'selected'; ?>>Clothing</option>
                 <option value="Shoes" <?php if ($productDetails['product_category'] == 'Shoes') echo 'selected'; ?>>Shoes</option>
-                <option value="Bag & Accessories" <?php if ($productDetails['product_category'] == 'Bag & Accessories') echo 'selected'; ?>>Bag & Accessories</option>
+                <option value="Bags and Accessories" <?php if ($productDetails['product_category'] == 'Bags and Accessories') echo 'selected'; ?>>Bags & Accessories</option>
             </select>
         </div>
 
