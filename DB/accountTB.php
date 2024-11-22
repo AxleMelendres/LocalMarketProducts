@@ -53,6 +53,96 @@ class account {
         $this->password = $_POST['password'];
         $this->purpose = $_POST['purpose'];
         $this->district = $_POST['district'];
+
+        $usernameQuery = "SELECT * FROM " . $this->tbl_name . " WHERE Username = :username";
+        $usernameStmt = $this->conn->prepare($usernameQuery);
+        $usernameStmt->bindParam(':username', $this->uname);
+        $usernameStmt->execute();
+    
+        if ($usernameStmt->rowCount() > 0) {
+            echo "<!DOCTYPE html>
+                <html lang='en'>
+                <head>
+                    <meta charset='UTF-8'>
+                    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+                    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+                </head>
+                <body>
+                <script>
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'The username you provided already exists. Please choose a different username.',
+                        icon: 'error',
+                        confirmButtonText: 'Okay'
+                    }).then(() => {
+                        window.history.back(); // Redirect the user back to the previous page
+                    });
+                </script>
+                </body>
+                </html>";
+            return false;
+        }
+    
+        // Check for duplicate email
+        $emailQuery = "SELECT * FROM " . $this->tbl_name . " WHERE Email = :email";
+        $emailStmt = $this->conn->prepare($emailQuery);
+        $emailStmt->bindParam(':email', $this->email);
+        $emailStmt->execute();
+    
+        if ($emailStmt->rowCount() > 0) {
+            echo "<!DOCTYPE html>
+                <html lang='en'>
+                <head>
+                    <meta charset='UTF-8'>
+                    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+                    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+                </head>
+                <body>
+                <script>
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'The email you provided already exists. Please use a different email.',
+                        icon: 'error',
+                        confirmButtonText: 'Okay'
+                    }).then(() => {
+                        window.history.back(); // Redirect the user back to the previous page
+                    });
+                </script>
+                </body>
+                </html>";
+            return false;
+        }
+    
+        // Check for duplicate contact number
+        $contactQuery = "SELECT * FROM " . $this->tbl_name . " WHERE `Contact Number` = :contact";
+        $contactStmt = $this->conn->prepare($contactQuery);
+        $contactStmt->bindParam(':contact', $this->contact);
+        $contactStmt->execute();
+    
+        if ($contactStmt->rowCount() > 0) {
+            echo "<!DOCTYPE html>
+                <html lang='en'>
+                <head>
+                    <meta charset='UTF-8'>
+                    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+                    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+                </head>
+                <body>
+                <script>
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'The contact number you provided already exists. Please use a different contact number.',
+                        icon: 'error',
+                        confirmButtonText: 'Okay'
+                    }).then(() => {
+                        window.history.back(); // Redirect the user back to the previous page
+                    });
+                </script>
+                </body>
+                </html>";
+            return false;
+        }
+    
     
         // Hash the password
         $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
@@ -167,11 +257,18 @@ class account {
                         header("Location: vendorsprofile.php");  // Redirect to vendor profile
                     } elseif ($purpose === "Buyer") {
 
+
+
                         header("Location: ../PHP/customerInterface.php");
 
                         $_SESSION['username'] = $this->uname;
                         $_SESSION['purpose'] = 'Buyer';  // Store 'Buyer' in session for buyer users
                         header("Location: ../PHP/customerProfile.php");
+
+
+                        $_SESSION['purpose'] = 'Buyer';  // Store 'Buyer' in session
+                        header("Location: ../PHP/customerProfile.php"); 
+
                       
                     } else {
                         echo "Invalid account type.";
