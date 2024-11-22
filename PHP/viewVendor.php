@@ -38,7 +38,7 @@ $conn = null;
 </head>
 <body>
 
-    <?php require "../HEADER/header.html" ?>
+    <?php require "../HEADER/vendorHeader.html" ?>
     
     <div class="products-offered">
         <h3>Products</h3>

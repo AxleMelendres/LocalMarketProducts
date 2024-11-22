@@ -38,7 +38,6 @@ $conn = null; // Close the connection
     <script src="../JS/vendorsprofile.js" defer></script>
 </head>
 <body>
-
     <?php  require "../ConnectedVendor/HEADER/profileheader.html" ?>
     <div class="container">
         <div class="profile">
