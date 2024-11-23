@@ -73,23 +73,7 @@ $conn->close();
                 <p><strong>District:</strong> <?php echo htmlspecialchars($user['District']); ?></p>
             </div>
 
-            <div class="order-history">
-                <h2>Order History</h2>
-                <div class="order-card">
-                    <h3>Order #12345</h3>
-                    <p>Items: 3</p>
-                    <p>Total: $120.50</p>
-                    <p>Status: Delivered</p>
-                    <button class="details-button">View Details</button>
-                </div>
-                <div class="order-card">
-                    <h3>Order #12346</h3>
-                    <p>Items: 1</p>
-                    <p>Total: $35.00</p>
-                    <p>Status: In Transit</p>
-                    <button class="details-button">View Details</button>
-                </div>
-            </div>
+            
         </section>
     </main>
 
