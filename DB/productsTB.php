@@ -68,9 +68,31 @@ class Product {
                 echo "<h3>" . htmlspecialchars($row['product_name'], ENT_QUOTES, 'UTF-8') . "</h3>";
                 echo "<p>$" . htmlspecialchars($row['product_price'], ENT_QUOTES, 'UTF-8') . "</p>";
                 
-                // Add buttons with safe URLs
-                echo "<a href='../DISPLAY/view.php?product_id=" . urlencode($row['product_id']) . "' class='view-button'>View</a>";
-                echo "<a href='reserve_product.php?product_id=" . urlencode($row['product_id']) . "' class='reserve-button'>Reserve</a>";
+                // Determine the full script path
+                $fullPath = $_SERVER['SCRIPT_NAME']; // Full path to the script
+
+                // Normalize the path to identify the folder structure
+                if (strpos($fullPath, '/DISPLAY/main.php') !== false) {
+                    $actionUrl = '../DISPLAY/view.php';
+                } elseif (strpos($fullPath, '/ConnectedVendor/main.php') !== false) {
+                    $actionUrl = '../ConnectedVendor/view.php';
+                } elseif (strpos($fullPath, '/ConnectedBuyer/main.php') !== false) {
+                    $actionUrl = '../ConnectedBuyer/view.php';
+                } else {
+                    $actionUrl = '../DISPLAY/view.php'; // Default redirection
+                }
+
+                // Generate the form dynamically
+                echo "<form method='POST' action='" . htmlspecialchars($actionUrl, ENT_QUOTES, 'UTF-8') . "' class='view-form'>";
+                echo "<input type='hidden' name='product_id' value='" . htmlspecialchars($row['product_id'], ENT_QUOTES, 'UTF-8') . "'>";
+                echo "<button type='submit' class='view-button'>View</button>";
+                echo "</form>";
+
+
+                echo "<form method='POST' action='reserve_product.php' class='reserve-form'>";
+                echo "<input type='hidden' name='product_id' value='" . htmlspecialchars($row['product_id'], ENT_QUOTES, 'UTF-8') . "'>";
+                echo "<button type='submit' class='reserve-button'>Reserve</button>";
+                echo "</form>";
 
                 echo "</div>";
             }
@@ -85,22 +107,31 @@ class Product {
         }
     }
 
-    public function view(){
-        $product_id = isset($_GET['product_id']) ? intval($_GET['product_id']) : 0;
-
+    public function view() {
+        // Get product_id from POST or GET
+        $product_id = isset($_POST['product_id']) ? intval($_POST['product_id']) : (isset($_GET['product_id']) ? intval($_GET['product_id']) : 0);
+    
+        if ($product_id === 0) {
+            echo "Error: No Product ID provided.";
+            exit;
+        }
+    
+        // Query to fetch product details
         $query = "SELECT * FROM products WHERE product_id = :product_id";
-        $stmt = $this->conn->prepare($query);;
+        $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
         $stmt->execute();
-
+    
         $product = $stmt->fetch(PDO::FETCH_ASSOC);
-
+    
         if (!$product) {
             echo "Product not found.";
             exit;
         }
+    
         return $product;
     }
+    
 
     public function search($queryParams) {
         $query = $queryParams['query'] ?? '';
@@ -153,9 +184,16 @@ class Product {
                     echo "<h3>" . htmlspecialchars($row['product_name'], ENT_QUOTES, 'UTF-8') . "</h3>";
                     echo "<p>$" . htmlspecialchars($row['product_price'], ENT_QUOTES, 'UTF-8') . "</p>";
     
-                    // Add buttons with safe URLs
-                    echo "<a href='../DISPLAY/view.php?product_id=" . urlencode($row['product_id']) . "' class='view-button'>View</a>";
-                    echo "<a href='reserve_product.php?product_id=" . urlencode($row['product_id']) . "' class='reserve-button'>Reserve</a>";
+                    // Add buttons using a form to send POST requests
+                    echo "<form method='POST' action='../DISPLAY/view.php' class='view-form'>";
+                    echo "<input type='hidden' name='product_id' value='" . htmlspecialchars($row['product_id'], ENT_QUOTES, 'UTF-8') . "'>";
+                    echo "<button type='submit' class='view-button'>View</button>";
+                    echo "</form>";
+
+                    echo "<form method='POST' action='reserve_product.php' class='reserve-form'>";
+                    echo "<input type='hidden' name='product_id' value='" . htmlspecialchars($row['product_id'], ENT_QUOTES, 'UTF-8') . "'>";
+                    echo "<button type='submit' class='reserve-button'>Reserve</button>";
+                    echo "</form>";
     
                     echo "</div>";
                 }
