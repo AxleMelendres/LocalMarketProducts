@@ -8,12 +8,12 @@ require_once '../PHP/product.php';
 $database = new Database();
 $conn = $database->getConnection();
 
-// Check if vendor_id is set in session
+
 if (!isset($_SESSION['vendor_id'])) {
     die("Vendor ID is not set in session. Please log in.");
 }
 
-$vendor_id = $_SESSION['vendor_id']; // Retrieve vendor_id from session
+$vendor_id = $_SESSION['vendor_id']; 
 
 // Create Product object
 $product = new Product($conn);
@@ -95,7 +95,9 @@ $products = $product->getProductsByVendor($vendor_id); // Get all products for t
     <script src="../JS/product.js" defer></script>
 </head>
 <body>
-
+    <div class="heading-container">
+        <h1>Edit Products</h1> 
+    </div>
 <div class="container">
     <h2>Manage Your Products</h2>
 
@@ -134,28 +136,27 @@ $products = $product->getProductsByVendor($vendor_id); // Get all products for t
                 <textarea name="product-description" id="product-description" required><?php echo htmlspecialchars($productDetails['product_description']); ?></textarea>
             </div>
 
-        <div class="input-box">
-            <label for="product-category">Category:</label>
-            <select name="product-category" id="product-category" required>
-                <option value="Meal" <?php if ($productDetails['product_category'] == 'Meal') echo 'selected'; ?>>Meal</option>
-                <option value="Grocery" <?php if ($productDetails['product_category'] == 'Grocery') echo 'selected'; ?>>Grocery</option>
-                <option value="Clothing" <?php if ($productDetails['product_category'] == 'Clothing') echo 'selected'; ?>>Clothing</option>
-                <option value="Shoes" <?php if ($productDetails['product_category'] == 'Shoes') echo 'selected'; ?>>Shoes</option>
-                <option value="Bags and Accessories" <?php if ($productDetails['product_category'] == 'Bags and Accessories') echo 'selected'; ?>>Bags & Accessories</option>
-            </select>
-        </div>
-
+            <div class="input-box">
+                <label for="product-category">Category:</label>
+                <select name="product-category" id="product-category" required>
+                    <option value="Meal" <?php if ($productDetails['product_category'] == 'Meal') echo 'selected'; ?>>Meal</option>
+                    <option value="Grocery" <?php if ($productDetails['product_category'] == 'Grocery') echo 'selected'; ?>>Grocery</option>
+                    <option value="Clothing" <?php if ($productDetails['product_category'] == 'Clothing') echo 'selected'; ?>>Clothing</option>
+                    <option value="Shoes" <?php if ($productDetails['product_category'] == 'Shoes') echo 'selected'; ?>>Shoes</option>
+                    <option value="Bags and Accessories" <?php if ($productDetails['product_category'] == 'Bags and Accessories') echo 'selected'; ?>>Bags & Accessories</option>
+                </select>
+            </div>
 
             <button type="submit" class="btn">Update Product</button>
 
         </form>
     <?php else: ?>
-        <!-- Display All Products If Not Editing -->
         <ul id="product-list">
             <?php
             if ($products) {
                 foreach ($products as $prod) {
                     echo "<li class='product-item' data-id='" . $prod['product_id'] . "'>";
+                    echo "<a href='edit_product.php?product_id=" . $prod['product_id'] . "'>";
                     echo "<img src='../" . htmlspecialchars($prod['product_image']) . "' alt='" . htmlspecialchars($prod['product_name']) . "'>";
                     echo "<div>";
                     echo "<h4>" . htmlspecialchars($prod['product_name']) . "</h4>";
@@ -163,8 +164,8 @@ $products = $product->getProductsByVendor($vendor_id); // Get all products for t
                     echo "<p><strong>Price:</strong> ₱" . number_format($prod['product_price'], 2) . "</p>";
                     echo "<p><strong>Quantity:</strong> " . htmlspecialchars($prod['product_quantity']) . "</p>";
                     echo "<p>" . nl2br(htmlspecialchars($prod['product_description'])) . "</p>";
-                    echo "<a href='edit_product.php?product_id=" . $prod['product_id'] . "' class='btn'>Edit</a>";
                     echo "</div>";
+                    echo "</a>";
                     echo "</li>";
                 }
             } else {
@@ -172,8 +173,6 @@ $products = $product->getProductsByVendor($vendor_id); // Get all products for t
             }
             ?>
         </ul>
-
-
     <?php endif; ?>
 </div>
 <button id="back-button" class="btn">Back</button>

@@ -1,26 +1,36 @@
-/* General Reset for Margins and Padding */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Body Styling */
 body {
     font-family: 'Nunito', sans-serif;
-    background-color: #4E6A4A; /* Light background for better contrast */
-    color: wheat; /* Darker text color for better readability */
+    background-color: #4E6A4A !important;
+    color: #333;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    min-height: 100vh;
+    justify-content: flex-start;
+    height: 100vh;
     padding: 20px;
 }
 
-/* Container for the Edit Product Form */
+.heading-container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 2;
+}
+
+.heading-container h1 {
+    color: #4E6A4A;
+    font-size: 2.5rem;
+    text-align: left;
+}
+
 .container {
-    background-color: wheat; /* White background for the form */
+    background-color: wheat;
     width: 100%;
     max-width: 600px;
     border-radius: 8px;
@@ -29,21 +39,18 @@ body {
     margin-top: 20px;
 }
 
-/* Form Elements */
 form {
     display: flex;
     flex-direction: column;
 }
 
-/* Form Labels */
 label {
     margin-top: 10px;
     font-weight: bold;
     color: #333;
 }
 
-/* Input Fields and Textarea Styling */
-input, textarea {
+input, textarea, select {
     margin-bottom: 15px;
     padding: 10px;
     border: 1px solid #ccc;
@@ -51,156 +58,149 @@ input, textarea {
     font-size: 1rem;
 }
 
-/* Resizing the Textarea for better user experience */
 textarea {
     resize: vertical;
     min-height: 100px;
 }
 
-/* Input Focus Effect */
-input:focus, textarea:focus {
-    border-color: #4CAF50; /* Green border on focus */
-    box-shadow: 0 0 5px rgba(76, 175, 80, 0.6); /* Green glow on focus */
+input:focus, textarea:focus, select:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.6);
 }
 
-/* Buttons */
 .btn {
-    padding: 10px 20px;
-    background-color: #4CAF50; /* Green background */
+    padding: 12px 20px;
+    background-color: #4E6A4A;
     color: white;
     font-size: 1rem;
     border: none;
+    border-radius: 6px;
     cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
+    margin-top: 20px;
 }
 
 .btn:hover {
-    background-color: #45a049; /* Slightly darker green on hover */
+    background-color: #3b4d3b;
 }
 
 .btn:active {
-    background-color: #388e3c; /* Even darker green when button is pressed */
+    background-color: #2d3b2d;
 }
 
-/* Image Preview Styling */
 input[type="file"] {
     margin-top: 10px;
 }
 
 input[type="file"]:focus {
-    border-color: #4CAF50; /* Green focus effect for the file input */
-    box-shadow: 0 0 5px rgba(76, 175, 80, 0.6); /* Green glow on focus */
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.6);
 }
 
 img {
     margin-top: 10px;
-    width: 100px; /* Fixed size for image */
-    height: 100px; /* Fixed size for image */
-    object-fit: cover; /* Ensure image doesn't distort */
-    border-radius: 5px; /* Rounded corners for the image */
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
     display: block;
 }
 
-/* Product List Styling */
 ul#product-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
     list-style-type: none;
     padding: 0;
+    margin-top: 20px;
+    width: 100%;
 }
 
 .product-item {
     display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-    padding: 10px;
-    border-radius: 6px;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 20px;
+    border-radius: 8px;
     background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.product-item:hover {
-    background-color: #f1f1f1;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 100%;
+    height: auto;
+    position: relative;
 }
 
 .product-item img {
-    width: 100px;
-    height: 100px;
+    width: 100%;
+    height: auto;
+    max-width: 120px;
+    margin-bottom: 10px;
     object-fit: cover;
-    margin-right: 15px;
-    border-radius: 5px; /* Ensure uniformity in product images */
+    border-radius: 6px;
+}
+
+.product-item .product-text {
+    flex-grow: 1;
+    margin-bottom: 10px;
 }
 
 .product-item h4 {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: #333;
+    margin-bottom: 8px;
 }
 
 .product-item p {
     font-size: 0.9rem;
     color: #555;
+    margin: 4px 0;
 }
 
-.product-item a {
-    margin-top: 10px;
-    text-decoration: none;
+.edit-btn {
     padding: 10px 20px;
     background-color: #4CAF50;
     color: white;
-    border-radius: 5px;
-    font-weight: bold;
+    font-size: 1rem;
+    border: none;
     cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
     transition: background-color 0.3s ease;
 }
 
-.product-item a:hover {
+.edit-btn:hover {
     background-color: #45a049;
 }
 
-/* Back Button Styling */
+.edit-btn:active {
+    background-color: #388e3c;
+}
+
+.product-item:hover {
+    background-color: #f1f1f1;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.product-item h4, .product-item p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 #back-button {
-    background-color: #f44336; /* Red color for the Back button */
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
-    text-align: center;
-    display: inline-block;
-    margin-top: 20px;
+    background-color: #f44336;
 }
 
-#back-button:hover {
-    background-color: #e53935; /* Darker red on hover */
-}
-
-#back-button:active {
-    background-color: #c62828; /* Even darker red on active */
-}
-
-/* Selected Product Item (for highlighting) */
-.product-item.selected {
-    background-color: #d3ffd3; /* Light green background when selected */
-}
-
-/* Responsive Design for Smaller Screens */
 @media (max-width: 768px) {
-    .container {
-        width: 90%;
-        padding: 20px;
+    ul#product-list {
+        grid-template-columns: repeat(2, 1fr);
     }
+}
 
-    .product-item {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .product-item img {
-        width: 80px;
-        height: 80px;
-        margin-right: 0;
-        margin-bottom: 10px;
+@media (max-width: 480px) {
+    ul#product-list {
+        grid-template-columns: 1fr;
     }
 }

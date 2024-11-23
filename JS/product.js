@@ -1,12 +1,16 @@
-const backButton = document.getElementById('back-button');
-backButton.addEventListener('click', function() {
-    window.history.back(); // Go back to previous page
-});
-
 document.addEventListener('DOMContentLoaded', () => {
+    // Back Button: Go back to the previous page
+    const backButton = document.getElementById('back-button');
+    if (backButton) {
+        backButton.addEventListener('click', function () {
+            window.history.back(); // Go back to the previous page
+        });
+    }
+
+    // Product Selection: Highlight selected product
     let selectedProductId = null;
 
-    // Handle product click
+    // Ensure that product elements are loaded before adding event listeners
     const productElements = document.querySelectorAll('.product-item');
     productElements.forEach(product => {
         product.addEventListener('click', () => {
@@ -24,87 +28,54 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Handle remove button click
-    document.getElementById('remove-product-btn').addEventListener('click', () => {
-        if (selectedProductId !== null) {
-            if (confirm('Are you sure you want to delete this product?')) {
-                // Create a form data object to send the product_id
-                const formData = new FormData();
-                formData.append('product_id', selectedProductId);
+  // Product Selection: Enable checkbox selection and toggle the delete button visibility
+  let selectedProductIds = [];
 
-                // Send the product ID to the server using a POST request
-                fetch('delete_product.php', {
-                    method: 'POST',
-                    body: formData,
-                })
-                .then(response => response.text())  // Handle response as text
-                .then(data => {
-                    console.log(data);  // Log the response data for debugging
+  const productCheckboxes = document.querySelectorAll('.product-checkbox');
+  const removeBtn = document.getElementById('remove-product-btn');
 
-                    if (data === 'success') {  // Checking if deletion was successful
-                        alert('Product deleted successfully.');
+  // Add click event listener to checkboxes
+  productCheckboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', function () {
+          const productId = this.getAttribute('data-product-id');
 
-                        // Remove the product from the UI
-                        document.querySelector(`.product-item[data-product-id="${selectedProductId}"]`).remove();
+          // Add or remove product ID from the selectedProductIds array
+          if (this.checked) {
+              selectedProductIds.push(productId);
+          } else {
+              selectedProductIds = selectedProductIds.filter(id => id !== productId);
+          }
 
-                        // Redirect to vendor profile page after successful deletion
-                        window.location.href = 'vendorsprofile.php';  // Use the correct relative path
-                    } else if (data === 'error') {
-                        alert('Error deleting product.');
-                    } else {
-                        alert('Unexpected server response.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Error deleting product.');
-                });
-            }
-        } else {
-            alert('Please select a product to delete.');
-        }
-    });
+          // Show or hide the "Delete" button depending on whether any products are selected
+          if (selectedProductIds.length > 0) {
+              removeBtn.style.display = 'block';
+          } else {
+              removeBtn.style.display = 'none';
+          }
+      });
+  });
+
+  // Add click event listener for the delete button
+  removeBtn.addEventListener('click', function () {
+      if (selectedProductIds.length > 0) {
+          // Make an AJAX request to delete the selected products
+          const formData = new FormData();
+          formData.append('product_ids[]', selectedProductIds);
+
+          fetch('delete_product.php', {
+              method: 'POST',
+              body: formData
+          })
+          .then(response => response.text())
+          .then(data => {
+              if (data === 'success') {
+                  alert('Selected products deleted successfully');
+                  location.reload(); // Reload the page to update the product list
+              } else {
+                  alert('Error deleting products');
+              }
+          })
+          .catch(error => console.error('Error:', error));
+      }
+  });
 });
-
-
-
-// Wait for the document to fully load
-document.addEventListener('DOMContentLoaded', function () {
-// Select all product items
-const productItems = document.querySelectorAll('.product-item');
-
-// Loop through each product item and add a click event listener
-productItems.forEach(item => {
-    item.addEventListener('click', function () {
-        // Get the id of the selected product from the data-id attribute
-        const selectedProductId = item.getAttribute('data-id');
-
-        // Loop through all product items and hide the ones that don't match the selected product
-        productItems.forEach(product => {
-            if (product.getAttribute('data-id') !== selectedProductId) {
-                product.style.display = 'none'; // Hide the other products
-            }
-        });
-
-        // Optionally, you can focus on the product details section after hiding others
-        // Scroll to the product details or display the editing form
-        // Example:
-        // document.querySelector('.edit-form').scrollIntoView({ behavior: 'smooth' });
-    });
-});
-});
-
-document.addEventListener('DOMContentLoaded', function () {
-    // Check if a product is being edited (i.e., product_id exists in the URL)
-    const isEditing = window.location.search.indexOf('product_id') !== -1;
-    
-    if (isEditing) {
-        // Hide the product list when editing
-        const productList = document.getElementById('product-list');
-        if (productList) {
-            productList.style.display = 'none';
-        }
-    }
-});
-
-
