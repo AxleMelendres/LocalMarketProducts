@@ -27,7 +27,7 @@
         <!-- Product Info Section -->
         <div class="product-info">
             <h2><?php echo htmlspecialchars($productDetails['product_name']); ?></h2>
-            <p class="category">Category: <?php echo htmlspecialchars($productDetails['product_category']); ?></p>
+            <h4><p class="category">Category: <?php echo htmlspecialchars($productDetails['product_category']); ?></p></h4>
             <p class="product-description"><?php echo htmlspecialchars($productDetails['product_description']); ?></p>
             <p class="price">$<?php echo htmlspecialchars(number_format($productDetails['product_price'], 2)); ?></p>
             <p class="quantity">Available Quantity: <?php echo htmlspecialchars($productDetails['product_quantity']); ?></p>
