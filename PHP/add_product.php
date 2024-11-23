@@ -3,6 +3,7 @@ session_start();
 
 require_once '../PHP/dbConnection.php';
 require_once '../PHP/product.php';
+require_once '../PHP/vendorConnection.php';
 
 $database = new Database();
 $conn = $database->getConnection();
@@ -10,7 +11,8 @@ $conn = $database->getConnection();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Check if vendor_id is set in session
     if (!isset($_SESSION['vendor_id'])) {
-        die("Vendor ID is not set in session. Please log in.");
+        echo "<script>alert('Vendor ID is not set in session. Please log in.');</script>";
+        exit;
     }
 
     $vendor_id = $_SESSION['vendor_id']; // Retrieve vendor_id from session
@@ -46,24 +48,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $product->product_category = $productCategory; 
                 $product->vendor_id = $vendor_id; // Assign vendor_id from session
 
-                // Debugging line to check vendor_id
-                echo "Vendor ID: " . $vendor_id; 
-
+                // Attempt to create the product in the database
                 if ($product->create()) {
-                    echo "Product added successfully!";
-                    header('Location: vendorsprofile.php'); // Redirect to the vendor profile page after success
+                    // Success message and redirect using JavaScript alert and header
+                    echo "<script>alert('Product added successfully!'); window.location.href = 'vendorsprofile.php';</script>";
                     exit;
                 } else {
-                    echo "Error: Could not add product.";
+                    // Error message if product creation fails
+                    echo "<script>alert('Could not add product. Please try again later.');</script>";
                 }
             } else {
-                echo "Failed to upload image.";
+                // Error if the image upload fails
+                echo "<script>alert('Failed to upload image.');</script>";
             }
         } else {
-            echo "Invalid image type. Only JPG, PNG, and GIF are allowed.";
+            // Error if the image type is invalid
+            echo "<script>alert('Invalid image type. Only JPG, PNG, and GIF are allowed.');</script>";
         }
     } else {
-        echo "No image uploaded or error during upload.";
+        // Error if no image was uploaded
+        echo "<script>alert('No image uploaded or error during upload.');</script>";
     }
 }
 ?>

@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Product</title>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.0/dist/sweetalert2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../CSS/add_product.css">
     <script src="../JS/product.js" defer></script>
-
 </head>
 <body>
     <header>
@@ -14,7 +14,7 @@
     </header>
 
     <div class="container">
-        <form action="../PHP/add_product.php" method="POST" enctype="multipart/form-data">
+        <form id="product-form" action="../PHP/add_product.php" method="POST" enctype="multipart/form-data">
             <div class="input-box">
                 <label for="product-name">Product Name:</label>
                 <input type="text" id="product-name" name="product-name" required>
@@ -55,10 +55,31 @@
         
             <button type="submit" class="btn">Add Product</button>
         </form>
-        
-        
+    
     </div>
     <button id="back-button" class="btn">Back</button>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.0/dist/sweetalert2.all.min.js"></script>
+    <script>
+        // Attach an event listener to the form submit button
+        document.getElementById('product-form').addEventListener('submit', function(event) {
+            event.preventDefault();  // Prevent the default form submission
+
+            // Show SweetAlert confirmation dialog before submitting the form
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'Do you want to add this product?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, add it',
+                cancelButtonText: 'Cancel',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Proceed with form submission if confirmed
+                    this.submit();  // Manually submit the form
+                }
+            });
+        });
+    </script>
 </body>
 </html>
