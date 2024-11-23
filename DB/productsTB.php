@@ -116,21 +116,39 @@ class Product {
             exit;
         }
     
-        // Query to fetch product details
-        $query = "SELECT * FROM products WHERE product_id = :product_id";
+        // Query to fetch product and vendor details
+        $query = "SELECT 
+                    p.*, 
+                    v.vendor_image, 
+                    v.vendor_username 
+                  FROM 
+                    products AS p 
+                  INNER JOIN 
+                    vendor AS v 
+                  ON 
+                    p.vendor_id = v.vendor_id 
+                  WHERE 
+                    p.product_id = :product_id";
+    
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
-        $stmt->execute();
     
-        $product = $stmt->fetch(PDO::FETCH_ASSOC);
+        try {
+            $stmt->execute();
+            $product = $stmt->fetch(PDO::FETCH_ASSOC);
     
-        if (!$product) {
-            echo "Product not found.";
+            if (!$product) {
+                echo "Error: Product not found.";
+                exit;
+            }
+    
+            return $product;
+        } catch (PDOException $e) {
+            echo "Database error: " . $e->getMessage();
             exit;
         }
-    
-        return $product;
     }
+    
     
 
     public function search($queryParams) {
