@@ -1,5 +1,4 @@
 <?php
-
 require_once '../PHP/dbConnection.php';
 require_once '../PHP/vendorConnection.php'; 
 require_once '../PHP/product.php'; 
@@ -10,18 +9,15 @@ $conn = $database->getConnection();
 session_start();
 
 // Check if vendor_id is set in session
-if (!isset($_SESSION['vendor_id'])) {
-    die("Vendor ID is not set in session. Please log in.");
-}
+$vendor_id = isset($_SESSION['vendor_id']) ? $_SESSION['vendor_id'] : null;
+$vendor_uname = isset($_SESSION['username']) ? $_SESSION['username'] : null;
+$buyer = !isset($vendor_id); // If no vendor_id is set, assume it's a buyer
 
-// Retrieve vendor_id from the session
-$vendor_id = $_SESSION['vendor_id']; 
-$vendor_uname = $_SESSION['username'];
-
-
+// Retrieve vendor details
 $vendor = new Vendor($conn);
 $vendorDetails = $vendor->getVendor($vendor_uname);
 
+// Fetch products offered by the vendor
 $product = new Product($conn);
 $products = $product->getProductsByVendor($vendor_id);
 
@@ -38,12 +34,13 @@ $conn = null; // Close the connection
     <script src="../JS/vendorsprofile.js" defer></script>
 </head>
 <body>
-    <?php  require "../ConnectedVendor/HEADER/profileheader.html" ?>
+    <?php require "../HEADER/header.html" ?> <!-- Assuming a shared header -->
+    
     <div class="container">
         <div class="profile">
             <img src="<?php echo $vendorDetails['vendor_image'] ? htmlspecialchars($vendorDetails['vendor_image']) : 'https://via.placeholder.com/150'; ?>" alt="Vendor Profile Picture">
             <div class="profile-info">
-            <h2><?php echo htmlspecialchars($vendorDetails['vendor_name']) . " (" . htmlspecialchars($vendor_uname) . ")"; ?></h2>
+                <h2><?php echo htmlspecialchars($vendorDetails['vendor_name']) . " (" . htmlspecialchars($vendor_uname) . ")"; ?></h2>
                 <p><?php echo $vendorDetails['vendor_description'] ? htmlspecialchars($vendorDetails['vendor_description']) : 'We offer a variety of top quality products.'; ?></p>
             </div>
         </div>
@@ -78,12 +75,15 @@ $conn = null; // Close the connection
             </ul>
         </div>
 
-        <div class="actions">
-            <button class="btn" id="add-products">Add Products</button>
-            <button class="btn" id="edit-products">Edit Products</button>
-            <button class="btn" id="delete-products">Delete Products</button>
-            <button class="btn" id="edit-profile">Edit Profile</button>
-        </div>
+        <?php if (!$buyer): ?>
+            <!-- Vendor-specific management options -->
+            <div class="actions">
+                <button class="btn" id="add-products">Add Products</button>
+                <button class="btn" id="edit-products">Edit Products</button>
+                <button class="btn" id="delete-products">Delete Products</button>
+                <button class="btn" id="edit-profile">Edit Profile</button>
+            </div>
+        <?php endif; ?>
     </div>
 </body>
 </html>
