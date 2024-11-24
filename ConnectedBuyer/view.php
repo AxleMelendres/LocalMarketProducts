@@ -41,11 +41,14 @@
             </div>
             <div class="vendor-details">
                 <div class="vendor-username">
-                    <p><?php echo htmlspecialchars($productDetails['vendor_username'], ENT_QUOTES, 'UTF-8'); ?></p>
+                    <a href="vendorsprofile.php?username=<?php echo urlencode($productDetails['vendor_username']); ?>" 
+                    title="View vendor profile">
+                        <?php echo htmlspecialchars($productDetails['vendor_username'], ENT_QUOTES, 'UTF-8'); ?>
+                    </a>
                 </div>
-                    <p><?php echo htmlspecialchars($productDetails['vendor_description'] ?? '', ENT_QUOTES, 'UTF-8'); ?></p>
-                </div>
+                <p><?php echo htmlspecialchars($productDetails['vendor_description'] ?? '', ENT_QUOTES, 'UTF-8'); ?></p>
             </div>
+        </div>
 
         <!-- Buttons -->
         <button class="reserve-button" onclick="reserveProduct()">Reserve</button>
