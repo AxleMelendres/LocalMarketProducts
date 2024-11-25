@@ -23,6 +23,7 @@
     $buyer_id = $_SESSION['buyer_id'] ?? 1; // Replace with actual session management logic
 ?>
 <div class="container">
+
     <div class="product-image">
         <img src="<?php echo htmlspecialchars($productDetails['product_image'], ENT_QUOTES, 'UTF-8'); ?>" alt="Product Image">
     </div>
@@ -42,9 +43,26 @@
             
             <label for="quantity">Reserve Quantity:</label>
             <input type="number" name="quantity" id="quantity" min="1" max="<?php echo htmlspecialchars($productDetails['product_quantity'], ENT_QUOTES, 'UTF-8'); ?>" required>
-            
             <button type="submit" class="reserve-button" id="reserveButton">Reserve</button>
         </form>
+
+        <div class="vendor-info">
+            <div class="vendor-image">
+                <img src="<?php echo !empty($productDetails['vendor_image']) 
+                                ? htmlspecialchars($productDetails['vendor_image'], ENT_QUOTES, 'UTF-8') 
+                                : '../uploads/default_vendor.png'; ?>" 
+                    alt="Vendor Image">
+            </div>
+            <div class="vendor-details">
+                <div class="vendor-username">
+                    <a href="../PHP/viewVendor.php?username=<?php echo urlencode($productDetails['vendor_username']); ?>" 
+                    title="View vendor profile">
+                        <?php echo htmlspecialchars($productDetails['vendor_username'], ENT_QUOTES, 'UTF-8'); ?>
+                    </a>
+                </div>
+                <p><?php echo htmlspecialchars($productDetails['vendor_description'] ?? '', ENT_QUOTES, 'UTF-8'); ?></p>
+            </div>
+        </div>
 
         <br>
         <a href="javascript:history.back()" class="back-button"><span>&lt;</span> Go Back</a>

@@ -11,7 +11,6 @@ session_start();
 // Check if vendor_id is set in session
 $vendor_id = isset($_SESSION['vendor_id']) ? $_SESSION['vendor_id'] : null;
 $vendor_uname = isset($_SESSION['username']) ? $_SESSION['username'] : null;
-$buyer = !isset($vendor_id); // If no vendor_id is set, assume it's a buyer
 
 // Retrieve vendor details
 $vendor = new Vendor($conn);
@@ -73,17 +72,13 @@ $conn = null; // Close the connection
                 }
                 ?>
             </ul>
-        </div>
-
-        <?php if (!$buyer): ?>
-            <!-- Vendor-specific management options -->
+        </div>yy
             <div class="actions">
                 <button class="btn" id="add-products">Add Products</button>
                 <button class="btn" id="edit-products">Edit Products</button>
                 <button class="btn" id="delete-products">Delete Products</button>
                 <button class="btn" id="edit-profile">Edit Profile</button>
             </div>
-        <?php endif; ?>
     </div>
 </body>
 </html>
