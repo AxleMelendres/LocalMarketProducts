@@ -1,0 +1,141 @@
+
+.container {
+    max-width: 1200px;
+    margin: 50px auto;
+    background-color: #babd8d;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.product-image {
+    width: 50%;
+    padding-right: 25px;
+    padding-left: 5px;
+}
+
+.product-image img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.product-info {
+    width: 50%;
+}
+
+.product-info h2 {
+    font-size: 3rem;
+    color: #132a13;
+    margin: 10px 0 20px; 
+}
+
+.product-info p {
+    font-size: 1rem;
+    color: #111d13;
+    margin: 20px 0;
+}
+
+.product-info .price {
+    font-size: 1.5rem;
+    color: #ba2d0b;
+    margin: 10px 0;
+}
+
+.product-info .category {
+    font-size: 1.1rem;
+    color: #1b3120;
+}
+
+.reserve-button {
+    background-color: #e2711d;
+    color: white;
+    font-size: 1.1rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
+.reserve-button:hover {
+    background-color: #e2721dc8;
+}
+
+.back-button {
+    font-size: 1rem;
+    color: #555;
+    margin-top: 50px;
+    text-decoration: none;
+}
+
+.back-button:hover {
+    color: #000;
+}
+
+.back-button span {
+    font-weight: bold;
+}
+.vendor-info {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding: 10px;
+    background-color: #f7f9e8; /* Light background to distinguish the section */
+    border: 1px solid #d4d9a0; /* Subtle border */
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex; /* Enable flexbox */
+    align-items: center; /* Align items vertically in the center */
+    gap: 15px; /* Add spacing between image and text */
+}
+
+.vendor-image {
+    flex-shrink: 0; /* Prevent the image from shrinking */
+}
+
+.vendor-image img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%; /* Circular image for a profile picture effect */
+    border: 2px solid #babd8d;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.vendor-details {
+    display: flex;
+    flex-direction: column; /* Keep the details vertically stacked */
+    justify-content: left;
+}
+
+.vendor-username {
+    display: flex; /* Add flexbox to align icon and text horizontally */
+    align-items: left; /* Vertically align the icon and text */
+    font-size: 1.3rem;
+    color: #1b3120;
+    font-weight: bold;
+    text-align: left;
+    gap: 0px; /* Add spacing between the icon and the text */
+}
+
+.vendor-username a{
+    margin-top: 5px;
+    color: #1b3120;
+}
+
+.vendor-username::before {
+    content: "👤";
+    font-size: 1.5rem; /* Match the size of the username text */
+    color: #132a13;
+    display: inline-block;
+    margin-right: 0px; /* Add some space between the icon and the username */
+}
+
+.vendor-info p {
+    font-size: 1rem;
+    color: #132a13;
+    text-align: left;
+    margin-top: 5px;
+}
+
