@@ -4,7 +4,6 @@ require_once '../PHP/dbConnection.php';
 require_once '../PHP/vendorConnection.php'; 
 
 if (!isset($_SESSION['username']) || $_SESSION['purpose'] !== 'Seller') {
-
     header("Location: vendorsprofile.php");
     exit;
 }
@@ -18,27 +17,33 @@ $vendorDetails = $vendor->getVendor($vendor_uname);
 
 // Update vendor profile when the form is submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Fetch form data
-    $vendor_name = $_POST['vendor_name'];
-    $vendor_description = $_POST['vendor_description'];
-    $vendor_email = $_POST['vendor_email'];
-    $vendor_contact = $_POST['vendor_contact'];
-    $vendor_address = $_POST['vendor_address'];
-    $vendor_district = $_POST['vendor_district'];
+    // Fetch form data using isset() to avoid undefined index errors
+    $vendor_name = isset($_POST['vendor_name']) ? $_POST['vendor_name'] : '';
+    $vendor_description = isset($_POST['vendor_description']) ? $_POST['vendor_description'] : '';
+    $vendor_email = isset($_POST['vendor_email']) ? $_POST['vendor_email'] : '';
+    $vendor_contact = isset($_POST['vendor_contact']) ? $_POST['vendor_contact'] : '';
+    $vendor_address = isset($_POST['vendor_address']) ? $_POST['vendor_address'] : '';
+    $vendor_district = isset($_POST['vendor_district']) ? $_POST['vendor_district'] : '';
 
+    // Set existing image as the default value
     $profile_image = $vendorDetails['vendor_image']; 
-    if (!empty($_FILES['vendor_image']['name'])) {
+    
+    // Check if a new image was uploaded
+    if (isset($_FILES['vendor_image']['name']) && !empty($_FILES['vendor_image']['name'])) {
         $image_name = $_FILES['vendor_image']['name'];
         $image_tmp_name = $_FILES['vendor_image']['tmp_name'];
         $image_ext = strtolower(pathinfo($image_name, PATHINFO_EXTENSION));
         
         $allowed_exts = ['jpg', 'jpeg', 'png', 'gif'];
         if (in_array($image_ext, $allowed_exts)) {
+            // Generate a unique image name and define the upload path
             $new_image_name = uniqid('vendor_') . '.' . $image_ext;
             $image_upload_path = "../uploads/" . $new_image_name;
-            
+
+            // Move the uploaded file to the target directory
             if (move_uploaded_file($image_tmp_name, $image_upload_path)) {
-                $profile_image = $image_upload_path; 
+                // Update the profile image path
+                $profile_image = $image_upload_path;
             } else {
                 $error = "Failed to upload image.";
             }
@@ -48,26 +53,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Update the vendor details in the database
-    $updateQuery = "UPDATE vendor SET vendor_name = :vendor_name, vendor_description = :vendor_description,
-                    vendor_email = :vendor_email, vendor_contact = :vendor_contact,
-                    vendor_address = :vendor_address, vendor_district = :vendor_district,
-                    vendor_image = :vendor_image WHERE vendor_username = :vendor_uname";
+    if (!isset($error)) {  // Check if there's no error before executing the update query
+        $updateQuery = "UPDATE vendor SET vendor_name = :vendor_name, vendor_description = :vendor_description,
+                        vendor_email = :vendor_email, vendor_contact = :vendor_contact,
+                        vendor_address = :vendor_address, vendor_district = :vendor_district,
+                        vendor_image = :vendor_image WHERE vendor_username = :vendor_uname";
 
-    $stmt = $conn->prepare($updateQuery);
-    $stmt->bindParam(':vendor_name', $vendor_name);
-    $stmt->bindParam(':vendor_description', $vendor_description);
-    $stmt->bindParam(':vendor_email', $vendor_email);
-    $stmt->bindParam(':vendor_contact', $vendor_contact);
-    $stmt->bindParam(':vendor_address', $vendor_address);
-    $stmt->bindParam(':vendor_district', $vendor_district);
-    $stmt->bindParam(':vendor_image', $profile_image);
-    $stmt->bindParam(':vendor_uname', $vendor_uname);
+        $stmt = $conn->prepare($updateQuery);
+        $stmt->bindParam(':vendor_name', $vendor_name);
+        $stmt->bindParam(':vendor_description', $vendor_description);
+        $stmt->bindParam(':vendor_email', $vendor_email);
+        $stmt->bindParam(':vendor_contact', $vendor_contact);
+        $stmt->bindParam(':vendor_address', $vendor_address);
+        $stmt->bindParam(':vendor_district', $vendor_district);
+        $stmt->bindParam(':vendor_image', $profile_image);
+        $stmt->bindParam(':vendor_uname', $vendor_uname);
 
-    if ($stmt->execute()) {
-        header("Location: vendorsprofile.php");
-        exit(); 
-    } else {
-        $error = "Failed to update profile. Please try again.";
+        if ($stmt->execute()) {
+            header("Location: vendorsprofile.php");
+            exit(); 
+        } else {
+            $error = "Failed to update profile. Please try again.";
+        }
     }
 }
 
