@@ -34,7 +34,7 @@ $conn = null; // Close the connection
     <script src="../JS/vendorsprofile.js" defer></script>
 </head>
 <body>
-    <?php require "../HEADER/header.html" ?> <!-- Assuming a shared header -->
+<?php  require "../ConnectedVendor/HEADER/profileheader.html" ?>
     
     <div class="container">
         <div class="profile">

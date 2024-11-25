@@ -34,6 +34,25 @@
         <p class="price">$<?php echo htmlspecialchars(number_format($productDetails['product_price'], 2), ENT_QUOTES, 'UTF-8'); ?></p>
         <p class="quantity">Available Quantity: <?php echo htmlspecialchars($productDetails['product_quantity'], ENT_QUOTES, 'UTF-8'); ?></p>
 
+        <!-- Vendor Information -->
+        <div class="vendor-info">
+            <div class="vendor-image">
+                <img src="<?php echo !empty($productDetails['vendor_image']) 
+                                ? htmlspecialchars($productDetails['vendor_image'], ENT_QUOTES, 'UTF-8') 
+                                : '../uploads/default_vendor.png'; ?>" 
+                    alt="Vendor Image">
+            </div>
+            <div class="vendor-details">
+                <div class="vendor-username">
+                    <a href="vendorsprofile.php?username=<?php echo urlencode($productDetails['vendor_username']); ?>" 
+                    title="View vendor profile">
+                        <?php echo htmlspecialchars($productDetails['vendor_username'], ENT_QUOTES, 'UTF-8'); ?>
+                    </a>
+                </div>
+                <p><?php echo htmlspecialchars($productDetails['vendor_description'] ?? '', ENT_QUOTES, 'UTF-8'); ?></p>
+            </div>
+        </div>
+
         <form method="POST" action="reserve_product.php" class="reserve-form" id="reserveForm">
             <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($productDetails['product_id'], ENT_QUOTES, 'UTF-8'); ?>">
             <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($productDetails['product_name'], ENT_QUOTES, 'UTF-8'); ?>">
