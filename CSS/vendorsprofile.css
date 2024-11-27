@@ -74,39 +74,36 @@ body{
 }
 
 .product-list {
-    display: flex; 
-    flex-wrap: wrap; 
-    gap: 20px; 
+    display: grid; 
+    grid-template-columns: repeat(5, 1fr); /* Creates 5 equal columns */
+    gap: 30px; /* Increased gap between items */
     list-style-type: none;
     padding: 0;
     margin-top: 20px;
 }
 
 .product-list li {
-    display: flex;
-    flex-direction: column; 
-    align-items: center;
     background-color: wheat;
-    padding: 20px;
+    padding: 30px; /* Increased padding to make the product items larger */
     border-radius: 10px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    font-size: 18px;
+    font-size: 20px; /* Larger font size */
     color: #4E6A4A;
-    width: 140px; 
-    text-align: center; 
+    text-align: center;
+    width: 100%; /* Ensures the items are fully utilizing the grid width */
 }
 
 .product-list li img {
     border-radius: 50%;
-    width: 50px;
-    height: 50px; 
-    margin-bottom: 10px; 
+    width: 80px; /* Larger image size */
+    height: 80px; 
+    margin-bottom: 15px; /* More space between the image and the text */
 }
 
 .product-list li .stock-quantity {
-    font-size: 1em;
+    font-size: 1.2em; /* Slightly bigger text for stock quantity */
     color: wheat;
-    margin-top: 10px; 
+    margin-top: 15px; 
     font-weight: 600;
 }
 
@@ -139,6 +136,29 @@ body{
     text-decoration: none;
     font-weight: bold;
     margin-right: 30px;
+}
+
+.reserve-btn {
+    padding: 10px 20px; /* Adding padding for a better button size */
+    background-color: #132a13; /* Dark green background to match the color scheme */
+    color: wheat; /* Wheat-colored text to match the theme */
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.reserve-btn:hover {
+    background-color: rgba(236, 206, 149, 0.837); /* Lighter color on hover */
+    transform: scale(1.05); /* Slight scaling effect on hover for interactivity */
+}
+
+.reserve-btn:active {
+    background-color: #4E6A4A; /* Darker background when the button is pressed */
+    transform: scale(0.98); /* Shrink the button when pressed */
 }
 
 .logo:hover {

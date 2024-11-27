@@ -72,7 +72,7 @@ $conn = null; // Close the connection
                 }
                 ?>
             </ul>
-        </div>yy
+        </div>
             <div class="actions">
                 <button class="btn" id="add-products">Add Products</button>
                 <button class="btn" id="edit-products">Edit Products</button>

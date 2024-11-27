@@ -2,6 +2,7 @@
 require_once '../PHP/dbConnection.php';
 require_once '../PHP/vendorConnection.php'; 
 require_once '../PHP/product.php'; 
+require_once '../DB/accountTB.php';
 
 $database = new Database();
 $conn = $database->getConnection();
@@ -52,23 +53,26 @@ $conn = null; // Close the connection
         <div class="products-offered">
             <h3>Products</h3>
             <ul class="product-list">
-                <?php
-                if ($products) {
-                    foreach ($products as $product) {
-                        echo "<li class='product-item'>";
-                        echo "<img src='../" . htmlspecialchars($product['product_image']) . "' alt='" . htmlspecialchars($product['product_name']) . "'>";
-                        echo "<h4>" . htmlspecialchars($product['product_name']) . "</h4>";
-                        echo "<p><strong>Category:</strong> " . htmlspecialchars($product['product_category']) . "</p>";
-                        echo "<p><strong>Price:</strong> ₱" . number_format($product['product_price'], 2) . "</p>";
-                        echo "<p><strong>Quantity:</strong> " . htmlspecialchars($product['product_quantity']) . "</p>";
-                        echo "<p>" . nl2br(htmlspecialchars($product['product_description'])) . "</p>";
-                        echo "</li>";
-                    }
-                } else {
-                    echo "<li>No products available.</li>";
+            <?php
+            if ($products) {
+                foreach ($products as $product) {
+                    echo "<li class='product-item'>";
+                    echo "<img src='../" . htmlspecialchars($product['product_image']) . "' alt='" . htmlspecialchars($product['product_name']) . "'>";
+                    echo "<h4>" . htmlspecialchars($product['product_name']) . "</h4>";
+                    echo "<p>" . nl2br(htmlspecialchars($product['product_description'])) . "</p>";
+                    echo "<p><strong>Category:</strong> " . htmlspecialchars($product['product_category']) . "</p>";
+                    echo "<p><strong>Price:</strong> ₱" . number_format($product['product_price'], 2) . "</p>";
+                    echo "<p><strong>Quantity:</strong> " . htmlspecialchars($product['product_quantity']) . "</p>";
+                    
+                    echo "<a href='../PHP/productDetails.php?product_id=" . htmlspecialchars($product['product_id']) . "' class='reserve-btn'>Reserve</a>"; // View button
+                    echo "</li>";
                 }
-                ?>
-            </ul>
+            } else {
+                echo "<li>No products available.</li>";
+            }
+            ?>
+        </ul>
+
         </div>
     </div>
 </body>

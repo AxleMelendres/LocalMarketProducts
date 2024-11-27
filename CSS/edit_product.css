@@ -1,3 +1,4 @@
+/* General reset for margins and padding */
 * {
     margin: 0;
     padding: 0;
@@ -16,106 +17,32 @@ body {
     padding: 20px;
 }
 
-.heading-container {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    z-index: 2;
-}
-
-.heading-container h1 {
-    color: #4E6A4A;
-    font-size: 2.5rem;
-    text-align: left;
-}
-
 .container {
     background-color: wheat;
     width: 100%;
-    max-width: 600px;
+    max-width: 1200px; /* Ensure the container has a max width */
     border-radius: 8px;
     padding: 40px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
-}
-
-form {
     display: flex;
     flex-direction: column;
+    align-items: center; /* Center the content inside the container */
 }
 
-label {
-    margin-top: 10px;
-    font-weight: bold;
-    color: #333;
-}
-
-input, textarea, select {
-    margin-bottom: 15px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
-}
-
-textarea {
-    resize: vertical;
-    min-height: 100px;
-}
-
-input:focus, textarea:focus, select:focus {
-    border-color: #4CAF50;
-    box-shadow: 0 0 5px rgba(76, 175, 80, 0.6);
-}
-
-.btn {
-    padding: 12px 20px;
-    background-color: #4E6A4A;
-    color: white;
-    font-size: 1rem;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 20px;
-}
-
-.btn:hover {
-    background-color: #3b4d3b;
-}
-
-.btn:active {
-    background-color: #2d3b2d;
-}
-
-input[type="file"] {
-    margin-top: 10px;
-}
-
-input[type="file"]:focus {
-    border-color: #4CAF50;
-    box-shadow: 0 0 5px rgba(76, 175, 80, 0.6);
-}
-
-img {
-    margin-top: 10px;
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 5px;
-    display: block;
-}
-
-ul#product-list {
+/* Product list styling */
+#product-list {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Grid of products */
     gap: 20px;
     list-style-type: none;
     padding: 0;
     margin-top: 20px;
     width: 100%;
+    justify-items: center; /* Center the items in each grid cell */
 }
 
+/* Product item styling */
 .product-item {
     display: flex;
     flex-direction: column;
@@ -128,22 +55,26 @@ ul#product-list {
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
     text-align: center;
     width: 100%;
-    height: auto;
+    height: 400px;
     position: relative;
 }
 
 .product-item img {
     width: 100%;
-    height: auto;
-    max-width: 120px;
-    margin-bottom: 10px;
+    height: 150px; /* Fixed height for the image */
     object-fit: cover;
     border-radius: 6px;
+    margin-bottom: 15px;
 }
 
 .product-item .product-text {
     flex-grow: 1;
     margin-bottom: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3; /* Limit description to 3 lines */
 }
 
 .product-item h4 {
@@ -156,17 +87,21 @@ ul#product-list {
     font-size: 0.9rem;
     color: #555;
     margin: 4px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .edit-btn {
-    padding: 10px 20px;
+    padding: 12px 20px;
     background-color: #4CAF50;
     color: white;
-    font-size: 1rem;
+    font-size: 1.2rem; /* Larger text size for better visibility */
     border: none;
     cursor: pointer;
     border-radius: 5px;
     margin-top: 10px;
+    text-align: center;
     transition: background-color 0.3s ease;
 }
 
@@ -183,24 +118,128 @@ ul#product-list {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-.product-item h4, .product-item p {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
 #back-button {
     background-color: #f44336;
 }
 
+/* Responsive design: Adjust for smaller screens */
 @media (max-width: 768px) {
-    ul#product-list {
-        grid-template-columns: repeat(2, 1fr);
+    #product-list {
+        grid-template-columns: repeat(2, 1fr); /* Two items per row on smaller screens */
     }
 }
 
 @media (max-width: 480px) {
-    ul#product-list {
-        grid-template-columns: 1fr;
+    #product-list {
+        grid-template-columns: 1fr; /* Single column on very small screens */
     }
+}
+
+/* Edit Form Specific Styles */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the form fields */
+    width: 100%; /* Ensure form takes full width of the container */
+    max-width: 600px; /* Set a max-width for the form to look balanced */
+    margin-top: 20px; /* Space between form and previous content */
+}
+
+/* Form Fields (Inputs, Textarea, Select) */
+input, textarea, select {
+    margin-bottom: 20px; /* Increased space between fields */
+    padding: 15px; /* Larger padding for more comfortable interaction */
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1.2rem; /* Increased font size */
+    height: 50px; /* Taller input fields for better usability */
+    width: 100%; /* Ensure they take up the full width of the form */
+    box-sizing: border-box; /* To prevent overflow */
+}
+
+/* Textarea specific styles */
+textarea {
+    resize: vertical;
+    min-height: 120px; /* Minimum height for textareas */
+    max-height: 250px; /* Limit maximum height to maintain uniformity */
+}
+
+/* Form Fields Focus Styles */
+textarea:focus, input:focus, select:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.6);
+}
+
+/* File input styling */
+input[type="file"] {
+    margin-top: 10px;
+}
+
+input[type="file"]:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.6);
+}
+
+/* Image preview styling */
+img {
+    margin-top: 10px;
+    width: 120px; /* Increased size for better visibility */
+    height: 120px; /* Matching height to maintain aspect ratio */
+    object-fit: cover;
+    border-radius: 5px;
+    display: block;
+}
+
+/* Submit Button styling */
+button.btn {
+    padding: 15px 30px;
+    background-color: #4E6A4A;
+    color: white;
+    font-size: 1.2rem; /* Larger text for better visibility */
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+
+button.btn:hover {
+    background-color: #3b4d3b;
+}
+
+button.btn:active {
+    background-color: #2d3b2d;
+}
+
+/* Back button styles for edit page */
+#back-button {
+    padding: 12px 25px;
+    background-color: #f44336;
+    color: white;
+    font-size: 1.2rem; /* Larger text size */
+    border: none;
+    border-radius: 6px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+#back-button:hover {
+    background-color: #e53935;
+}
+
+/* Center content inside container */
+.container {
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+}
+
+/* Center form content in the container */
+form {
+    align-items: center;
+    justify-content: center;
+}
+
+/* Hide the product list when in edit mode */
+#product-list.hidden {
+    display: none;
 }
