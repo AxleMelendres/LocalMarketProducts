@@ -7,16 +7,15 @@
     font-family: "Nunito Sans", sans-serif;
 }
 
-
-body{
+body {
     background-color:#FAF9F6 ;
     overflow-x: hidden;
 }
 
 .container {
     width: 80%;
-    max-width: 1200px; /* Max width to prevent stretching too much on large screens */
-    margin: 0 auto; /* This will center the container horizontally */
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 20px;
 }
 
@@ -75,8 +74,8 @@ body{
 
 .product-list {
     display: grid; 
-    grid-template-columns: repeat(5, 1fr); /* Creates 5 equal columns */
-    gap: 30px; /* Increased gap between items */
+    grid-template-columns: repeat(5, 1fr);
+    gap: 30px;
     list-style-type: none;
     padding: 0;
     margin-top: 20px;
@@ -84,24 +83,24 @@ body{
 
 .product-list li {
     background-color: wheat;
-    padding: 30px; /* Increased padding to make the product items larger */
+    padding: 30px;
     border-radius: 10px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    font-size: 20px; /* Larger font size */
+    font-size: 20px;
     color: #4E6A4A;
     text-align: center;
-    width: 100%; /* Ensures the items are fully utilizing the grid width */
+    width: 100%;
 }
 
 .product-list li img {
     border-radius: 50%;
-    width: 80px; /* Larger image size */
-    height: 80px; 
-    margin-bottom: 15px; /* More space between the image and the text */
+    width: 80px;
+    height: 80px;
+    margin-bottom: 15px;
 }
 
 .product-list li .stock-quantity {
-    font-size: 1.2em; /* Slightly bigger text for stock quantity */
+    font-size: 1.2em;
     color: wheat;
     margin-top: 15px; 
     font-weight: 600;
@@ -139,9 +138,9 @@ body{
 }
 
 .reserve-btn {
-    padding: 10px 20px; /* Adding padding for a better button size */
-    background-color: #132a13; /* Dark green background to match the color scheme */
-    color: wheat; /* Wheat-colored text to match the theme */
+    padding: 10px 20px;
+    background-color: #132a13;
+    color: wheat;
     font-size: 16px;
     font-weight: 700;
     border-radius: 20px;
@@ -152,13 +151,13 @@ body{
 }
 
 .reserve-btn:hover {
-    background-color: rgba(236, 206, 149, 0.837); /* Lighter color on hover */
-    transform: scale(1.05); /* Slight scaling effect on hover for interactivity */
+    background-color: rgba(236, 206, 149, 0.837);
+    transform: scale(1.05);
 }
 
 .reserve-btn:active {
-    background-color: #4E6A4A; /* Darker background when the button is pressed */
-    transform: scale(0.98); /* Shrink the button when pressed */
+    background-color: #4E6A4A;
+    transform: scale(0.98);
 }
 
 .logo:hover {
@@ -205,8 +204,6 @@ body{
     color: #333;
 }
 
-/* side bar */
-
 .icons {
     display: flex;
     justify-content: center;
@@ -232,13 +229,11 @@ body{
     padding: 40px 20px;
     display: none;
     z-index: 1000;
-
 }
 
-.sidebar.active{
+.sidebar.active {
     display: block;
 }
-
 
 .info-sidebar {
     display: flex;
@@ -248,7 +243,7 @@ body{
     cursor: pointer;
 }
 
-.info-sidebar .logo{
+.info-sidebar .logo {
     font-size: 22px;
     color: wheat;
     font-weight: bold;
@@ -264,7 +259,7 @@ body{
     margin: 100px 0px;
 }
 
-.sidebar .social-sidebar a{
+.sidebar .social-sidebar a {
     display: block;
     color: wheat;
     padding: 10px;

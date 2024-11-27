@@ -57,7 +57,6 @@ $conn = null;  // Close the database connection
     </div>
     
     <div class="remove-product">
-        <h2>Remove Product</h2>
 
         <!-- Display products with click to select -->
         <ul id="product-list">
