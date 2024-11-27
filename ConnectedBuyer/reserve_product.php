@@ -23,6 +23,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $conn->beginTransaction();
 
     try {
+        // Check if buyer exists in the buyer table
+        $buyerCheckQuery = "SELECT buyer_id FROM buyer WHERE buyer_id = :buyer_id";
+        $buyerCheckStmt = $conn->prepare($buyerCheckQuery);
+        $buyerCheckStmt->bindParam(':buyer_id', $buyer_id, PDO::PARAM_INT);
+        $buyerCheckStmt->execute();
+
+        if ($buyerCheckStmt->rowCount() === 0) {
+            throw new Exception("Invalid buyer ID: Buyer does not exist.");
+        }
+
         // Insert reservation into the `reservations` table
         $query = "INSERT INTO reservations (product_id, buyer_id, product_name, product_price, reserved_quantity, reserved_date)
                   VALUES (:product_id, :buyer_id, :product_name, :product_price, :reserved_quantity, NOW())";
