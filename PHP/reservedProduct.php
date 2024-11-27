@@ -8,6 +8,6 @@
     <script src="../HEADER/header.js" defer></script>
 </head>
 <body>
-<?php  require "../HEADER/customerHeader.html" ?>
+<?php  require "../ConnectedBuyer/HEADER/header.html" ?>
 </body>
 </html>

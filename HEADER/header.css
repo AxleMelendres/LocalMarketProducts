@@ -80,19 +80,25 @@ body{
 
 .icons {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    color: wheat;
+    align-items: center; 
+    gap: 15px; 
     margin-left: 10px;
 }
 
-.icons i {
-    width: 25px;
-    cursor: pointer;
-    color: wheat;
+.icons a {
+    color: wheat; 
+    text-decoration: none; 
+    font-size: 20px; 
+    transition: color 0.3s ease; 
 }
 
+.icons a:hover {
+    color: rgba(236, 206, 149, 0.837); 
+}
+
+.icons i {
+    cursor: pointer;
+}
 .sidebar {
     background-color: #4E6A4A;
     position: fixed;
