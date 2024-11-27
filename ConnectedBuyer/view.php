@@ -65,24 +65,6 @@
             <button type="submit" class="reserve-button" id="reserveButton">Reserve</button>
         </form>
 
-        <div class="vendor-info">
-            <div class="vendor-image">
-                <img src="<?php echo !empty($productDetails['vendor_image']) 
-                                ? htmlspecialchars($productDetails['vendor_image'], ENT_QUOTES, 'UTF-8') 
-                                : '../uploads/default_vendor.png'; ?>" 
-                    alt="Vendor Image">
-            </div>
-            <div class="vendor-details">
-                <div class="vendor-username">
-                    <a href="../PHP/viewVendor.php?username=<?php echo urlencode($productDetails['vendor_username']); ?>" 
-                    title="View vendor profile">
-                        <?php echo htmlspecialchars($productDetails['vendor_username'], ENT_QUOTES, 'UTF-8'); ?>
-                    </a>
-                </div>
-                <p><?php echo htmlspecialchars($productDetails['vendor_description'] ?? '', ENT_QUOTES, 'UTF-8'); ?></p>
-            </div>
-        </div>
-
         <br>
         <a href="javascript:history.back()" class="back-button"><span>&lt;</span> Go Back</a>
     </div>

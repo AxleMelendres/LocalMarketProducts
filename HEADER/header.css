@@ -80,8 +80,10 @@ body{
 
 .icons {
     display: flex;
-    align-items: center; 
-    gap: 15px; 
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    color: wheat;
     margin-left: 10px;
 }
 
@@ -97,7 +99,9 @@ body{
 }
 
 .icons i {
+    width: 25px;
     cursor: pointer;
+    color: wheat;
 }
 .sidebar {
     background-color: #4E6A4A;
