@@ -1,4 +1,3 @@
-/* General reset for margins and padding */
 * {
     margin: 0;
     padding: 0;
@@ -17,32 +16,34 @@ body {
     padding: 20px;
 }
 
+h1 {
+    color: wheat;
+    font-size: 2.5rem;
+}
 .container {
     background-color: wheat;
     width: 100%;
-    max-width: 1200px; /* Ensure the container has a max width */
+    max-width: 1200px;
     border-radius: 8px;
     padding: 40px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center the content inside the container */
+    align-items: center;
 }
 
-/* Product list styling */
 #product-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Grid of products */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
     list-style-type: none;
     padding: 0;
     margin-top: 20px;
     width: 100%;
-    justify-items: center; /* Center the items in each grid cell */
+    justify-items: center;
 }
 
-/* Product item styling */
 .product-item {
     display: flex;
     flex-direction: column;
@@ -61,7 +62,7 @@ body {
 
 .product-item img {
     width: 100%;
-    height: 150px; /* Fixed height for the image */
+    height: 150px;
     object-fit: cover;
     border-radius: 6px;
     margin-bottom: 15px;
@@ -74,7 +75,7 @@ body {
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3; /* Limit description to 3 lines */
+    -webkit-line-clamp: 3;
 }
 
 .product-item h4 {
@@ -96,7 +97,7 @@ body {
     padding: 12px 20px;
     background-color: #4CAF50;
     color: white;
-    font-size: 1.2rem; /* Larger text size for better visibility */
+    font-size: 1.2rem;
     border: none;
     cursor: pointer;
     border-radius: 5px;
@@ -122,55 +123,49 @@ body {
     background-color: #f44336;
 }
 
-/* Responsive design: Adjust for smaller screens */
 @media (max-width: 768px) {
     #product-list {
-        grid-template-columns: repeat(2, 1fr); /* Two items per row on smaller screens */
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (max-width: 480px) {
     #product-list {
-        grid-template-columns: 1fr; /* Single column on very small screens */
+        grid-template-columns: 1fr;
     }
 }
 
-/* Edit Form Specific Styles */
 form {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center the form fields */
-    width: 100%; /* Ensure form takes full width of the container */
-    max-width: 600px; /* Set a max-width for the form to look balanced */
-    margin-top: 20px; /* Space between form and previous content */
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 20px;
 }
 
-/* Form Fields (Inputs, Textarea, Select) */
 input, textarea, select {
-    margin-bottom: 20px; /* Increased space between fields */
-    padding: 15px; /* Larger padding for more comfortable interaction */
+    margin-bottom: 20px;
+    padding: 15px;
     border: 1px solid #ccc;
     border-radius: 6px;
-    font-size: 1.2rem; /* Increased font size */
-    height: 50px; /* Taller input fields for better usability */
-    width: 100%; /* Ensure they take up the full width of the form */
-    box-sizing: border-box; /* To prevent overflow */
+    font-size: 1.2rem;
+    height: 50px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-/* Textarea specific styles */
 textarea {
     resize: vertical;
-    min-height: 120px; /* Minimum height for textareas */
-    max-height: 250px; /* Limit maximum height to maintain uniformity */
+    min-height: 120px;
+    max-height: 250px;
 }
 
-/* Form Fields Focus Styles */
 textarea:focus, input:focus, select:focus {
     border-color: #4CAF50;
     box-shadow: 0 0 5px rgba(76, 175, 80, 0.6);
 }
 
-/* File input styling */
 input[type="file"] {
     margin-top: 10px;
 }
@@ -180,22 +175,20 @@ input[type="file"]:focus {
     box-shadow: 0 0 5px rgba(76, 175, 80, 0.6);
 }
 
-/* Image preview styling */
 img {
     margin-top: 10px;
-    width: 120px; /* Increased size for better visibility */
-    height: 120px; /* Matching height to maintain aspect ratio */
+    width: 120px;
+    height: 120px;
     object-fit: cover;
     border-radius: 5px;
     display: block;
 }
 
-/* Submit Button styling */
 button.btn {
     padding: 15px 30px;
     background-color: #4E6A4A;
     color: white;
-    font-size: 1.2rem; /* Larger text for better visibility */
+    font-size: 1.2rem;
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -211,12 +204,11 @@ button.btn:active {
     background-color: #2d3b2d;
 }
 
-/* Back button styles for edit page */
 #back-button {
     padding: 12px 25px;
     background-color: #f44336;
     color: white;
-    font-size: 1.2rem; /* Larger text size */
+    font-size: 1.2rem;
     border: none;
     border-radius: 6px;
     margin-top: 15px;
@@ -227,19 +219,16 @@ button.btn:active {
     background-color: #e53935;
 }
 
-/* Center content inside container */
 .container {
-    justify-content: center; /* Center content vertically */
-    align-items: center; /* Center content horizontally */
+    justify-content: center;
+    align-items: center;
 }
 
-/* Center form content in the container */
 form {
     align-items: center;
     justify-content: center;
 }
 
-/* Hide the product list when in edit mode */
 #product-list.hidden {
     display: none;
 }

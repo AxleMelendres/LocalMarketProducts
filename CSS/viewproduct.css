@@ -62,7 +62,7 @@
     flex-direction: column;
     gap: 15px;
     margin-top: 20px;
-    align-items: flex-start; /* Align items to the left */
+    align-items: flex-start;
 }
 
 .reserve-form label {
@@ -72,15 +72,15 @@
 }
 
 .reserve-form input[type="number"] {
-    width: 50%; /* Adjusted width for shorter input */
-    padding: 8px; /* Reduced padding for a compact size */
+    width: 50%;
+    padding: 8px;
     border: 1px solid #d4d9a0;
     border-radius: 5px;
     font-size: 1rem;
     color: #132a13;
     background-color: #f7f9e8;
     outline: none;
-    box-sizing: border-box; /* Ensure padding doesn't affect overall width */
+    box-sizing: border-box;
 }
 
 .reserve-form input[type="number"]:focus {
@@ -91,19 +91,18 @@
 .reserve-button {
     background-color: #e2711d;
     color: white;
-    font-size: 1rem; /* Reduced font size for a compact button */
-    padding: 8px 18px; /* Adjusted padding for smaller dimensions */
+    font-size: 1rem;
+    padding: 8px 18px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-top: 10px; /* Spacing between button and input field */
+    margin-top: 10px;
 }
 
 .reserve-button:hover {
     background-color: #e2721dc8;
 }
-
 
 .back-button {
     display: inline-block;
