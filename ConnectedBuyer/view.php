@@ -65,8 +65,6 @@
             <button type="submit" class="reserve-button" id="reserveButton">Reserve</button>
         </form>
 
-
-
         <br>
         <a href="javascript:history.back()" class="back-button"><span>&lt;</span> Go Back</a>
     </div>

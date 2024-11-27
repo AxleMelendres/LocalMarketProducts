@@ -52,7 +52,8 @@
 
 
         <!-- Buttons -->
-        <button class="reserve-button" onclick="reserveProduct()">Reserve</button>
+        <a href="../HTML/login.html" class="reserve-buttonn">Reserve</a>
+
         <br>
         <a href="javascript:history.back()" class="back-button"><span>&lt;</span> Go Back</a>
     </div>
