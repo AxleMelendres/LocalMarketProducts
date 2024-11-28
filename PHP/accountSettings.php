@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Update other account details
-    $stmt = $conn->prepare("UPDATE account SET `Full Name` = ?, Email = ?, `Contact Number` = ? WHERE Username = ?");
+    $stmt = $conn->prepare("UPDATE account SET `full_name` = ?, Email = ?, `Contact Number` = ? WHERE Username = ?");
     $stmt->bind_param("ssss", $full_name, $email, $contact_number, $username);
     if ($stmt->execute()) {
         $success = "Account details updated successfully!";
@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 // Fetch account details
-$stmt = $conn->prepare("SELECT account.account_id, account.`Full Name`, account.Email, account.`Contact Number`, buyer.buyer_name, buyer.buyer_email, buyer.buyer_contact, buyer.buyer_image 
+$stmt = $conn->prepare("SELECT account.account_id, account.`full_name`, account.Email, account.`Contact Number`, buyer.buyer_name, buyer.buyer_email, buyer.buyer_contact, buyer.buyer_image 
                         FROM account 
                         LEFT JOIN buyer ON account.account_id = buyer.account_id 
                         WHERE account.Username = ?");
@@ -88,6 +88,7 @@ $conn->close();
     <title>Account Settings</title>
     <link rel="stylesheet" href="../CSS/accountsettings.css">
     <script src="https://kit.fontawesome.com/89e47c0436.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
 </head>
 <body>
     <header class="navbar">
@@ -104,11 +105,9 @@ $conn->close();
     <main class="profile-container">
         <section class="main-content">
             <h2>Account Settings</h2>
-            <?php if (isset($success)) echo "<p style='color: green;'>$success</p>"; ?>
-            <?php if (isset($error)) echo "<p style='color: red;'>$error</p>"; ?>
             <form method="POST" action="" enctype="multipart/form-data">
                 <label for="full_name">Full Name:</label>
-                <input type="text" id="full_name" name="full_name" value="<?php echo htmlspecialchars($user['buyer_name'] ?? $user['Full Name']); ?>" required>
+                <input type="text" id="full_name" name="full_name" value="<?php echo htmlspecialchars($user['buyer_name'] ?? $user['full_name']); ?>" required>
 
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($user['buyer_email'] ?? $user['Email']); ?>" required>
@@ -123,5 +122,37 @@ $conn->close();
             </form>
         </section>
     </main>
+
+
+    <?php if (isset($success)): ?>
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: '<?php echo $success; ?>',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = 'customerProfile.php'; 
+            }
+        });
+    </script>
+<?php elseif (isset($error)): ?>
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: '<?php echo $error; ?>',
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Try Again'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = 'customerProfile.php'; 
+            }
+        });
+    </script>
+<?php endif; ?>
+
 </body>
 </html>
