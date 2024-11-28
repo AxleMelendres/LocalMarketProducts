@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Update other account details
-    $stmt = $conn->prepare("UPDATE account SET `full_name` = ?, Email = ?, `Contact Number` = ? WHERE Username = ?");
+    $stmt = $conn->prepare("UPDATE account SET `Full Name` = ?, Email = ?, `Contact Number` = ? WHERE Username = ?");
     $stmt->bind_param("ssss", $full_name, $email, $contact_number, $username);
     if ($stmt->execute()) {
         $success = "Account details updated successfully!";
@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 // Fetch account details
-$stmt = $conn->prepare("SELECT account.account_id, account.`full_name`, account.Email, account.`Contact Number`, buyer.buyer_name, buyer.buyer_email, buyer.buyer_contact, buyer.buyer_image 
+$stmt = $conn->prepare("SELECT account.account_id, account.`Full Name`, account.Email, account.`Contact Number`, buyer.buyer_name, buyer.buyer_email, buyer.buyer_contact, buyer.buyer_image 
                         FROM account 
                         LEFT JOIN buyer ON account.account_id = buyer.account_id 
                         WHERE account.Username = ?");
@@ -95,7 +95,7 @@ $conn->close();
         <h1 class="logo">Market Alchemy</h1>
         <nav>
             <ul class="nav-links">
-                <li><a href="../PHP/customerInterface.php" style="color: wheat;">Home</a></li>
+                <li><a href="../ConnectedBuyer/main.php" style="color: wheat;">Home</a></li>
                 <li><a href="../PHP/reservedProduct.php" style="color: wheat;"><i class="fas fa-shopping-cart"></i></a></li>
                 <li><a href="../PHP/customerLogout.php" class="logout-button" style="color: wheat;">Logout</a></li>
             </ul>
