@@ -152,27 +152,28 @@ $products = $product->getProductsByVendor($vendor_id); // Get all products for t
         </form>
     <?php else: ?>
         <ul id="product-list">
-            <?php
-            if ($products) {
-                foreach ($products as $prod) {
-                    echo "<li class='product-item' data-id='" . $prod['product_id'] . "'>";
-                    echo "<a href='edit_product.php?product_id=" . $prod['product_id'] . "'>";
-                    echo "<img src='../" . htmlspecialchars($prod['product_image']) . "' alt='" . htmlspecialchars($prod['product_name']) . "'>";
-                    echo "<div>";
-                    echo "<h4>" . htmlspecialchars($prod['product_name']) . "</h4>";
-                    echo "<p><strong>Category:</strong> " . htmlspecialchars($prod['product_category']) . "</p>";
-                    echo "<p><strong>Price:</strong> ₱" . number_format($prod['product_price'], 2) . "</p>";
-                    echo "<p><strong>Quantity:</strong> " . htmlspecialchars($prod['product_quantity']) . "</p>";
-                    echo "<p>" . nl2br(htmlspecialchars($prod['product_description'])) . "</p>";
-                    echo "</div>";
-                    echo "</a>";
-                    echo "</li>";
-                }
-            } else {
-                echo "<p>No products available to edit.</p>";
+        <?php
+        if ($products) {
+            foreach ($products as $prod) {
+                echo "<li class='product-item' data-id='" . $prod['product_id'] . "'>";
+                echo "<img src='../" . htmlspecialchars($prod['product_image']) . "' alt='" . htmlspecialchars($prod['product_name']) . "'>";
+                echo "<div>";
+                echo "<h4>" . htmlspecialchars($prod['product_name']) . "</h4>";
+                echo "<p><strong>Category:</strong> " . htmlspecialchars($prod['product_category']) . "</p>";
+                echo "<p><strong>Price:</strong> ₱" . number_format($prod['product_price'], 2) . "</p>";
+                echo "<p><strong>Quantity:</strong> " . htmlspecialchars($prod['product_quantity']) . "</p>";
+                echo "<p>" . nl2br(htmlspecialchars($prod['product_description'])) . "</p>";
+                echo "</div>";
+                // Add an Edit button to each product item
+                echo "<a href='edit_product.php?product_id=" . $prod['product_id'] . "' class='edit-btn'>Edit</a>";
+                echo "</li>";
             }
-            ?>
-        </ul>
+        } else {
+            echo "<p>No products available to edit.</p>";
+        }
+        ?>
+    </ul>
+
     <?php endif; ?>
 </div>
 <button id="back-button" class="btn">Back</button>

@@ -7,16 +7,15 @@
     font-family: "Nunito Sans", sans-serif;
 }
 
-
-body{
+body {
     background-color:#FAF9F6 ;
     overflow-x: hidden;
 }
 
 .container {
     width: 80%;
-    max-width: 1200px; /* Max width to prevent stretching too much on large screens */
-    margin: 0 auto; /* This will center the container horizontally */
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 20px;
 }
 
@@ -74,39 +73,36 @@ body{
 }
 
 .product-list {
-    display: flex; 
-    flex-wrap: wrap; 
-    gap: 20px; 
+    display: grid; 
+    grid-template-columns: repeat(5, 1fr);
+    gap: 30px;
     list-style-type: none;
     padding: 0;
     margin-top: 20px;
 }
 
 .product-list li {
-    display: flex;
-    flex-direction: column; 
-    align-items: center;
     background-color: wheat;
-    padding: 20px;
+    padding: 30px;
     border-radius: 10px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    font-size: 18px;
+    font-size: 20px;
     color: #4E6A4A;
-    width: 140px; 
-    text-align: center; 
+    text-align: center;
+    width: 100%;
 }
 
 .product-list li img {
     border-radius: 50%;
-    width: 50px;
-    height: 50px; 
-    margin-bottom: 10px; 
+    width: 80px;
+    height: 80px;
+    margin-bottom: 15px;
 }
 
 .product-list li .stock-quantity {
-    font-size: 1em;
+    font-size: 1.2em;
     color: wheat;
-    margin-top: 10px; 
+    margin-top: 15px; 
     font-weight: 600;
 }
 
@@ -139,6 +135,29 @@ body{
     text-decoration: none;
     font-weight: bold;
     margin-right: 30px;
+}
+
+.reserve-btn {
+    padding: 10px 20px;
+    background-color: #132a13;
+    color: wheat;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.reserve-btn:hover {
+    background-color: rgba(236, 206, 149, 0.837);
+    transform: scale(1.05);
+}
+
+.reserve-btn:active {
+    background-color: #4E6A4A;
+    transform: scale(0.98);
 }
 
 .logo:hover {
@@ -185,8 +204,6 @@ body{
     color: #333;
 }
 
-/* side bar */
-
 .icons {
     display: flex;
     justify-content: center;
@@ -212,13 +229,11 @@ body{
     padding: 40px 20px;
     display: none;
     z-index: 1000;
-
 }
 
-.sidebar.active{
+.sidebar.active {
     display: block;
 }
-
 
 .info-sidebar {
     display: flex;
@@ -228,7 +243,7 @@ body{
     cursor: pointer;
 }
 
-.info-sidebar .logo{
+.info-sidebar .logo {
     font-size: 22px;
     color: wheat;
     font-weight: bold;
@@ -244,7 +259,7 @@ body{
     margin: 100px 0px;
 }
 
-.sidebar .social-sidebar a{
+.sidebar .social-sidebar a {
     display: block;
     color: wheat;
     padding: 10px;

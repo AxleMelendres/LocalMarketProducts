@@ -153,15 +153,11 @@ class Product {
 
     public function search($queryParams) {
         $query = $queryParams['query'] ?? '';
-        $district = $queryParams['district'] ?? '';
         $category = $queryParams['category'] ?? '';
     
         // SQL query with placeholders to prevent SQL injection
         $sql = "SELECT product_id, product_name, product_price, product_image FROM " . $this->tbl_name . " WHERE product_name LIKE :query";
     
-        if (!empty($district)) {
-            $sql .= " AND district = :district";
-        }
         if (!empty($category)) {
             $sql .= " AND product_category = :category";
         }

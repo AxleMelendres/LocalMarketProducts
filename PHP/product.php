@@ -60,6 +60,7 @@ class Product {
         }
     }
 
+    
     public function delete($product_id) {
         $query = "DELETE FROM " . $this->tbl_name . " WHERE product_id = :product_id";
         
@@ -73,23 +74,23 @@ class Product {
         }
     }
 
-    public function getProductDetails($product_id, $vendor_id) {
+    public function getProductDetails($product_id) {
         $query = "SELECT product_id, product_name, product_image, product_quantity, product_price, product_description, product_category
                   FROM " . $this->tbl_name . " 
-                  WHERE product_id = :product_id AND vendor_id = :vendor_id";
-
+                  WHERE product_id = :product_id";
+    
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':product_id', $product_id);
-        $stmt->bindParam(':vendor_id', $vendor_id);
-
+    
         $stmt->execute();
-
+    
         if ($stmt->rowCount() > 0) {
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } else {
-            return null;
+            return null; // Return null if no product is found
         }
     }
+    
 
     // Update product details
     public function update($product_id) {
