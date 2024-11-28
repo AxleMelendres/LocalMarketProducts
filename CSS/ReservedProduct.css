@@ -1,0 +1,79 @@
+body {
+    font-family: "Nunito Sans", sans-serif;
+    background-color: #FAF9F6;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 24px;
+    color: #4E6A4A;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.product-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.product-card {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    background-color: #4E6A4A;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    color: wheat;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.product-card img {
+    width: 100%;
+    height: auto;
+    border-bottom: 2px solid wheat;
+}
+
+.product-card h2 {
+    font-size: 18px;
+    color: wheat;
+    margin: 10px;
+    text-align: center;
+}
+
+.product-card p {
+    font-size: 14px;
+    color: wheat;
+    margin: 10px;
+    text-align: center;
+}
+
+.product-card .price {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+footer {
+    background-color: #4E6A4A;
+    color: white;
+    text-align: center;
+    padding: 1em 0;
+    margin-top: 20px;
+}
