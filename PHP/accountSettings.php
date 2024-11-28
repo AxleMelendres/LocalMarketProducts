@@ -134,7 +134,7 @@ $conn->close();
             confirmButtonText: 'OK'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = 'customerProfile.php'; // Redirect to customerProfile.php after clicking OK
+                window.location.href = 'customerProfile.php'; 
             }
         });
     </script>
@@ -148,7 +148,7 @@ $conn->close();
             confirmButtonText: 'Try Again'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = 'customerProfile.php'; // Redirect to customerProfile.php after clicking OK
+                window.location.href = 'customerProfile.php'; 
             }
         });
     </script>
