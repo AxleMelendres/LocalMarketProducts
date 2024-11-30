@@ -149,7 +149,7 @@ class account {
     
         // Prepare the query with named placeholders for the account insertion
         $query = "INSERT INTO " . $this->tbl_name . " 
-                    (`Full Name`, Username, Email, `Contact Number`, Password, Purpose, District) 
+                    (`full_name`, Username, Email, `Contact Number`, Password, Purpose, District) 
                     VALUES (:name, :username, :email, :contact, :password, :purpose, :district)";
     
         // Prepare the statement
