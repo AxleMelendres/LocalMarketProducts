@@ -49,7 +49,7 @@ try {
                 <?php else: ?>
                     <img src="https://via.placeholder.com/100" alt="Profile Picture" class="profile-img">
                 <?php endif; ?>
-                <h2 class="profile-name"><?php echo htmlspecialchars($user['full_name']); ?></h2>
+                <h2 class="profile-name"><?php echo htmlspecialchars($user['Full Name']); ?></h2>
                 <p class="profile-username">@<?php echo htmlspecialchars($user['Username']); ?></p>
                 <a href="accountSettings.php" class="edit-button">Edit Profile</a>
             </div>
