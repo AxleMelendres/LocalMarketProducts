@@ -1,18 +1,11 @@
 <?php
-
 session_start();
 
-$hostname = 'localhost';
-$dbname = 'dbgroup1';
-$username = 'root';
-$password = '';
+// Include required files
+require_once '../PHP/dbConnection.php';
+require_once '../PHP/customerConnection.php';
 
-$conn = new mysqli($hostname, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection Failed: " . $conn->connect_error);
-}
-
+// Check if the user is logged in
 if (!isset($_SESSION['username'])) {
     header("Location: login.php");
     exit;
@@ -20,19 +13,23 @@ if (!isset($_SESSION['username'])) {
 
 $username = $_SESSION['username'];
 
-$stmt = $conn->prepare("SELECT `full_name`, Username, Email, `Contact Number`, Purpose, District, buyer_image FROM account LEFT JOIN buyer ON account.account_id = buyer.account_id WHERE Username = ?");
-$stmt->bind_param("s", $username);
-$stmt->execute();
-$result = $stmt->get_result();
+// Create a database connection
+$database = new Database();
+$conn = $database->getConnection();
 
-if ($result->num_rows === 0) {
-    die("User not found.");
+// Create an instance of the Customer class
+$customer = new Customer($conn);
+
+try {
+    // Fetch customer details
+    $user = $customer->getCustomerDetails($username);
+
+    if (!$user) {
+        die("User not found.");
+    }
+} catch (PDOException $e) {
+    die("Database error: " . $e->getMessage());
 }
-
-$user = $result->fetch_assoc();
-$stmt->close();
-$conn->close();
-
 ?>
 
 <!DOCTYPE html>
@@ -41,12 +38,12 @@ $conn->close();
     <link rel="stylesheet" href="../CSS/customerprofile.css">
 </head>
 <body>
-    <?php  require "../ConnectedBuyer/HEADER/profileheader.html" ?>
+    <?php require "../ConnectedBuyer/HEADER/profileheader.html"; ?>
 
     <main class="profile-container">
         <aside class="sidebar">
             <div class="profile-section">
-                <!-- Display the profile picture -->
+                <!-- Display profile picture -->
                 <?php if (!empty($user['buyer_image'])): ?>
                     <img src="<?php echo htmlspecialchars($user['buyer_image']); ?>" alt="Profile Picture" class="profile-img">
                 <?php else: ?>
@@ -72,12 +69,7 @@ $conn->close();
                 <p><strong>Purpose:</strong> <?php echo htmlspecialchars($user['Purpose']); ?></p>
                 <p><strong>District:</strong> <?php echo htmlspecialchars($user['District']); ?></p>
             </div>
-
-            
         </section>
     </main>
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../JS/logout.js"></script>
 </body>
 </html>
