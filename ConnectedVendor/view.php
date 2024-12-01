@@ -41,7 +41,7 @@
             </div>
             <div class="vendor-details">
                 <div class="vendor-username">
-                    <a href="vendorsprofile.php?username=<?php echo urlencode($productDetails['vendor_username']); ?>" 
+                    <a href="../PHP/viewVendor.php?username=<?php echo urlencode($productDetails['vendor_username']); ?>" 
                     title="View vendor profile">
                         <?php echo htmlspecialchars($productDetails['vendor_username'], ENT_QUOTES, 'UTF-8'); ?>
                     </a>

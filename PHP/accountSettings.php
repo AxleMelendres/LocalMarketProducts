@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 // Fetch account details
-$stmt = $conn->prepare("SELECT account.account_id, account.`Full Name`, account.Email, account.`Contact Number`, buyer.buyer_name, buyer.buyer_email, buyer.buyer_contact, buyer.buyer_image 
+$stmt = $conn->prepare("SELECT account.account_id, account.full_name, account.Email, account.`Contact Number`, buyer.buyer_name, buyer.buyer_email, buyer.buyer_contact, buyer.buyer_image 
                         FROM account 
                         LEFT JOIN buyer ON account.account_id = buyer.account_id 
                         WHERE account.Username = ?");

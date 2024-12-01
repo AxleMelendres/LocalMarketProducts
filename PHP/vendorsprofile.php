@@ -1,7 +1,7 @@
 <?php
 require_once '../PHP/dbConnection.php';
 require_once '../PHP/vendorConnection.php'; 
-require_once '../PHP/product.php'; 
+require_once '../DB/productsTB.php';
 
 $database = new Database();
 $conn = $database->getConnection();
