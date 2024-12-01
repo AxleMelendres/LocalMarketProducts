@@ -2,7 +2,7 @@
 session_start();  
 
 require_once '../PHP/dbConnection.php';
-require_once '../PHP/product.php';
+require_once '../DB/productsTB.php';
 require_once '../PHP/vendorConnection.php';
 
 $database = new Database();
