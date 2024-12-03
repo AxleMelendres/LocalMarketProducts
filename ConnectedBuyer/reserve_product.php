@@ -1,17 +1,25 @@
 <?php
 require_once "../PHP/dbConnection.php";
+session_start(); // Start the session to access buyer ID
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve reservation data from POST request
     $product_id = $_POST['product_id'] ?? null;
-    $buyer_id = $_POST['buyer_id'] ?? null;
     $product_name = $_POST['product_name'] ?? null;
     $product_price = $_POST['product_price'] ?? null;
     $reserved_quantity = $_POST['quantity'] ?? null;
 
+    // Get the buyer_id from the session (logged-in user)
+    $buyer_id = $_SESSION['buyer_id'] ?? null;
+
     // Validate input data
-    if (!$product_id || !$buyer_id || !$reserved_quantity) {
-        echo "Error: Missing required fields.";
+    if (!$product_id || !$product_name || !$product_price || !$reserved_quantity || !$buyer_id) {
+        echo "Error: Missing required fields. Debug info:";
+        echo "product_id: " . ($product_id ? "set" : "not set") . ", ";
+        echo "product_name: " . ($product_name ? "set" : "not set") . ", ";
+        echo "product_price: " . ($product_price ? "set" : "not set") . ", ";
+        echo "reserved_quantity: " . ($reserved_quantity ? "set" : "not set") . ", ";
+        echo "buyer_id: " . ($buyer_id ? "set" : "not set");
         exit;
     }
 

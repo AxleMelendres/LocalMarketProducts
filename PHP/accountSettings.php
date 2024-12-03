@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Update other account details
-    $stmt = $conn->prepare("UPDATE account SET `Full Name` = ?, Email = ?, `Contact Number` = ? WHERE Username = ?");
+    $stmt = $conn->prepare("UPDATE account SET `full_name` = ?, Email = ?, `Contact Number` = ? WHERE Username = ?");
     $stmt->bind_param("ssss", $full_name, $email, $contact_number, $username);
     if ($stmt->execute()) {
         $success = "Account details updated successfully!";

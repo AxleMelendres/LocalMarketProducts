@@ -55,15 +55,14 @@
         </div>
 
         <form method="POST" action="reserve_product.php" class="reserve-form" id="reserveForm">
-            <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($productDetails['product_id'], ENT_QUOTES, 'UTF-8'); ?>">
-            <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($productDetails['product_name'], ENT_QUOTES, 'UTF-8'); ?>">
-            <input type="hidden" name="product_price" value="<?php echo htmlspecialchars($productDetails['product_price'], ENT_QUOTES, 'UTF-8'); ?>">
-            <input type="hidden" name="buyer_id" value="<?php echo htmlspecialchars($buyer_id, ENT_QUOTES, 'UTF-8'); ?>">
-            
-            <label for="quantity">Reserve Quantity:</label>
-            <input type="number" name="quantity" id="quantity" min="1" max="<?php echo htmlspecialchars($productDetails['product_quantity'], ENT_QUOTES, 'UTF-8'); ?>" required>
-            <button type="submit" class="reserve-button" id="reserveButton">Reserve</button>
-        </form>
+    <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($productDetails['product_id'], ENT_QUOTES, 'UTF-8'); ?>">
+    <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($productDetails['product_name'], ENT_QUOTES, 'UTF-8'); ?>">
+    <input type="hidden" name="product_price" value="<?php echo htmlspecialchars($productDetails['product_price'], ENT_QUOTES, 'UTF-8'); ?>">
+    <label for="quantity">Reserve Quantity:</label>
+    <input type="number" name="quantity" id="quantity" min="1" max="<?php echo htmlspecialchars($productDetails['product_quantity'], ENT_QUOTES, 'UTF-8'); ?>" required>
+    <button type="submit" class="reserve-button" id="reserveButton">Reserve</button>
+</form>
+
 
         <br>
         <a href="javascript:history.back()" class="back-button"><span>&lt;</span> Go Back</a>
