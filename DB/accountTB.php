@@ -257,7 +257,22 @@ class account {
                         header("Location: vendorsprofile.php");  // Redirect to vendor profile
                     } elseif ($purpose === "Buyer") {
                         $_SESSION['username'] = $this->uname;
-                        $_SESSION['purpose'] = 'Buyer';  // Store 'Buyer' in session for buyer users
+                        $_SESSION['purpose'] = 'Buyer';
+                    
+                        // Fetch buyer_id from the buyer table
+                        $buyerQuery = "SELECT buyer_id FROM buyer WHERE account_id = :account_id";
+                        $buyerStmt = $this->conn->prepare($buyerQuery);
+                        $buyerStmt->bindParam(':account_id', $account_id);
+                        $buyerStmt->execute();
+                        
+                        if ($buyerRow = $buyerStmt->fetch(PDO::FETCH_ASSOC)) {
+                            $_SESSION['buyer_id'] = $buyerRow['buyer_id'];
+                        } else {
+                            // Handle the case where buyer_id is not found
+                            echo "Error: Buyer ID not found.";
+                            exit;
+                        }
+                    
                         header("Location: ../PHP/customerProfile.php");
                         exit; // Stop further script execution after redirection
                     }
