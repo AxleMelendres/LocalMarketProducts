@@ -27,6 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $database = new Database();
     $conn = $database->getConnection();
 
+    // Calculate the total price (price * quantity)
+    $total_price = $product_price * $reserved_quantity;
+
     // Begin a transaction
     $conn->beginTransaction();
 
@@ -41,9 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             throw new Exception("Invalid buyer ID: Buyer does not exist.");
         }
 
-        // Insert reservation into the `reservations` table
-        $query = "INSERT INTO reservations (product_id, buyer_id, product_name, product_price, reserved_quantity, reserved_date)
-                  VALUES (:product_id, :buyer_id, :product_name, :product_price, :reserved_quantity, NOW())";
+        // Insert reservation into the `reservations` table, including total price
+        $query = "INSERT INTO reservations (product_id, buyer_id, product_name, product_price, reserved_quantity, total_price, reserved_date)
+                  VALUES (:product_id, :buyer_id, :product_name, :product_price, :reserved_quantity, :total_price, NOW())";
 
         $stmt = $conn->prepare($query);
         $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
@@ -51,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bindParam(':product_name', $product_name, PDO::PARAM_STR);
         $stmt->bindParam(':product_price', $product_price, PDO::PARAM_STR);
         $stmt->bindParam(':reserved_quantity', $reserved_quantity, PDO::PARAM_INT);
+        $stmt->bindParam(':total_price', $total_price, PDO::PARAM_STR); // Insert the total price
         $stmt->execute();
 
         // Update product quantity in the `products` table
