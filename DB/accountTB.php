@@ -1,5 +1,5 @@
 <?php 
-    require_once 'vendorConnection.php';
+    require_once '../PHP/vendorConnection.php';
 
 class account {
 

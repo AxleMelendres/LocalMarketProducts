@@ -93,12 +93,6 @@ class Product {
                 echo "<button type='submit' class='view-button'>View</button>";
                 echo "</form>";
 
-
-                // echo "<form method='POST' action='reserve_product.php' class='reserve-form'>";
-                // echo "<input type='hidden' name='product_id' value='" . htmlspecialchars($row['product_id'], ENT_QUOTES, 'UTF-8') . "'>";
-                // echo "<button type='submit' class='reserve-button'>Reserve</button>";
-                // echo "</form>";
-
                 echo "</div>";
             }
         } else {
@@ -202,18 +196,27 @@ class Product {
                     echo "<h3>" . htmlspecialchars($row['product_name'], ENT_QUOTES, 'UTF-8') . "</h3>";
                     echo "<p>$" . htmlspecialchars($row['product_price'], ENT_QUOTES, 'UTF-8') . "</p>";
     
-                    // Add buttons using a form to send POST requests
-                    echo "<form method='POST' action='../DISPLAY/view.php' class='view-form'>";
-                    echo "<input type='hidden' name='product_id' value='" . htmlspecialchars($row['product_id'], ENT_QUOTES, 'UTF-8') . "'>";
-                    echo "<button type='submit' class='view-button'>View</button>";
-                    echo "</form>";
+                    // Determine the full script path
+                $fullPath = $_SERVER['SCRIPT_NAME']; // Full path to the script
 
-                    echo "<form method='POST' action='reserve_product.php' class='reserve-form'>";
-                    echo "<input type='hidden' name='product_id' value='" . htmlspecialchars($row['product_id'], ENT_QUOTES, 'UTF-8') . "'>";
-                    echo "<button type='submit' class='reserve-button'>Reserve</button>";
-                    echo "</form>";
-    
-                    echo "</div>";
+                // Normalize the path to identify the folder structure
+                if (strpos($fullPath, '/DISPLAY/search.php') !== false) {
+                    $actionUrl = '../DISPLAY/view.php';
+                } elseif (strpos($fullPath, '/ConnectedVendor/search.php') !== false) {
+                    $actionUrl = '../ConnectedVendor/view.php';
+                } elseif (strpos($fullPath, '/ConnectedBuyer/search.php') !== false) {
+                    $actionUrl = '../ConnectedBuyer/view.php';
+                } else {
+                    $actionUrl = '../DISPLAY/view.php'; // Default redirection
+                }
+
+                // Generate the form dynamically
+                echo "<form method='POST' action='" . htmlspecialchars($actionUrl, ENT_QUOTES, 'UTF-8') . "' class='view-form'>";
+                echo "<input type='hidden' name='product_id' value='" . htmlspecialchars($row['product_id'], ENT_QUOTES, 'UTF-8') . "'>";
+                echo "<button type='submit' class='view-button'>View</button>";
+                echo "</form>";
+
+                echo "</div>";
                 }
             } else {
                 echo "<p>No products found.</p>";
@@ -305,6 +308,41 @@ class Product {
         }
     }
 }
+
+class Reservation {
+    private $conn;
+
+    // Constructor with database connection
+    public function __construct($dbConnection) {
+        $this->conn = $dbConnection;
+    }
+
+    // Get reserved products for a specific product
+    public function getReservedProductsByProduct($product_id) {
+        // SQL query to get reserved products by product_id
+        $query = "SELECT p.product_name, r.reserved_quantity, r.reserved_date, b.buyer_name
+                  FROM reservations r
+                  JOIN products p ON r.product_id = p.product_id
+                  JOIN buyer b ON r.buyer_id = b.buyer_id
+                  WHERE r.product_id = :product_id
+                  ORDER BY r.reserved_date DESC"; // Sorted by reservation date
+
+        // Prepare the statement
+        $stmt = $this->conn->prepare($query);
+
+        // Bind the product_id parameter
+        $stmt->bindParam(':product_id', $product_id);
+
+        // Execute the query
+        $stmt->execute();
+
+        // Return the results as an associative array
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+}
+
+
+
 
 
 ?>

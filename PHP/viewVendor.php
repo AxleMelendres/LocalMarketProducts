@@ -9,7 +9,11 @@ $conn = $database->getConnection();
 
 session_start();
 
-$vendor_uname = isset($_GET['username']) ? $_GET['username'] : null; // Get vendor username from URL
+// Get the logged-in user's role (e.g., 'Seller' or 'Buyer')
+$user_role = isset($_SESSION['purpose']) ? $_SESSION['purpose'] : '';
+
+// Get vendor username from URL
+$vendor_uname = isset($_GET['username']) ? $_GET['username'] : null;
 
 // Retrieve vendor details
 $vendor = new Vendor($conn);
@@ -18,7 +22,6 @@ $vendorDetails = $vendor->getVendor($vendor_uname);
 // Fetch products offered by the vendor
 $product = new Product($conn);
 $products = $product->getProductsByVendor($vendorDetails['vendor_id']);
-
 
 $conn = null; // Close the connection
 ?>
@@ -64,8 +67,13 @@ $conn = null; // Close the connection
                     echo "<p><strong>Category:</strong> " . htmlspecialchars($product['product_category']) . "</p>";
                     echo "<p><strong>Price:</strong> ₱" . number_format($product['product_price'], 2) . "</p>";
                     echo "<p><strong>Quantity:</strong> " . htmlspecialchars($product['product_quantity']) . "</p>";
+
+                    if ($user_role !== 'Seller') {
+                        // Display the "Reserve" button for non-sellers (Buyers)
+                        echo "<a href='../PHP/productDetails.php?product_id=" . htmlspecialchars($product['product_id']) . "' class='reserve-btn'>Reserve</a>";
+                    } else {
+                    }
                     
-                    echo "<a href='../PHP/productDetails.php?product_id=" . htmlspecialchars($product['product_id']) . "' class='reserve-btn'>Reserve</a>"; // View button
                     echo "</li>";
                 }
             } else {
@@ -73,7 +81,6 @@ $conn = null; // Close the connection
             }
             ?>
         </ul>
-
         </div>
     </div>
 </body>

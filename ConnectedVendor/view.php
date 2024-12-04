@@ -51,7 +51,7 @@
         </div>
 
         <!-- Buttons -->
-        <button class="reserve-button" onclick="reserveProduct()">Reserve</button>
+
         <br>
         <a href="javascript:history.back()" class="back-button"><span>&lt;</span> Go Back</a>
     </div>
