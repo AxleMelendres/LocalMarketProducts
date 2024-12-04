@@ -93,12 +93,6 @@ class Product {
                 echo "<button type='submit' class='view-button'>View</button>";
                 echo "</form>";
 
-
-                // echo "<form method='POST' action='reserve_product.php' class='reserve-form'>";
-                // echo "<input type='hidden' name='product_id' value='" . htmlspecialchars($row['product_id'], ENT_QUOTES, 'UTF-8') . "'>";
-                // echo "<button type='submit' class='reserve-button'>Reserve</button>";
-                // echo "</form>";
-
                 echo "</div>";
             }
         } else {
@@ -202,13 +196,27 @@ class Product {
                     echo "<h3>" . htmlspecialchars($row['product_name'], ENT_QUOTES, 'UTF-8') . "</h3>";
                     echo "<p>$" . htmlspecialchars($row['product_price'], ENT_QUOTES, 'UTF-8') . "</p>";
     
-                    // Add buttons using a form to send POST requests
-                    echo "<form method='POST' action='../DISPLAY/view.php' class='view-form'>";
-                    echo "<input type='hidden' name='product_id' value='" . htmlspecialchars($row['product_id'], ENT_QUOTES, 'UTF-8') . "'>";
-                    echo "<button type='submit' class='view-button'>View</button>";
-                    echo "</form>";
-    
-                    echo "</div>";
+                    // Determine the full script path
+                $fullPath = $_SERVER['SCRIPT_NAME']; // Full path to the script
+
+                // Normalize the path to identify the folder structure
+                if (strpos($fullPath, '/DISPLAY/search.php') !== false) {
+                    $actionUrl = '../DISPLAY/view.php';
+                } elseif (strpos($fullPath, '/ConnectedVendor/search.php') !== false) {
+                    $actionUrl = '../ConnectedVendor/view.php';
+                } elseif (strpos($fullPath, '/ConnectedBuyer/search.php') !== false) {
+                    $actionUrl = '../ConnectedBuyer/view.php';
+                } else {
+                    $actionUrl = '../DISPLAY/view.php'; // Default redirection
+                }
+
+                // Generate the form dynamically
+                echo "<form method='POST' action='" . htmlspecialchars($actionUrl, ENT_QUOTES, 'UTF-8') . "' class='view-form'>";
+                echo "<input type='hidden' name='product_id' value='" . htmlspecialchars($row['product_id'], ENT_QUOTES, 'UTF-8') . "'>";
+                echo "<button type='submit' class='view-button'>View</button>";
+                echo "</form>";
+
+                echo "</div>";
                 }
             } else {
                 echo "<p>No products found.</p>";
