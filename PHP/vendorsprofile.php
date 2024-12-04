@@ -73,12 +73,14 @@ $conn = null; // Close the connection
                 ?>
             </ul>
         </div>
-            <div class="actions">
-                <button class="btn" id="add-products">Add Products</button>
-                <button class="btn" id="edit-products">Edit Products</button>
-                <button class="btn" id="delete-products">Delete Products</button>
-                <button class="btn" id="edit-profile">Edit Profile</button>
-            </div>
+
+        <div class="actions">
+            <button class="btn" id="add-products">Add Products</button>
+            <button class="btn" id="edit-products">Edit Products</button>
+            <button class="btn" id="delete-products">Delete Products</button>
+            <button class="btn" id="edit-profile">Edit Profile</button>
+            <button class="btn" id="reserved-products">Reserved Products</button>
+        </div>
     </div>
 </body>
 </html>
