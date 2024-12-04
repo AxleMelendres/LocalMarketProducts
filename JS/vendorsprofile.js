@@ -2,6 +2,7 @@ const addProductButton = document.getElementById('add-products');
 const editProductButton = document.getElementById('edit-products');
 const deleteProductButton = document.getElementById('delete-products');
 const editProfileButton = document.getElementById('edit-profile');  // Fixed typo
+const reservedProducts = document.getElementById('reserved-products');  // Fixed typo
 
 addProductButton.addEventListener('click', function() {
     window.location.href = "../HTML/add_product.html";  
@@ -17,4 +18,8 @@ deleteProductButton.addEventListener('click', function() {
 
 editProfileButton.addEventListener('click', function() {
     window.location.href = "../PHP/editProfile.php"; 
+});  
+
+reservedProducts.addEventListener('click', function() {
+    window.location.href = "../PHP/vendorReservedProducts.php"; 
 });  
