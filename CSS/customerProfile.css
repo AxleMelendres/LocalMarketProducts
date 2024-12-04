@@ -189,3 +189,50 @@ body {
 .rounded {
     border-radius: 10px;
 }
+
+/* Order History Section */
+.order-history {
+    margin-top: 40px;
+    color: wheat;
+}
+
+.reserved-card {
+    display: flex;
+    background-color: wheat;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.reserved-item {
+    display: flex;
+    gap: 20px;
+}
+
+.reserved-item-image {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.reserved-item-info {
+    flex: 1;
+}
+
+.reserved-item-info h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.reserved-item-info p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #333;
+}
+
+.reserved-item-info strong {
+    font-weight: bold;
+}

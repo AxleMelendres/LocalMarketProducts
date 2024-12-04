@@ -1,3 +1,37 @@
+<?php
+session_start(); // Ensure the session is started
+
+// Check if buyer_id is available in the session
+if (!isset($_SESSION['buyer_id'])) {
+    echo "<p>Please log in to view your reserved products.</p>";
+    exit;
+}
+
+require_once "../PHP/dbConnection.php";
+
+// Fetch reserved products for the logged-in buyer
+$buyer_id = $_SESSION['buyer_id'];  // Get buyer_id from session
+$database = new Database();
+$conn = $database->getConnection();
+
+$query = "
+    SELECT r.reserved_quantity, r.reserved_date, b.buyer_name, 
+           p.product_name, p.product_price, p.product_image
+    FROM reservations r
+    JOIN buyer b ON r.buyer_id = b.buyer_id
+    JOIN products p ON r.product_id = p.product_id
+    WHERE r.buyer_id = :buyer_id
+";
+
+$stmt = $conn->prepare($query);
+$stmt->bindParam(':buyer_id', $buyer_id, PDO::PARAM_INT);  // Bind the buyer_id parameter
+$stmt->execute();
+
+$reservedProducts = [];
+if ($stmt->rowCount() > 0) {
+    $reservedProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,40 +46,22 @@
     <div class="container">
         <h1>Reserved Products</h1>
         <div class="product-grid">
-    <?php
-    require_once "../PHP/dbConnection.php";
-
-    // Initialize database connection
-    $database = new Database();
-    $conn = $database->getConnection();
-
-    // Fetch reserved products
-    $query = "SELECT r.reserved_quantity, r.reserved_date, b.buyer_name, 
-                     p.product_name, p.product_price, p.product_image
-              FROM reservations r
-              JOIN buyer b ON r.buyer_id = b.buyer_id
-              JOIN products p ON r.product_id = p.product_id";
-    $stmt = $conn->prepare($query);
-    $stmt->execute();
-
-    if ($stmt->rowCount() > 0) {
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
-            <div class="product-card">
-                <img src="<?= htmlspecialchars($row['product_image']); ?>" alt="<?= htmlspecialchars($row['product_name']); ?>">
-                <h2><?= htmlspecialchars($row['product_name']); ?></h2>
-                <p>Buyer: <?= htmlspecialchars($row['buyer_name']); ?></p>
-                <p class="price">$<?= htmlspecialchars($row['product_price']); ?></p>
-                <p>Quantity: <?= htmlspecialchars($row['reserved_quantity']); ?></p>
-                <p>Reserved Date: <?= htmlspecialchars($row['reserved_date']); ?></p>
-            </div>
-        <?php endwhile;
-    } else {
-        echo "<p>No reserved products found.</p>";
-    }
-    ?>
-</div>
-
+            <?php if (empty($reservedProducts)): ?>
+                <p>No reserved products found.</p>
+            <?php else: ?>
+                <?php foreach ($reservedProducts as $product): ?>
+                    <div class="product-card">
+                        <img src="<?= htmlspecialchars($product['product_image']); ?>" 
+                             alt="<?= htmlspecialchars($product['product_name']); ?>">
+                        <h2><?= htmlspecialchars($product['product_name']); ?></h2>
+                        <p>Buyer: <?= htmlspecialchars($product['buyer_name']); ?></p>
+                        <p class="price">$<?= htmlspecialchars($product['product_price']); ?></p>
+                        <p>Quantity: <?= htmlspecialchars($product['reserved_quantity']); ?></p>
+                        <p>Reserved Date: <?= htmlspecialchars($product['reserved_date']); ?></p>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
     </div>
-
 </body>
 </html>
