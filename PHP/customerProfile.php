@@ -43,7 +43,6 @@ try {
     <main class="profile-container">
         <aside class="sidebar">
             <div class="profile-section">
-                <!-- Display profile picture -->
                 <?php if (!empty($user['buyer_image'])): ?>
                     <img src="<?php echo htmlspecialchars($user['buyer_image']); ?>" alt="Profile Picture" class="profile-img">
                 <?php else: ?>
