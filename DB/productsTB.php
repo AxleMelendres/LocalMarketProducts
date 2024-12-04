@@ -207,11 +207,6 @@ class Product {
                     echo "<input type='hidden' name='product_id' value='" . htmlspecialchars($row['product_id'], ENT_QUOTES, 'UTF-8') . "'>";
                     echo "<button type='submit' class='view-button'>View</button>";
                     echo "</form>";
-
-                    echo "<form method='POST' action='reserve_product.php' class='reserve-form'>";
-                    echo "<input type='hidden' name='product_id' value='" . htmlspecialchars($row['product_id'], ENT_QUOTES, 'UTF-8') . "'>";
-                    echo "<button type='submit' class='reserve-button'>Reserve</button>";
-                    echo "</form>";
     
                     echo "</div>";
                 }
