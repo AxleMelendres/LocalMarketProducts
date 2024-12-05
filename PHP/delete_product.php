@@ -10,7 +10,7 @@ $conn = $database->getConnection();
 $product = new Product($conn);
 $products = $product->getProductsByVendor($_SESSION['vendor_id']);  // Assuming vendor_id is set in the session
 
-// Handle product deletion
+// Handle product deletion via AJAX (POST request)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['product_ids']) && !empty($_POST['product_ids'])) {
         $product_ids = $_POST['product_ids'];
@@ -25,20 +25,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        // Redirect to the same page with a success or error message
+        // Return a JSON response based on the result
         if ($successCount > 0) {
-            if ($successCount > 0) {
-                header('Location: delete_product.php?status=success');
-                exit();
-            } else {
-                header('Location: delete_product.php?status=error');
-                exit();
-            }
+            echo json_encode(['status' => 'success', 'message' => 'Selected products deleted successfully!']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'An error occurred while deleting the products.']);
         }
     } else {
-        header('Location: delete_product.php?status=no_products');
-        exit();
+        echo json_encode(['status' => 'error', 'message' => 'No products selected to delete.']);
     }
+    exit(); // End script after responding to AJAX request
 }
 
 $conn = null;  // Close the database connection
@@ -55,14 +51,13 @@ $conn = null;  // Close the database connection
 </head>
 <body>
 
-
     <!-- Container for h1 heading -->
     <div class="heading-container">
         <h1>Delete Products</h1> 
     </div>
 
     <!-- Form to handle deletion -->
-    <form action="delete_product.php" method="POST">
+    <form id="delete-product-form">
         <div class="remove-product">
             <!-- Display products with checkboxes to select for deletion -->
             <ul id="product-list">
@@ -85,42 +80,52 @@ $conn = null;  // Close the database connection
             </ul>
 
             <!-- Submit button to remove selected products -->
-            <button type="submit" id="remove-product-btn" class="btn" style="display: inline-block;">Remove Selected Products</button>
+            <button type="button" id="remove-product-btn" class="btn" style="display: inline-block;">Remove Selected Products</button>
         </div>
     </form>
+
     <a href="../PHP/vendorsprofile.php">
         <button id="back-button" class="btn">Back</button>
     </a>
     <!-- Back Button -->
 
     <script>
-        // Check if the 'status' parameter exists in the URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const status = urlParams.get('status');
+        document.getElementById('remove-product-btn').addEventListener('click', function() {
+            var formData = new FormData(document.getElementById('delete-product-form'));
 
-        if (status) {
-            if (status === 'success') {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success!',
-                    text: 'Selected products deleted successfully!',
-                });
-            } else if (status === 'error') {
+            // Make AJAX request to delete selected products
+            fetch('delete_product.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: data.message,
+                    }).then(() => {
+                        // Optionally, refresh the page or redirect
+                        location.reload();  // Reload the page
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: data.message,
+                    });
+                }
+            })
+            .catch(error => {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error!',
-                    text: 'An error occurred while deleting the products.',
+                    text: 'Something went wrong, please try again.',
                 });
-            } else if (status === 'no_products') {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'No Products Selected',
-                    text: 'Please select products to delete.',
-                });
-            }
-        }
+            });
+        });
     </script>
 
 </body>
-
 </html>
