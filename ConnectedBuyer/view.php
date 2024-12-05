@@ -32,7 +32,7 @@
         <h2><?php echo htmlspecialchars($productDetails['product_name'], ENT_QUOTES, 'UTF-8'); ?></h2>
         <h4><p class="category">Category: <?php echo htmlspecialchars($productDetails['product_category'], ENT_QUOTES, 'UTF-8'); ?></p></h4>
         <p class="product-description"><?php echo htmlspecialchars($productDetails['product_description'], ENT_QUOTES, 'UTF-8'); ?></p>
-        <p class="price">$<?php echo htmlspecialchars(number_format($productDetails['product_price'], 2), ENT_QUOTES, 'UTF-8'); ?></p>
+        <p class="price">₱<?php echo htmlspecialchars(number_format($productDetails['product_price'], 2), ENT_QUOTES, 'UTF-8'); ?></p>
         <p class="quantity">Available Quantity: <?php echo htmlspecialchars($productDetails['product_quantity'], ENT_QUOTES, 'UTF-8'); ?></p>
 
         <!-- Vendor Information -->
