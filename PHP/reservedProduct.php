@@ -38,7 +38,7 @@ if ($stmt->rowCount() > 0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reserved Products</title>
-    <link rel="stylesheet" href="../CSS/ReservedProduct.css">
+    <link rel="stylesheet" href="../CSS/reservedProduct.css">
 </head>
 <body>
     <?php require "../ConnectedBuyer/HEADER/header.html"; ?>
@@ -50,14 +50,18 @@ if ($stmt->rowCount() > 0) {
                 <p>No reserved products found.</p>
             <?php else: ?>
                 <?php foreach ($reservedProducts as $product): ?>
+                    <?php
+                    // Calculate the total price
+                    $total_price = $product['product_price'] * $product['reserved_quantity'];
+                    ?>
                     <div class="product-card">
                         <img src="<?= htmlspecialchars($product['product_image']); ?>" 
                              alt="<?= htmlspecialchars($product['product_name']); ?>">
                         <h2><?= htmlspecialchars($product['product_name']); ?></h2>
-                        <p>Buyer: <?= htmlspecialchars($product['buyer_name']); ?></p>
-                        <p class="price">$<?= htmlspecialchars($product['product_price']); ?></p>
-                        <p>Quantity: <?= htmlspecialchars($product['reserved_quantity']); ?></p>
-                        <p>Reserved Date: <?= htmlspecialchars($product['reserved_date']); ?></p>
+                        <p class="">Buyer: <?= htmlspecialchars($product['buyer_name']); ?></p>
+                        <p class="price">Total Price: ₱<?= number_format($total_price, 2); ?></p>
+                        <p class="">Quantity: <?= htmlspecialchars($product['reserved_quantity']); ?></p>
+                        <p class="">Reserved Date: <?= htmlspecialchars($product['reserved_date']); ?></p>
                     </div>
                 <?php endforeach; ?>
             <?php endif; ?>
@@ -65,3 +69,4 @@ if ($stmt->rowCount() > 0) {
     </div>
 </body>
 </html>
+

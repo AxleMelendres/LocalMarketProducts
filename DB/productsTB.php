@@ -71,7 +71,7 @@ class Product {
                 
                 // Output product name and price
                 echo "<h3>" . htmlspecialchars($row['product_name'], ENT_QUOTES, 'UTF-8') . "</h3>";
-                echo "<p>$" . htmlspecialchars($row['product_price'], ENT_QUOTES, 'UTF-8') . "</p>";
+                echo "<p>₱" . htmlspecialchars($row['product_price'], ENT_QUOTES, 'UTF-8') . "</p>";
                 
                 // Determine the full script path
                 $fullPath = $_SERVER['SCRIPT_NAME']; // Full path to the script
