@@ -16,7 +16,7 @@ $conn = $database->getConnection();
 
 $query = "
     SELECT r.reservation_id, r.reserved_quantity, r.reserved_date, b.buyer_name, 
-           p.product_name, p.product_price, p.product_image
+           p.product_name, p.product_price, p.product_image, r.status
     FROM reservations r
     JOIN buyer b ON r.buyer_id = b.buyer_id
     JOIN products p ON r.product_id = p.product_id
@@ -64,12 +64,17 @@ if ($stmt->rowCount() > 0) {
                             <p class="price">Total Price: ₱<?= number_format($total_price, 2); ?></p>
                             <p>Quantity: <?= htmlspecialchars($product['reserved_quantity']); ?></p>
                             <p>Reserved Date: <?= htmlspecialchars($product['reserved_date']); ?></p>
+                            <p>Status: <?= htmlspecialchars($product['status']); ?></p>
                         </div>
-                        <!-- Delete button -->
-                        <button class="delete-button" onclick="confirmDelete(<?= htmlspecialchars($product['reservation_id']); ?>, this.closest('.product-card'))">
-                            Delete
-                        </button>
+                        
+                        <!-- Delete button will only be visible if the status is NOT "Received" -->
+                        <?php if ($product['status'] !== 'Received'): ?>
+                            <button class="delete-button" onclick="confirmDelete(<?= htmlspecialchars($product['reservation_id']); ?>, this.closest('.product-card'))">
+                                Delete
+                            </button>
+                        <?php endif; ?>
                     </div>
+
 
                 <?php endforeach; ?>
             <?php endif; ?>
