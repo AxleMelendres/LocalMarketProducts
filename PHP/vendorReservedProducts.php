@@ -34,6 +34,8 @@ $conn = null; // Close the connection
     <title>Reserved Products</title>
     <link rel="stylesheet" href="../CSS/vendorReservedProducts.css">
     <script src="../JS/product.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 <body>
 <h2>Reserved Products</h2>
@@ -141,19 +143,48 @@ function saveStatus(reservationId) {
     .then(data => {
         console.log("Response from server:", data);
         if (data.trim() === "Success") {
+
+            Swal.fire({
+                title: 'Success!',
+                text: 'Status updated successfully!',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                location.reload();
+            });
+        } else {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Error updating status: ' + data,
+                icon: 'error',
+                confirmButtonText: 'Try Again'
+            });
+
             alert("Status updated successfully!");
             location.reload();
         } else {
             alert("Error updating status: " + data);
+
         }
     })
     .catch(error => {
         console.error('Error:', error);
+
+        Swal.fire({
+            title: 'Error!',
+            text: 'Error sending request to update status!',
+            icon: 'error',
+            confirmButtonText: 'Close'
+
         alert("Error sending request to update status!");
+
     });
 
     document.getElementById('status-modal').remove();
 }
+
+
+
 </script>
 </body>
 </html>
