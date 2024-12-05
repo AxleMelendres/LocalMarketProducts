@@ -8,7 +8,6 @@ require_once '../DB/productsTB.php';
 $database = new Database();
 $conn = $database->getConnection();
 
-
 if (!isset($_SESSION['vendor_id'])) {
     die("Vendor ID is not set in session. Please log in.");
 }
@@ -44,10 +43,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['product_id'])) {
             if (move_uploaded_file($imageTmpName, $imagePath)) {
                 // Image uploaded successfully
             } else {
-                echo "Failed to upload image.";
+                $error = "Failed to upload image.";
             }
         } else {
-            echo "Invalid image type. Only JPG, PNG, and GIF are allowed.";
+            $error = "Invalid image type. Only JPG, PNG, and GIF are allowed.";
         }
     }
 
@@ -60,13 +59,58 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['product_id'])) {
     $product->product_category = $productCategory;
 
     if ($product->update($productId)) {
-        echo "Product updated successfully!";
-        header('Location: ../PHP/vendorsprofile.php'); // Redirect to the vendor profile page after successful update
+        // Success: Use SweetAlert for success message and redirect
+        echo "
+        <!DOCTYPE html>
+        <html lang='en'>
+        <head>
+            <meta charset='UTF-8'>
+            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+            <title>SweetAlert</title>
+            <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        </head>
+        <body>
+        <script>
+        Swal.fire({
+            title: 'Product Updated Successfully!',
+            text: 'Your product has been updated.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        }).then((result) => {
+            if(result.isConfirmed) {
+                window.location.href = '../PHP/vendorsprofile.php'; // Redirect after confirmation
+            }
+        });
+        </script>
+        </body>
+        </html>";
         exit;
     } else {
-        echo "Error: Could not update product.";
+        // Error: Use SweetAlert for error message
+        echo "
+        <!DOCTYPE html>
+        <html lang='en'>
+        <head>
+            <meta charset='UTF-8'>
+            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+            <title>SweetAlert</title>
+            <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        </head>
+        <body>
+        <script>
+        Swal.fire({
+            title: 'Error!',
+            text: 'Could not update product. Please try again.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+        </script>
+        </body>
+        </html>";
+        exit;
     }
 }
+
 // If a product ID is set in the URL, fetch that product's details
 if (isset($_GET['product_id']) && !empty($_GET['product_id'])) {
     $product_id = $_GET['product_id'];
@@ -93,6 +137,7 @@ $products = $product->getProductsByVendor($vendor_id); // Get all products for t
     <title>Edit Products</title>
     <link rel="stylesheet" href="../CSS/edit_product.css">
     <script src="../JS/product.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert CDN -->
 </head>
 <body>
     <div class="heading-container">
@@ -162,21 +207,17 @@ $products = $product->getProductsByVendor($vendor_id); // Get all products for t
                 echo "<p><strong>Category:</strong> " . htmlspecialchars($prod['product_category']) . "</p>";
                 echo "<p><strong>Price:</strong> ₱" . number_format($prod['product_price'], 2) . "</p>";
                 echo "<p><strong>Quantity:</strong> " . htmlspecialchars($prod['product_quantity']) . "</p>";
-                echo "<p>" . nl2br(htmlspecialchars($prod['product_description'])) . "</p>";
+                echo "<p><strong>Description:</strong> " . htmlspecialchars($prod['product_description']) . "</p>";
+                echo "<a href='edit_product.php?product_id=" . $prod['product_id'] . "' class='btn'>Edit</a>";
                 echo "</div>";
-                // Add an Edit button to each product item
-                echo "<a href='edit_product.php?product_id=" . $prod['product_id'] . "' class='edit-btn'>Edit</a>";
                 echo "</li>";
             }
         } else {
-            echo "<p>No products available to edit.</p>";
+            echo "<p>No products found.</p>";
         }
         ?>
-    </ul>
-
+        </ul>
     <?php endif; ?>
 </div>
-<button id="back-button" class="btn">Back</button>
-
 </body>
 </html>

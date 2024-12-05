@@ -5,7 +5,7 @@ const editProfileButton = document.getElementById('edit-profile');  // Fixed typ
 const reservedProducts = document.getElementById('reserved-products');  // Fixed typo
 
 addProductButton.addEventListener('click', function() {
-    window.location.href = "../HTML/add_product.html";  
+    window.location.href = "../PHP/add_product.php";  
 });
 
 editProductButton.addEventListener('click', function() {
