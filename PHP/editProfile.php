@@ -17,7 +17,6 @@ $vendorDetails = $vendor->getVendor($vendor_uname);
 
 // Update vendor profile when the form is submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Fetch form data using isset() to avoid undefined index errors
     $vendor_name = isset($_POST['vendor_name']) ? $_POST['vendor_name'] : '';
     $vendor_description = isset($_POST['vendor_description']) ? $_POST['vendor_description'] : '';
     $vendor_email = isset($_POST['vendor_email']) ? $_POST['vendor_email'] : '';
@@ -36,13 +35,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         $allowed_exts = ['jpg', 'jpeg', 'png', 'gif'];
         if (in_array($image_ext, $allowed_exts)) {
-            // Generate a unique image name and define the upload path
             $new_image_name = uniqid('vendor_') . '.' . $image_ext;
             $image_upload_path = "../uploads/" . $new_image_name;
 
-            // Move the uploaded file to the target directory
             if (move_uploaded_file($image_tmp_name, $image_upload_path)) {
-                // Update the profile image path
                 $profile_image = $image_upload_path;
             } else {
                 $error = "Failed to upload image.";
@@ -53,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Update the vendor details in the database
-    if (!isset($error)) {  // Check if there's no error before executing the update query
+    if (!isset($error)) {
         $updateQuery = "UPDATE vendor SET vendor_name = :vendor_name, vendor_description = :vendor_description,
                         vendor_email = :vendor_email, vendor_contact = :vendor_contact,
                         vendor_address = :vendor_address, vendor_district = :vendor_district,
@@ -70,8 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->bindParam(':vendor_uname', $vendor_uname);
 
         if ($stmt->execute()) {
-            header("Location: vendorsprofile.php");
-            exit(); 
+            $success = "Profile updated successfully!";
         } else {
             $error = "Failed to update profile. Please try again.";
         }
@@ -90,6 +85,7 @@ $conn = null;
     <link rel="stylesheet" href="../CSS/editProfile.css"> 
     <script src="../JS/product.js" defer></script>
     <script src="https://kit.fontawesome.com/89e47c0436.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert CDN -->
 </head>
 <body>
 
@@ -97,10 +93,33 @@ $conn = null;
 
 <div class="container">
     <h2>Edit Profile</h2>
-    
-    <!-- Display success or error message -->
-    <?php if (isset($success) && $success != '') { echo "<div class='success'>$success</div>"; } ?>
-    <?php if (isset($error) && $error != '') { echo "<div class='error'>$error</div>"; } ?>
+
+    <!-- Display success or error message using SweetAlert -->
+    <?php if (isset($success) && $success != '') { ?>
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '<?php echo $success; ?>',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = 'vendorsprofile.php'; // Redirect to vendor profile page
+                }
+            });
+        </script>
+    <?php } ?>
+
+    <?php if (isset($error) && $error != '') { ?>
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: '<?php echo $error; ?>',
+                confirmButtonText: 'OK'
+            });
+        </script>
+    <?php } ?>
 
     <!-- Vendor Edit Form -->
     <form action="editProfile.php" method="POST" enctype="multipart/form-data">
@@ -141,6 +160,8 @@ $conn = null;
         <button type="submit" class="btn">Update Profile</button>
     </form>
 </div>
-    <button id="back-button" class="btn">Back</button>
+
+<button id="back-button" class="btn">Back</button>
+
 </body>
 </html>
