@@ -3,15 +3,6 @@ class Customer {
     private $conn;
     private $tbl_name = "buyer";
 
-    public $customer_id;
-    public $full_name;
-    public $username;
-    public $email;
-    public $contact_number;
-    public $purpose;
-    public $district;
-    public $buyer_image;
-
     public function __construct($db) {
         $this->conn = $db;
     }
@@ -35,24 +26,25 @@ class Customer {
     
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
     
-        // Check if data exists, return an empty array if not
-        if ($result) {
-            return $result;
-        } else {
-            return []; // Return an empty array if no data is found
-        }
+        // Return false if no data is found
+        return $result ?: false;
     }
-    
-    
 
-    public function updateCustomerDetails($username, $full_name, $email, $contact_number, $profile_picture = null) {
+    public function updateCustomerDetails($username, $full_name, $email, $contact_number, $district, $profile_picture = null) {
         try {
             // Update account details
-            $update_account_query = "UPDATE account SET `full_name` = :full_name, Email = :email, `Contact Number` = :contact_number WHERE Username = :username";
+            $update_account_query = "UPDATE account SET 
+                full_name = :full_name, 
+                Email = :email, 
+                `Contact Number` = :contact_number, 
+                District = :district 
+                WHERE Username = :username";
+            
             $stmt = $this->conn->prepare($update_account_query);
             $stmt->bindParam(':full_name', $full_name);
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':contact_number', $contact_number);
+            $stmt->bindParam(':district', $district);
             $stmt->bindParam(':username', $username);
             $stmt->execute();
 
