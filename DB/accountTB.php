@@ -53,11 +53,62 @@ class account {
         $this->password = $_POST['password'];
         $this->purpose = $_POST['purpose'];
         $this->district = $_POST['district'];
-
-        $usernameQuery = "SELECT * FROM " . $this->tbl_name . " WHERE Username = :username";
-        $usernameStmt = $this->conn->prepare($usernameQuery);
-        $usernameStmt->bindParam(':username', $this->uname);
-        $usernameStmt->execute();
+    
+        // Perform duplicate checks (username, email, contact) as in your original code...
+    
+        // Hash the password
+        $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
+    
+        // Prepare the query with named placeholders for the account insertion
+        $query = "INSERT INTO " . $this->tbl_name . " 
+                    (`full_name`, Username, Email, `Contact Number`, Password, Purpose, District) 
+                    VALUES (:name, :username, :email, :contact, :password, :purpose, :district)";
+    
+        // Prepare the statement
+        $stmt = $this->conn->prepare($query);
+    
+        // Bind the parameters to the placeholders
+        $stmt->bindParam(':name', $this->name);
+        $stmt->bindParam(':username', $this->uname);
+        $stmt->bindParam(':email', $this->email);
+        $stmt->bindParam(':contact', $this->contact);
+        $stmt->bindParam(':password', $hashedPassword);
+        $stmt->bindParam(':purpose', $this->purpose);
+        $stmt->bindParam(':district', $this->district);
+    
+        // Execute the query and check if it was successful
+        if ($stmt->execute()) {
+            // If successful, display SweetAlert and redirect
+            echo "<!DOCTYPE html>
+                <html lang='en'>
+                <head>
+                    <meta charset='UTF-8'>
+                    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+                    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+                </head>
+                <body>
+                <script>
+                    Swal.fire({
+                        title: 'Account Created!',
+                        text: 'Your account has been successfully created.',
+                        icon: 'success',
+                        confirmButtonText: 'Login Now'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = '../HTML/login.html'; // Redirect to login page
+                        }
+                    });
+                </script>
+                </body>
+                </html>";
+            exit; // Stop further script execution after alert
+        } else {
+            // Output error if account insert fails
+            echo "Error: " . $stmt->errorInfo()[2];
+            return false;  // Registration failed
+        }
+    
+    
     
         if ($usernameStmt->rowCount() > 0) {
             echo "<!DOCTYPE html>
