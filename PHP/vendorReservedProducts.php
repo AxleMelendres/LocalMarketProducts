@@ -143,6 +143,7 @@ function saveStatus(reservationId) {
     .then(data => {
         console.log("Response from server:", data);
         if (data.trim() === "Success") {
+
             Swal.fire({
                 title: 'Success!',
                 text: 'Status updated successfully!',
@@ -158,20 +159,31 @@ function saveStatus(reservationId) {
                 icon: 'error',
                 confirmButtonText: 'Try Again'
             });
+
+            alert("Status updated successfully!");
+            location.reload();
+        } else {
+            alert("Error updating status: " + data);
+
         }
     })
     .catch(error => {
         console.error('Error:', error);
+
         Swal.fire({
             title: 'Error!',
             text: 'Error sending request to update status!',
             icon: 'error',
             confirmButtonText: 'Close'
-        });
+
+        alert("Error sending request to update status!");
+
     });
 
     document.getElementById('status-modal').remove();
 }
+
+
 
 </script>
 </body>

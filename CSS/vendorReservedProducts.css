@@ -115,6 +115,7 @@ h2 {
     border-radius: 8px;
 }
 
+
 /* Style for the button */
 .btn-edit-status {
     background-color: #4CAF50; /* Green background */
@@ -143,3 +144,4 @@ h2 {
 .btn-edit-status:active {
     transform: scale(0.98); /* Slightly shrink the button when clicked */
 }
+
