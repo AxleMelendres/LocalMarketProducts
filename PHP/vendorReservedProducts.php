@@ -22,6 +22,7 @@ if ($vendor_id) {
     $reservedProducts = [];
 }
 
+
 $conn = null; // Close the connection
 ?>
 
@@ -38,8 +39,6 @@ $conn = null; // Close the connection
 <h2>Reserved Products</h2>
 <div class="container">
     <div class="reserved-products">
-        
-
         <?php if (isset($reservedProducts) && !empty($reservedProducts)): ?>
             <table class="reserved-products-table">
                 <thead>
@@ -50,6 +49,9 @@ $conn = null; // Close the connection
                         <th>Buyer</th>
                         <th>Quantity</th>
                         <th>Date Reserved</th>
+                        <th>Pickup Duration</th>
+                        <th>Status</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -65,6 +67,11 @@ $conn = null; // Close the connection
                             <td><?php echo htmlspecialchars($reservation['buyer_name']); ?></td>
                             <td><?php echo htmlspecialchars($reservation['reserved_quantity']); ?></td>
                             <td><?php echo htmlspecialchars($reservation['reserved_date']); ?></td>
+                            <td><?php echo htmlspecialchars($reservation['pickup_date']); ?></td>
+                            <td><?php echo htmlspecialchars($reservation['status']); ?></td>
+                            <td>
+                                <button class="btn-edit-status" onclick="editStatus(<?php echo $reservation['reservation_id']; ?>)">Edit Status</button>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -72,11 +79,81 @@ $conn = null; // Close the connection
         <?php else: ?>
             <p>No products have been reserved for your listings.</p>
         <?php endif; ?>
-
     </div>
 </div>
-            
-</div>
-    <button id="back-button" class="btn">Back</button>
+<button id="back-button" class="btn">Back</button>
+
+<script>
+function editStatus(reservationId) {
+    var dropdownHtml = `
+        <label for="status">Select Status:</label>
+        <select id="status-dropdown">
+            <option value="Pending">Pending</option>
+            <option value="Received">Received</option>
+            <option value="Cancelled">Cancelled</option>
+        </select>
+        <button onclick="saveStatus(${reservationId})">Save</button>
+    `;
+    
+    var modalContent = document.createElement('div');
+    modalContent.innerHTML = dropdownHtml;
+    
+    var modal = document.createElement('div');
+    modal.id = 'status-modal';
+    modal.className = 'status-modal';
+    modal.appendChild(modalContent);
+    
+    document.body.appendChild(modal);
+    
+    var style = document.createElement('style');
+    style.innerHTML = `
+        .status-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .status-modal div {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+function saveStatus(reservationId) {
+    var newStatus = document.getElementById('status-dropdown').value;
+    
+    fetch('../PHP/update_status.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `reservation_id=${reservationId}&status=${newStatus}`
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log("Response from server:", data);
+        if (data.trim() === "Success") {
+            alert("Status updated successfully!");
+            location.reload();
+        } else {
+            alert("Error updating status: " + data);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert("Error sending request to update status!");
+    });
+
+    document.getElementById('status-modal').remove();
+}
+</script>
 </body>
 </html>

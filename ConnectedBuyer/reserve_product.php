@@ -56,9 +56,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $vendor_id = $vendorRow['vendor_id'];
 
-        // Insert reservation into the `reservations` table, including vendor_id and total price
-        $query = "INSERT INTO reservations (product_id, buyer_id, vendor_id, product_name, product_price, reserved_quantity, total_price, reserved_date)
-                  VALUES (:product_id, :buyer_id, :vendor_id, :product_name, :product_price, :reserved_quantity, :total_price, NOW())";
+        // Insert reservation into the `reservations` table, including vendor_id, total price, and status 'pending'
+        $query = "INSERT INTO reservations (product_id, buyer_id, vendor_id, product_name, product_price, reserved_quantity, total_price, reserved_date, status)
+                  VALUES (:product_id, :buyer_id, :vendor_id, :product_name, :product_price, :reserved_quantity, :total_price, NOW(), 'pending')";
 
         $stmt = $conn->prepare($query);
         $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Commit the transaction
         $conn->commit();
-        header("Location: ../ConnectedBuyer/main.php");
+        header("Location: ../ConnectedBuyer/main.php"); // Redirect after reservation
     } catch (Exception $e) {
         // Rollback the transaction in case of an error
         $conn->rollBack();
