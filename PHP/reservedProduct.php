@@ -15,7 +15,7 @@ $database = new Database();
 $conn = $database->getConnection();
 
 $query = "
-    SELECT r.reserved_quantity, r.reserved_date, b.buyer_name, 
+    SELECT r.reservation_id, r.reserved_quantity, r.reserved_date, b.buyer_name, 
            p.product_name, p.product_price, p.product_image
     FROM reservations r
     JOIN buyer b ON r.buyer_id = b.buyer_id
@@ -39,6 +39,7 @@ if ($stmt->rowCount() > 0) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reserved Products</title>
     <link rel="stylesheet" href="../CSS/reservedProduct.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert2 -->
 </head>
 <body>
     <?php require "../ConnectedBuyer/HEADER/header.html"; ?>
@@ -54,19 +55,84 @@ if ($stmt->rowCount() > 0) {
                     // Calculate the total price
                     $total_price = $product['product_price'] * $product['reserved_quantity'];
                     ?>
-                    <div class="product-card">
+                    <div class="product-card" id="product-card-<?= htmlspecialchars($product['reservation_id']); ?>">
                         <img src="<?= htmlspecialchars($product['product_image']); ?>" 
-                             alt="<?= htmlspecialchars($product['product_name']); ?>">
+                            alt="<?= htmlspecialchars($product['product_name']); ?>">
                         <h2><?= htmlspecialchars($product['product_name']); ?></h2>
-                        <p class="">Buyer: <?= htmlspecialchars($product['buyer_name']); ?></p>
+                        <p>Buyer: <?= htmlspecialchars($product['buyer_name']); ?></p>
                         <p class="price">Total Price: ₱<?= number_format($total_price, 2); ?></p>
-                        <p class="">Quantity: <?= htmlspecialchars($product['reserved_quantity']); ?></p>
-                        <p class="">Reserved Date: <?= htmlspecialchars($product['reserved_date']); ?></p>
+                        <p>Quantity: <?= htmlspecialchars($product['reserved_quantity']); ?></p>
+                        <p>Reserved Date: <?= htmlspecialchars($product['reserved_date']); ?></p>
+                        <!-- Delete button -->
+                        <button 
+                            class="delete-button" 
+                            onclick="confirmDelete(<?= htmlspecialchars($product['reservation_id']); ?>, this.closest('.product-card'))">
+                            Delete
+                        </button>
                     </div>
+
                 <?php endforeach; ?>
             <?php endif; ?>
         </div>
     </div>
+
+                <script>
+                        function confirmDelete(reservationId, cardElement) {
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Proceed with the deletion
+                            const formData = new FormData();
+                            formData.append('reservation_id', reservationId);
+
+                            fetch('deleteReservation.php', {
+                                method: 'POST',
+                                body: formData
+                            })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(`HTTP error! status: ${response.status}`);
+                                }
+                                return response.text();
+                            })
+                            .then(data => {
+                                if (data.trim() === '') {
+                                    Swal.fire(
+                                        'Deleted!',
+                                        'Your reservation has been deleted.',
+                                        'success'
+                                    ).then(() => {
+                                        // Remove the product card dynamically
+                                        cardElement.remove();
+                                    });
+                                } else {
+                                    Swal.fire(
+                                        'Error!',
+                                        data,
+                                        'error'
+                                    );
+                                }
+                            })
+                            .catch(error => {
+                                Swal.fire(
+                                    'Error!',
+                                    'An error occurred while deleting the reservation.',
+                                    'error'
+                                );
+                                console.error('Fetch error:', error);
+                            });
+                        }
+                    });
+                }
+
+            </script>
 </body>
 </html>
 
