@@ -1,11 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Back Button: Go back to the previous page
     const backButton = document.getElementById('back-button');
     if (backButton) {
+
         backButton.addEventListener('click', function () {
-            window.history.back(); // Go back to the previous page
+            window.location.href = '../PHP/vendorsprofile.php';
         });
     }
+});
+
 
     // Product Selection: Highlight selected product
     let selectedProductId = null;
@@ -28,54 +30,50 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-  // Product Selection: Enable checkbox selection and toggle the delete button visibility
-  let selectedProductIds = [];
+    // Product Selection: Enable checkbox selection and toggle the delete button visibility
+    let selectedProductIds = [];
 
-  const productCheckboxes = document.querySelectorAll('.product-checkbox');
-  const removeBtn = document.getElementById('remove-product-btn');
+    const productCheckboxes = document.querySelectorAll('.product-checkbox');
+    const removeBtn = document.getElementById('remove-product-btn');
 
-  // Add click event listener to checkboxes
-  productCheckboxes.forEach(checkbox => {
-      checkbox.addEventListener('change', function () {
-          const productId = this.getAttribute('data-product-id');
+    // Add click event listener to checkboxes
+    productCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            const productId = this.getAttribute('data-product-id');
 
-          // Add or remove product ID from the selectedProductIds array
-          if (this.checked) {
-              selectedProductIds.push(productId);
-          } else {
-              selectedProductIds = selectedProductIds.filter(id => id !== productId);
-          }
+            // Add or remove product ID from the selectedProductIds array
+            if (this.checked) {
+                selectedProductIds.push(productId);
+            } else {
+                selectedProductIds = selectedProductIds.filter(id => id !== productId);
+            }
 
-          // Show or hide the "Delete" button depending on whether any products are selected
-          if (selectedProductIds.length > 0) {
-              removeBtn.style.display = 'block';
-          } else {
-              removeBtn.style.display = 'none';
-          }
-      });
-  });
+            // Show or hide the "Delete" button depending on whether any products are selected
+            if (selectedProductIds.length > 0) {
+                removeBtn.style.display = 'block';
+            } else {
+                removeBtn.style.display = 'none';
+            }
+        });
+    });
 
-  // Add click event listener for the delete button
-  removeBtn.addEventListener('click', function () {
-      if (selectedProductIds.length > 0) {
-          // Make an AJAX request to delete the selected products
-          const formData = new FormData();
-          formData.append('product_ids[]', selectedProductIds);
+    // Add click event listener for the delete button
+    removeBtn.addEventListener('click', function () {
+        if (selectedProductIds.length > 0) {
+            // Check all the selected checkboxes and ensure they are part of the form
+            const form = document.querySelector('form');
+            // Add the selected product IDs to the form (hidden input fields)
+            selectedProductIds.forEach(id => {
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = 'product_ids[]';
+                hiddenInput.value = id;
+                form.appendChild(hiddenInput);
+            });
+            // Submit the form
+            form.submit();
+        } else {
+            alert('Please select at least one product to delete.');
+        }
+    });
 
-          fetch('delete_product.php', {
-              method: 'POST',
-              body: formData
-          })
-          .then(response => response.text())
-          .then(data => {
-              if (data === 'success') {
-                  alert('Selected products deleted successfully');
-                  location.reload(); // Reload the page to update the product list
-              } else {
-                  alert('Error deleting products');
-              }
-          })
-          .catch(error => console.error('Error:', error));
-      }
-  });
-});
