@@ -9,7 +9,8 @@ $database = new Database();
 $conn = $database->getConnection();
 
 if (!isset($_SESSION['vendor_id'])) {
-    die("Vendor ID is not set in session. Please log in.");
+    echo json_encode(['status' => 'error', 'message' => 'Vendor ID is not set in session. Please log in.']);
+    exit;
 }
 
 $vendor_id = $_SESSION['vendor_id']; 
@@ -17,7 +18,6 @@ $vendor_id = $_SESSION['vendor_id'];
 // Create Product object
 $product = new Product($conn);
 
-// Handle form submission to update the product
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['product_id'])) {
     // Collect product details from the form
     $productId = $_POST['product_id'];
@@ -40,13 +40,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['product_id'])) {
             $uploadDir = '../uploads/';
             $imagePath = $uploadDir . basename($imageName); // Update image path if new image is uploaded
 
-            if (move_uploaded_file($imageTmpName, $imagePath)) {
-                // Image uploaded successfully
-            } else {
-                $error = "Failed to upload image.";
+            if (!move_uploaded_file($imageTmpName, $imagePath)) {
+                echo json_encode(['status' => 'error', 'message' => 'Failed to upload image.']);
+                exit;
             }
         } else {
-            $error = "Invalid image type. Only JPG, PNG, and GIF are allowed.";
+            echo json_encode(['status' => 'error', 'message' => 'Invalid image type. Only JPG, PNG, and GIF are allowed.']);
+            exit;
         }
     }
 
@@ -59,56 +59,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['product_id'])) {
     $product->product_category = $productCategory;
 
     if ($product->update($productId)) {
-        // Success: Use SweetAlert for success message and redirect
-        echo "
-        <!DOCTYPE html>
-        <html lang='en'>
-        <head>
-            <meta charset='UTF-8'>
-            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-            <title>SweetAlert</title>
-            <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
-        </head>
-        <body>
-        <script>
-        Swal.fire({
-            title: 'Product Updated Successfully!',
-            text: 'Your product has been updated.',
-            icon: 'success',
-            confirmButtonText: 'OK'
-        }).then((result) => {
-            if(result.isConfirmed) {
-                window.location.href = '../PHP/vendorsprofile.php'; // Redirect after confirmation
-            }
-        });
-        </script>
-        </body>
-        </html>";
-        exit;
+        echo json_encode(['status' => 'success', 'message' => 'Product updated successfully.']);
     } else {
-        // Error: Use SweetAlert for error message
-        echo "
-        <!DOCTYPE html>
-        <html lang='en'>
-        <head>
-            <meta charset='UTF-8'>
-            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-            <title>SweetAlert</title>
-            <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
-        </head>
-        <body>
-        <script>
-        Swal.fire({
-            title: 'Error!',
-            text: 'Could not update product. Please try again.',
-            icon: 'error',
-            confirmButtonText: 'OK'
-        });
-        </script>
-        </body>
-        </html>";
-        exit;
+        echo json_encode(['status' => 'error', 'message' => 'Could not update product. Please try again.']);
     }
+    exit; // Ensure the script stops after sending the response
 }
 
 // If a product ID is set in the URL, fetch that product's details
@@ -138,6 +93,7 @@ $products = $product->getProductsByVendor($vendor_id); // Get all products for t
     <link rel="stylesheet" href="../CSS/edit_product.css">
     <script src="../JS/product.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="heading-container">
@@ -151,7 +107,7 @@ $products = $product->getProductsByVendor($vendor_id); // Get all products for t
         <!-- If Editing a Product -->
         <h2>Edit Product: <?php echo htmlspecialchars($productDetails['product_name']); ?></h2>
 
-        <form action="edit_product.php" method="POST" enctype="multipart/form-data">
+        <form id="edit-product-form" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="product_id" value="<?php echo $product_id; ?>">
             <input type="hidden" name="current-image" value="<?php echo htmlspecialchars($productDetails['product_image']); ?>">
 
@@ -193,7 +149,6 @@ $products = $product->getProductsByVendor($vendor_id); // Get all products for t
             </div>
 
             <button type="submit" class="btn">Update Product</button>
-
         </form>
     <?php else: ?>
         <ul id="product-list">
@@ -220,5 +175,56 @@ $products = $product->getProductsByVendor($vendor_id); // Get all products for t
     <?php endif; ?>
 </div>
     <button id="back-button" class="btn">Back</button>
+
+<script>
+$(document).ready(function() {
+    $('#edit-product-form').on('submit', function(e) {
+        e.preventDefault();
+
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: 'edit_product.php', 
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            dataType: 'json',
+            success: function(data) {
+                if (data.status === 'success') {
+                    Swal.fire({
+                        title: 'Product Updated!',
+                        text: data.message,
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        window.location.href = 'edit_product.php'; // Reload page after success
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: data.message,
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            },
+            error: function() {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'An error occurred while updating the product.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            }
+        });
+    });
+
+    $('#back-button').click(function() {
+        window.location.href = 'vendorsprofile.php'; // Redirect to vendor profile page
+    });
+});
+</script>
+
 </body>
 </html>
