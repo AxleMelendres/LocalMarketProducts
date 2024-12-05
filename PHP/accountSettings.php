@@ -18,14 +18,16 @@ $username = $_SESSION['username'];
 $success = $error = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    
     // Get form data
     $full_name = $_POST['full_name'];
     $email = $_POST['email'];
     $contact_number = $_POST['contact_number'];
+    $district = $_POST['district'];
     $profile_picture = $_FILES['profile_picture'] ?? null;
 
     // Call the update function
-    $result = $customer->updateCustomerDetails($username, $full_name, $email, $contact_number, $profile_picture);
+    $result = $customer->updateCustomerDetails($username, $full_name, $email, $contact_number, $district, $profile_picture);
 
     // Check the result
     if (strpos($result, 'successfully') !== false) {
@@ -37,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 // Fetch account details
 $user = $customer->getCustomerDetails($username);
-if (!$user) {
+if ($user === false) {
     die("User not found.");
 }
 ?>
@@ -77,10 +79,17 @@ if (!$user) {
                 <label for="contact_number">Contact Number:</label>
                 <input type="text" id="contact_number" name="contact_number" value="<?php echo htmlspecialchars($user['Contact Number'] ?? ''); ?>" required>
 
-
-
                 <label for="profile_picture">Profile Picture:</label>
                 <input type="file" name="profile_picture" id="profile_picture" accept="image/*">
+
+                <label for="district">District:</label>
+                <select id="district" name="district" required>
+                    <option value="South District" <?php echo $user['District'] == 'South District' ? 'selected' : ''; ?>>South District</option>
+                    <option value="North District" <?php echo $user['District'] == 'North District' ? 'selected' : ''; ?>>North District</option>
+                    <option value="West District" <?php echo $user['District'] == 'West District' ? 'selected' : ''; ?>>West District</option>
+                    <option value="East District" <?php echo $user['District'] == 'East District' ? 'selected' : ''; ?>>East District</option>
+                    <option value="Urban District" <?php echo $user['District'] == 'Urban District' ? 'selected' : ''; ?>>Urban District</option>
+                </select>
 
                 <button type="submit" class="details-button" style="color: wheat;">Save Changes</button>
             </form>
@@ -98,11 +107,7 @@ if (!$user) {
             confirmButtonText: 'OK'
         }).then((result) => {
             if (result.isConfirmed) {
-
                 window.location.href = 'customerProfile.php';
-
-                window.location.href = 'customerProfile.php'; // Redirect after success
-
             }
         });
     </script>
