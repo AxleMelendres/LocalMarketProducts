@@ -22,7 +22,6 @@ if ($vendor_id) {
     $reservedProducts = [];
 }
 
-
 $conn = null; // Close the connection
 ?>
 
@@ -35,7 +34,6 @@ $conn = null; // Close the connection
     <link rel="stylesheet" href="../CSS/vendorReservedProducts.css">
     <script src="../JS/product.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 </head>
 <body>
 <h2>Reserved Products</h2>
@@ -73,14 +71,12 @@ $conn = null; // Close the connection
                             <td><?php echo htmlspecialchars($reservation['status']); ?></td>
                             <td>
                                 <?php if ($reservation['status'] !== 'Received' && $reservation['status'] !== 'Cancelled'): ?>
-                                <button class="btn-received-product" onclick="markAsReceived(<?php echo $reservation['reservation_id']; ?>)">Received Product</button>
+                                    <button class="btn-received-product" onclick="markAsReceived(<?php echo $reservation['reservation_id']; ?>)">Received Product</button>
                                 <?php endif; ?>
                             </td>
-
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
-
             </table>
         <?php else: ?>
             <p>No products have been reserved for your listings.</p>
@@ -139,8 +135,6 @@ function markAsReceived(reservationId) {
     });
 }
 
-
-
 function saveStatus(reservationId) {
     var newStatus = document.getElementById('status-dropdown').value;
     
@@ -181,10 +175,7 @@ function saveStatus(reservationId) {
             confirmButtonText: 'Close'
         });
     });
-
-    document.getElementById('status-modal').remove();
 }
-
 </script>
 </body>
 </html>
