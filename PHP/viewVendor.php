@@ -35,7 +35,23 @@ $conn = null; // Close the connection
     <link rel="stylesheet" href="../CSS/vendorsprofile.css">
 </head>
 <body>
-    <?php require "../connectedBuyer/HEADER/profileheader.html"; ?> <!-- Assuming a shared header -->
+    <?php
+    // Determine the full script path
+    $fullPath = $_SERVER['SCRIPT_NAME'];
+
+        if ($user_role !== 'Seller') {
+            // Load Buyer-specific header
+            require realpath("../ConnectedBuyer/HEADER/profileheader.html");
+        } else if ($user_role !== 'Buyer') {
+            require realpath("../ConnectedVendor/HEADER/profileheader.html");
+        } else {
+            // Load Buyer-specific header
+            require realpath("../ConnectedBuyer/HEADER/profileheader.html");
+        }
+    ?>
+
+
+
     
     <div class="container">
         <div class="profile">
