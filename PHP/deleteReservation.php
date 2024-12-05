@@ -1,40 +1,51 @@
 <?php
-require_once "../PHP/dbConnection.php";
 session_start();
 
-// Check if the request method is POST and the reservation_id is set
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reservation_id'])) {
-    $reservation_id = $_POST['reservation_id'];
+// Ensure the buyer is logged in
+if (!isset($_SESSION['buyer_id'])) {
+    echo "Error: Please log in to delete a reservation.";
+    exit;
+}
 
-    // Validate buyer session
-    if (!isset($_SESSION['buyer_id'])) {
-        http_response_code(403); // Forbidden
-        echo "Error: You need to log in to delete a reservation.";
+require_once "../PHP/dbConnection.php";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Get reservation_id from POST request
+    $reservation_id = $_POST['reservation_id'] ?? null;
+
+    if (!$reservation_id) {
+        echo "Error: Missing reservation ID.";
         exit;
     }
-
-    $buyer_id = $_SESSION['buyer_id']; // Get the logged-in buyer ID
 
     // Initialize database connection
     $database = new Database();
     $conn = $database->getConnection();
 
-    // Begin a transaction
-    $conn->beginTransaction();
-
     try {
-        // Check if the reservation exists and belongs to the logged-in buyer
-        $query = "SELECT * FROM reservations WHERE reservation_id = :reservation_id AND buyer_id = :buyer_id";
-        $stmt = $conn->prepare($query);
-        $stmt->bindParam(':reservation_id', $reservation_id, PDO::PARAM_INT);
-        $stmt->bindParam(':buyer_id', $buyer_id, PDO::PARAM_INT);
-        $stmt->execute();
+        // Begin a transaction
+        $conn->beginTransaction();
 
-        if ($stmt->rowCount() === 0) {
-            throw new Exception("Reservation not found or you are not authorized to delete this reservation.");
+        // Fetch the reservation data to get the reserved quantity and product_id
+        $reservationQuery = "SELECT product_id, reserved_quantity FROM reservations WHERE reservation_id = :reservation_id";
+        $reservationStmt = $conn->prepare($reservationQuery);
+        $reservationStmt->bindParam(':reservation_id', $reservation_id, PDO::PARAM_INT);
+        $reservationStmt->execute();
+
+        $reservation = $reservationStmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$reservation) {
+            throw new Exception("Reservation not found.");
         }
 
-        // Delete the reservation
+        // Restore the original product quantity in the products table
+        $updateProductQuery = "UPDATE products SET product_quantity = product_quantity + :reserved_quantity WHERE product_id = :product_id";
+        $updateProductStmt = $conn->prepare($updateProductQuery);
+        $updateProductStmt->bindParam(':reserved_quantity', $reservation['reserved_quantity'], PDO::PARAM_INT);
+        $updateProductStmt->bindParam(':product_id', $reservation['product_id'], PDO::PARAM_INT);
+        $updateProductStmt->execute();
+
+        // Delete the reservation from the reservations table
         $deleteQuery = "DELETE FROM reservations WHERE reservation_id = :reservation_id";
         $deleteStmt = $conn->prepare($deleteQuery);
         $deleteStmt->bindParam(':reservation_id', $reservation_id, PDO::PARAM_INT);
@@ -42,19 +53,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reservation_id'])) {
 
         // Commit the transaction
         $conn->commit();
-
-        // Return success (empty response or success message)
-        http_response_code(200); // OK
-        exit; // Exit without outputting anything else
+        echo ""; // Success, return an empty response
     } catch (Exception $e) {
-        // Rollback the transaction on error
+        // Rollback the transaction in case of an error
         $conn->rollBack();
-        http_response_code(500); // Internal Server Error
-        echo "Error: Unable to delete the reservation. " . $e->getMessage();
-        exit;
+        echo "Error: " . $e->getMessage();
     }
 } else {
-    http_response_code(400); // Bad Request
-    echo "Invalid request.";
-    exit;
+    echo "Invalid request method.";
 }
+?>

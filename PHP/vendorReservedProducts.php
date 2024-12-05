@@ -58,7 +58,7 @@ $conn = null; // Close the connection
                 </thead>
                 <tbody>
                     <?php foreach ($reservedProducts as $reservation): ?>
-                        <tr>
+                        <tr data-reservation-id="<?php echo $reservation['reservation_id']; ?>">
                             <td>
                                 <img src="<?php echo htmlspecialchars($reservation['product_image']); ?>" alt="Product Image" style="width: 100px; height: auto;">
                             </td>
@@ -72,11 +72,15 @@ $conn = null; // Close the connection
                             <td><?php echo htmlspecialchars($reservation['pickup_date']); ?></td>
                             <td><?php echo htmlspecialchars($reservation['status']); ?></td>
                             <td>
-                                <button class="btn-edit-status" onclick="editStatus(<?php echo $reservation['reservation_id']; ?>)">Edit Status</button>
+                                <?php if ($reservation['status'] !== 'Received' && $reservation['status'] !== 'Cancelled'): ?>
+                                <button class="btn-received-product" onclick="markAsReceived(<?php echo $reservation['reservation_id']; ?>)">Received Product</button>
+                                <?php endif; ?>
                             </td>
+
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
+
             </table>
         <?php else: ?>
             <p>No products have been reserved for your listings.</p>
@@ -86,48 +90,56 @@ $conn = null; // Close the connection
 <button id="back-button" class="btn">Back</button>
 
 <script>
-function editStatus(reservationId) {
-    var dropdownHtml = `
-        <label for="status">Select Status:</label>
-        <select id="status-dropdown">
-            <option value="Pending">Pending</option>
-            <option value="Received">Received</option>
-            <option value="Cancelled">Cancelled</option>
-        </select>
-        <button onclick="saveStatus(${reservationId})">Save</button>
-    `;
-    
-    var modalContent = document.createElement('div');
-    modalContent.innerHTML = dropdownHtml;
-    
-    var modal = document.createElement('div');
-    modal.id = 'status-modal';
-    modal.className = 'status-modal';
-    modal.appendChild(modalContent);
-    
-    document.body.appendChild(modal);
-    
-    var style = document.createElement('style');
-    style.innerHTML = `
-        .status-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+function markAsReceived(reservationId) {
+    fetch('../PHP/update_status.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `reservation_id=${reservationId}&status=Received`
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log("Response from server:", data);
+        if (data.trim() === "Success") {
+            Swal.fire({
+                title: 'Success!',
+                text: 'Product marked as received!',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                // Optionally remove the button if the status is updated
+                const row = document.querySelector(`tr[data-reservation-id="${reservationId}"]`);
+                if (row) {
+                    const buttonCell = row.querySelector('.btn-received-product');
+                    if (buttonCell) {
+                        buttonCell.remove(); // Remove the button
+                    }
+                }
+
+                location.reload(); // Reload to reflect the updated status in the table
+            });
+        } else {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Error marking product as received: ' + data,
+                icon: 'error',
+                confirmButtonText: 'Try Again'
+            });
         }
-        .status-modal div {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-        }
-    `;
-    document.head.appendChild(style);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        Swal.fire({
+            title: 'Error!',
+            text: 'Error sending request to update status!',
+            icon: 'error',
+            confirmButtonText: 'Close'
+        });
+    });
 }
+
+
 
 function saveStatus(reservationId) {
     var newStatus = document.getElementById('status-dropdown').value;

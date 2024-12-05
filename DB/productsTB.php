@@ -329,25 +329,39 @@ class Reservation {
                       b.buyer_name, 
                       b.buyer_image,
                       DATE_ADD(r.reserved_date, INTERVAL 3 DAY) AS pickup_date,  -- Adding 3 days to reserved_date
-                      r.status
+                      r.status,
+                      CASE
+                          WHEN CURDATE() >= DATE_ADD(r.reserved_date, INTERVAL 3 DAY) AND r.status != 'Received' THEN 'Cancelled'
+                          ELSE r.status
+                      END AS updated_status
                   FROM reservations r
                   JOIN products p ON r.product_id = p.product_id
                   JOIN buyer b ON r.buyer_id = b.buyer_id
                   WHERE p.vendor_id = :vendor_id
                   ORDER BY r.reserved_date DESC"; // Sorted by reservation date
-    
+        
         // Prepare the statement
         $stmt = $this->conn->prepare($query);
-    
+        
         // Bind the vendor_id parameter
         $stmt->bindParam(':vendor_id', $vendor_id, PDO::PARAM_INT);
-    
+        
         // Execute the query
         $stmt->execute();
+        
+        // Fetch the results and update the status field
+        $reservedProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        // Iterate over the products and update the status in the array
+        foreach ($reservedProducts as &$product) {
+            // Update the status field based on the query logic
+            $product['status'] = $product['updated_status'];
+        }
     
         // Return the results as an associative array
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $reservedProducts;
     }
+    
 }
 
 ?>
