@@ -49,9 +49,6 @@ $conn = null; // Close the connection
             require realpath("../ConnectedBuyer/HEADER/profileheader.html");
         }
     ?>
-
-
-
     
     <div class="container">
         <div class="profile">
