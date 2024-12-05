@@ -317,32 +317,36 @@ class Reservation {
         $this->conn = $dbConnection;
     }
 
-    // Get reserved products for a specific product
-    public function getReservedProductsByProduct($product_id) {
-        // SQL query to get reserved products by product_id
-        $query = "SELECT p.product_name, r.reserved_quantity, r.reserved_date, b.buyer_name
+    // Get reserved products for a specific vendor
+    public function getReservedProductsByVendor($vendor_id) {
+        // SQL query to get reserved products by vendor_id, including images
+        $query = "SELECT 
+                      p.product_name, 
+                      p.product_image, 
+                      r.reserved_quantity, 
+                      r.reserved_date, 
+                      b.buyer_name, 
+                      b.buyer_image
                   FROM reservations r
                   JOIN products p ON r.product_id = p.product_id
                   JOIN buyer b ON r.buyer_id = b.buyer_id
-                  WHERE r.product_id = :product_id
+                  WHERE p.vendor_id = :vendor_id
                   ORDER BY r.reserved_date DESC"; // Sorted by reservation date
-
+    
         // Prepare the statement
         $stmt = $this->conn->prepare($query);
-
-        // Bind the product_id parameter
-        $stmt->bindParam(':product_id', $product_id);
-
+    
+        // Bind the vendor_id parameter
+        $stmt->bindParam(':vendor_id', $vendor_id, PDO::PARAM_INT);
+    
         // Execute the query
         $stmt->execute();
-
+    
         // Return the results as an associative array
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    
+
 }
-
-
-
-
 
 ?>
