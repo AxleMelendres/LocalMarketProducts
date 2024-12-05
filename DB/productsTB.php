@@ -319,14 +319,17 @@ class Reservation {
 
     // Get reserved products for a specific vendor
     public function getReservedProductsByVendor($vendor_id) {
-        // SQL query to get reserved products by vendor_id, including images
+        // SQL query to get reserved products by vendor_id, including images and calculating pickup_date
         $query = "SELECT 
+                      r.reservation_id,
                       p.product_name, 
                       p.product_image, 
                       r.reserved_quantity, 
                       r.reserved_date, 
                       b.buyer_name, 
-                      b.buyer_image
+                      b.buyer_image,
+                      DATE_ADD(r.reserved_date, INTERVAL 3 DAY) AS pickup_date,  -- Adding 3 days to reserved_date
+                      r.status
                   FROM reservations r
                   JOIN products p ON r.product_id = p.product_id
                   JOIN buyer b ON r.buyer_id = b.buyer_id
@@ -345,8 +348,6 @@ class Reservation {
         // Return the results as an associative array
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
-
 }
 
 ?>
