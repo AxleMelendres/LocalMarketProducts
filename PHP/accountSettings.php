@@ -98,7 +98,11 @@ if (!$user) {
             confirmButtonText: 'OK'
         }).then((result) => {
             if (result.isConfirmed) {
+
                 window.location.href = 'customerProfile.php';
+
+                window.location.href = 'customerProfile.php'; // Redirect after success
+
             }
         });
     </script>
