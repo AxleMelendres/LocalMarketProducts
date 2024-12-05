@@ -44,13 +44,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             throw new Exception("Invalid buyer ID: Buyer does not exist.");
         }
 
-        // Insert reservation into the `reservations` table, including total price
-        $query = "INSERT INTO reservations (product_id, buyer_id, product_name, product_price, reserved_quantity, total_price, reserved_date)
-                  VALUES (:product_id, :buyer_id, :product_name, :product_price, :reserved_quantity, :total_price, NOW())";
+        // Fetch the vendor_id from the products table using product_id
+        $vendorQuery = "SELECT vendor_id FROM products WHERE product_id = :product_id";
+        $vendorStmt = $conn->prepare($vendorQuery);
+        $vendorStmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
+        $vendorStmt->execute();
+
+        $vendorRow = $vendorStmt->fetch(PDO::FETCH_ASSOC);
+        if (!$vendorRow) {
+            throw new Exception("Invalid product ID: Product does not exist.");
+        }
+        $vendor_id = $vendorRow['vendor_id'];
+
+        // Insert reservation into the `reservations` table, including vendor_id and total price
+        $query = "INSERT INTO reservations (product_id, buyer_id, vendor_id, product_name, product_price, reserved_quantity, total_price, reserved_date)
+                  VALUES (:product_id, :buyer_id, :vendor_id, :product_name, :product_price, :reserved_quantity, :total_price, NOW())";
 
         $stmt = $conn->prepare($query);
         $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
         $stmt->bindParam(':buyer_id', $buyer_id, PDO::PARAM_INT);
+        $stmt->bindParam(':vendor_id', $vendor_id, PDO::PARAM_INT);
         $stmt->bindParam(':product_name', $product_name, PDO::PARAM_STR);
         $stmt->bindParam(':product_price', $product_price, PDO::PARAM_STR);
         $stmt->bindParam(':reserved_quantity', $reserved_quantity, PDO::PARAM_INT);

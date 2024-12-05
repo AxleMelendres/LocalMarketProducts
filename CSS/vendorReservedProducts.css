@@ -1,0 +1,99 @@
+/* General Reset */
+body, h1, h2, h3, p, ul, li, table {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color:#4E6A4A  ;
+    color: #333;
+    line-height: 1.6;
+    display: flex;           /* Enable flexbox */
+    flex-direction: column;  /* Stack elements vertically */
+    justify-content: center; /* Center content horizontally */
+    align-items: center;     /* Center content vertically */
+    height: 100vh;           /* Full viewport height */
+    margin: 0;               /* Remove default margin */
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 15px;
+    background-color: wheat;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Header */
+h2 {
+    color: wheat;
+    font-size: 2.5rem;
+}
+
+/* Reserved Products Table */
+.reserved-products-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.reserved-products-table th, 
+.reserved-products-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.reserved-products-table th {
+    background-color: #f1f1f1;
+    font-weight: bold;
+}
+
+.reserved-products-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.reserved-products-table td img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* Reserved Products - Empty State */
+.container p {
+    text-align: center;
+    color: #666;
+}
+
+/* Back Button */
+#back-button {
+    background-color: #f44336;
+    padding: 12px 24px;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;         /* Add space between the container and the button */
+    margin-bottom: 20px;      /* Add bottom space for aesthetic */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .reserved-products-table th, 
+    .reserved-products-table td {
+        padding: 10px 8px;
+        font-size: 14px;
+    }
+
+    .reserved-products-table td img {
+        max-width: 80px;
+        max-height: 80px;
+    }
+}
+
