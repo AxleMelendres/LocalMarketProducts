@@ -207,9 +207,9 @@ $products = $product->getProductsByVendor($vendor_id); // Get all products for t
                 echo "<p><strong>Category:</strong> " . htmlspecialchars($prod['product_category']) . "</p>";
                 echo "<p><strong>Price:</strong> ₱" . number_format($prod['product_price'], 2) . "</p>";
                 echo "<p><strong>Quantity:</strong> " . htmlspecialchars($prod['product_quantity']) . "</p>";
-                echo "<p><strong>Description:</strong> " . htmlspecialchars($prod['product_description']) . "</p>";
-                echo "<a href='edit_product.php?product_id=" . $prod['product_id'] . "' class='btn'>Edit</a>";
+                echo "<p>" . nl2br(htmlspecialchars($prod['product_description'])) . "</p>";
                 echo "</div>";
+                echo "<a href='edit_product.php?product_id=" . $prod['product_id'] . "' class='edit-btn'>Edit</a>";
                 echo "</li>";
             }
         } else {
@@ -219,5 +219,6 @@ $products = $product->getProductsByVendor($vendor_id); // Get all products for t
         </ul>
     <?php endif; ?>
 </div>
+    <button id="back-button" class="btn">Back</button>
 </body>
 </html>
