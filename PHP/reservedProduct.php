@@ -38,7 +38,7 @@ if ($stmt->rowCount() > 0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reserved Products</title>
-    <link rel="stylesheet" href="../CSS/reservedProduct.css">
+    <link rel="stylesheet" href="../CSS/reservedproduct.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert2 -->
 </head>
 <body>
@@ -58,15 +58,15 @@ if ($stmt->rowCount() > 0) {
                     <div class="product-card" id="product-card-<?= htmlspecialchars($product['reservation_id']); ?>">
                         <img src="<?= htmlspecialchars($product['product_image']); ?>" 
                             alt="<?= htmlspecialchars($product['product_name']); ?>">
-                        <h2><?= htmlspecialchars($product['product_name']); ?></h2>
-                        <p>Buyer: <?= htmlspecialchars($product['buyer_name']); ?></p>
-                        <p class="price">Total Price: ₱<?= number_format($total_price, 2); ?></p>
-                        <p>Quantity: <?= htmlspecialchars($product['reserved_quantity']); ?></p>
-                        <p>Reserved Date: <?= htmlspecialchars($product['reserved_date']); ?></p>
+                        <div class="product-info">
+                            <h2><?= htmlspecialchars($product['product_name']); ?></h2>
+                            <p>Buyer: <?= htmlspecialchars($product['buyer_name']); ?></p>
+                            <p class="price">Total Price: ₱<?= number_format($total_price, 2); ?></p>
+                            <p>Quantity: <?= htmlspecialchars($product['reserved_quantity']); ?></p>
+                            <p>Reserved Date: <?= htmlspecialchars($product['reserved_date']); ?></p>
+                        </div>
                         <!-- Delete button -->
-                        <button 
-                            class="delete-button" 
-                            onclick="confirmDelete(<?= htmlspecialchars($product['reservation_id']); ?>, this.closest('.product-card'))">
+                        <button class="delete-button" onclick="confirmDelete(<?= htmlspecialchars($product['reservation_id']); ?>, this.closest('.product-card'))">
                             Delete
                         </button>
                     </div>
