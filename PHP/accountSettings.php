@@ -50,21 +50,12 @@ if ($user === false) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account Settings</title>
-    <link rel="stylesheet" href="../CSS/accountsettings.css">
+    <link rel="stylesheet" href="../CSS/accountSettings.css">
     <script src="https://kit.fontawesome.com/89e47c0436.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
 </head>
 <body>
-    <header class="navbar">
-        <h1 class="logo">Market Alchemy</h1>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="../ConnectedBuyer/main.php" style="color: wheat;">Home</a></li>
-                <li><a href="../PHP/reservedProduct.php" style="color: wheat;"><i class="fas fa-shopping-cart"></i></a></li>
-                <li><a href="../PHP/customerLogout.php" class="logout-button" style="color: wheat;">Logout</a></li>
-            </ul>
-        </nav>
-    </header>
+   
 
     <main class="profile-container">
         <section class="main-content">
@@ -91,12 +82,14 @@ if ($user === false) {
                     <option value="Urban District" <?php echo $user['District'] == 'Urban District' ? 'selected' : ''; ?>>Urban District</option>
                 </select>
 
-                <button type="submit" class="details-button" style="color: wheat;">Save Changes</button>
+                <div class="button-container">
+                    <a href="customerProfile.php" class="back-button">Back</a>
+                    <button type="submit" class="details-button">Save Changes</button>
+                </div>
             </form>
         </section>
     </main>
 
-    <!-- SweetAlert Trigger -->
     <?php if ($success): ?>
     <script>
         Swal.fire({

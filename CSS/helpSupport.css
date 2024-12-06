@@ -1,0 +1,171 @@
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Style */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #F5F5F5;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #4E6A4A;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: wheat;
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links li {
+    margin-left: 2rem;
+}
+
+.nav-links a {
+    color: wheat;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover,
+.nav-links .active {
+    color: orange;
+}
+
+/* Support Container */
+.support-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.support-container h2 {
+    text-align: center;
+    color: #4E6A4A;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.support-container section {
+    margin-bottom: 2rem;
+}
+
+section h3 {
+    color: #4E6A4A;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #4E6A4A;
+    padding-bottom: 0.5rem;
+}
+
+.faq {
+    margin-bottom: 1rem;
+}
+
+.faq h4 {
+    color: #333;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.faq p {
+    color: #666;
+    font-size: 1rem;
+    margin-left: 1rem;
+}
+
+/* Contact Section */
+.contact-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.contact-section li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.contact-section li i {
+    margin-right: 0.5rem;
+    color: #4E6A4A;
+}
+
+/* Feedback Section */
+textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    resize: none;
+    margin-bottom: 1rem;
+}
+
+.submit-button {
+    background-color: #4E6A4A;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.submit-button:hover {
+    background-color: orange;
+    transform: scale(1.05);
+}
+
+/* Back Button */
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: white;
+    background-color: #4E6A4A;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.back-button i {
+    margin-right: 10px; /* Adds spacing between icon and text */
+}
+
+.back-button:hover {
+    background-color: orange;
+    transform: scale(1.05);
+}
