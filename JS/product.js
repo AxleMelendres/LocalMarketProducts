@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
     const backButton = document.getElementById('back-button');
     if (backButton) {
-
         backButton.addEventListener('click', function () {
-            window.location.href = '../PHP/vendorsprofile.php';
+            window.history.back(); // Go back to the previous page in history
         });
     }
 });
+
 
 
     // Product Selection: Highlight selected product
