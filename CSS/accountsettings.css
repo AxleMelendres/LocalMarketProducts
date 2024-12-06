@@ -1,4 +1,4 @@
-
+/* Reset and Global Styles */
 * {
     margin: 0;
     padding: 0;
@@ -6,15 +6,15 @@
 }
 
 body {
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    min-height: 100vh; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
     font-family: 'Roboto', sans-serif;
-    background-color: #4E6A4A; 
+    background-color: #4E6A4A;
 }
 
-
+/* Navbar (Optional: Remove if no navbar is present) */
 .navbar {
     background-color: #4E6A4A;
     padding: 1rem 2rem;
@@ -51,35 +51,36 @@ body {
 }
 
 .nav-links a:hover {
-    color: var(--secondary-color);
+    color: orange;
 }
 
+/* Profile Container */
 .profile-container {
     background-color: wheat;
-    backdrop-filter: blur(10px); 
+    backdrop-filter: blur(10px);
     border-radius: 16px;
-    padding: 3rem; 
-    width: 60%; 
+    padding: 3rem;
+    width: 60%;
     max-width: 900px;
     text-align: center;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); 
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-
 .profile-container h2 {
-    color:#4E6A4A;
+    color: #4E6A4A;
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 2rem;
 }
 
-
+/* Form Styles */
 form {
     display: flex;
     flex-direction: column;
-    align-items: center; 
+    align-items: center;
     gap: 1.8rem;
+    width: 100%; /* Make form width responsive */
 }
 
 .form-group {
@@ -96,7 +97,7 @@ label {
 input[type="text"],
 input[type="email"] {
     width: 90%;
-    padding: 1rem; 
+    padding: 1rem;
     border: none;
     border-radius: 8px;
     background: rgba(255, 255, 255, 0.9);
@@ -109,13 +110,42 @@ input[type="text"]:focus,
 input[type="email"]:focus {
     outline: none;
     background: rgba(255, 255, 255, 1);
-    box-shadow: 0 0 8px rgba(78, 106, 74, 0.5); 
+    box-shadow: 0 0 8px rgba(78, 106, 74, 0.5);
 }
 
+/* Button Container */
+.button-container {
+    display: flex;
+    justify-content: space-between; /* Align buttons side-by-side */
+    width: 100%; /* Make buttons align based on form width */
+    margin-top: 20px;
+}
 
+/* Back Button */
+.back-button {
+    display: flex; /* Enable flexbox */
+    justify-content: center; /* Center text horizontally */
+    align-items: center; /* Center text vertically */
+    text-decoration: none;
+    color: wheat;
+    background-color: #4E6A4A;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.back-button:hover {
+    background-color: orange;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+/* Save Changes Button */
 .details-button {
-    width: 50%;
-    background-color:#4E6A4A;
+    background-color: #4E6A4A;
+    color: wheat;
     border: none;
     padding: 1rem 2rem;
     border-radius: 50px;
@@ -128,5 +158,22 @@ input[type="email"]:focus {
 .details-button:hover {
     background-color: orange;
     color: #fff;
-    transform: scale(1.05); 
+    transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .profile-container {
+        width: 90%; /* Adjust profile container for smaller screens */
+    }
+
+    .button-container {
+        flex-direction: column; /* Stack buttons on top of each other */
+        gap: 10px;
+    }
+
+    .back-button, 
+    .details-button {
+        width: 100%; /* Make buttons full-width on smaller screens */
+    }
 }
