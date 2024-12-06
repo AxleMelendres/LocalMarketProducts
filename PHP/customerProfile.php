@@ -86,11 +86,6 @@ try {
     <?php if ($latestReservation): ?>
         <div class="reservation-details">
             <div class="product-info">
-                <?php if (!empty($latestReservation['product_image'])): ?>
-                    <img src="../uploads/<?php echo htmlspecialchars($latestReservation['product_image']); ?>" alt="Product Image" class="product-img">
-                <?php else: ?>
-                    <img src="https://via.placeholder.com/100" alt="Product Image" class="product-img">
-                <?php endif; ?>
                 <div class="product-details">
                     <p><strong>Product Name:</strong> <?php echo htmlspecialchars($latestReservation['product_name']); ?></p>
                     <p><strong>Price:</strong> ₱<?php echo htmlspecialchars($latestReservation['product_price']); ?></p>
@@ -101,7 +96,7 @@ try {
                     $reservedDateTime = new DateTime($latestReservation['reserved_date']);
                     $formattedDateTime = $reservedDateTime->format('F j, Y, g:i a');
                     ?>
-                    <p><strong>Reserved Date</strong> <?php echo $formattedDateTime; ?></p>
+                    <p><strong>Reserved Date: </strong> <?php echo $formattedDateTime; ?></p>
                 </div>
             </div>
         </div>
