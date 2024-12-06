@@ -9,6 +9,7 @@ class Customer {
 
     public function getCustomerDetails($username) {
         $query = "SELECT 
+                    buyer_id,
                     a.full_name AS full_name, 
                     a.Username, 
                     a.Email, 
@@ -80,5 +81,24 @@ class Customer {
             return "Error updating account details: " . $e->getMessage();
         }
     }
+
+    public function getLatestReservation($buyer_id) {
+        try {
+            $query = "SELECT product_name, product_price, reserved_quantity, total_price, reserved_date 
+                      FROM reservations 
+                      WHERE buyer_id = :buyer_id 
+                      ORDER BY reserved_date DESC 
+                      LIMIT 1";
+        
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':buyer_id', $buyer_id, PDO::PARAM_INT);
+            $stmt->execute();
+        
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching latest reservation: " . $e->getMessage());
+        }
+    }
+    
 }
 ?>

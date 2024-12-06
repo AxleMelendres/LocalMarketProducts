@@ -27,6 +27,13 @@ try {
     if (!$user) {
         die("User not found.");
     }
+
+    // Fetch the latest reservation
+    $latestReservation = $customer->getLatestReservation($user['buyer_id']);
+
+    if (!$latestReservation) {
+        $latestReservation = null; // No reservation found
+    }
 } catch (PDOException $e) {
     die("Database error: " . $e->getMessage());
 }
@@ -35,7 +42,11 @@ try {
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Profile</title>
     <link rel="stylesheet" href="../CSS/customerprofile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <?php require "../ConnectedBuyer/HEADER/profileheader.html"; ?>
@@ -68,6 +79,38 @@ try {
                 <p><strong>Purpose:</strong> <?php echo htmlspecialchars($user['Purpose']); ?></p>
                 <p><strong>District:</strong> <?php echo htmlspecialchars($user['District']); ?></p>
             </div>
+
+            <div class="latest-reservation">
+            <div class="latest-reservation">
+    <h2>Latest Reserved Product</h2>
+    <?php if ($latestReservation): ?>
+        <div class="reservation-details">
+            <div class="product-info">
+                <?php if (!empty($latestReservation['product_image'])): ?>
+                    <img src="../uploads/<?php echo htmlspecialchars($latestReservation['product_image']); ?>" alt="Product Image" class="product-img">
+                <?php else: ?>
+                    <img src="https://via.placeholder.com/100" alt="Product Image" class="product-img">
+                <?php endif; ?>
+                <div class="product-details">
+                    <p><strong>Product Name:</strong> <?php echo htmlspecialchars($latestReservation['product_name']); ?></p>
+                    <p><strong>Price:</strong> ₱<?php echo htmlspecialchars($latestReservation['product_price']); ?></p>
+                    <p><strong>Quantity Reserved:</strong> <?php echo htmlspecialchars($latestReservation['reserved_quantity']); ?></p>
+                    <p><strong>Total Price:</strong> ₱<?php echo htmlspecialchars($latestReservation['total_price']); ?></p>
+
+                    <?php
+                    $reservedDateTime = new DateTime($latestReservation['reserved_date']);
+                    $formattedDateTime = $reservedDateTime->format('F j, Y, g:i a');
+                    ?>
+                    <p><strong>Reserved Date</strong> <?php echo $formattedDateTime; ?></p>
+                </div>
+            </div>
+        </div>
+    <?php else: ?>
+        <p>You haven't reserved any products yet.</p>
+    <?php endif; ?>
+</div>
+
+
         </section>
     </main>
 </body>
