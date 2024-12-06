@@ -76,14 +76,13 @@ $conn = null; // Close the connection
                     echo "<li class='product-item'>";
                     echo "<img src='../" . htmlspecialchars($product['product_image']) . "' alt='" . htmlspecialchars($product['product_name']) . "'>";
                     echo "<h4>" . htmlspecialchars($product['product_name']) . "</h4>";
-                    echo "<p>" . nl2br(htmlspecialchars($product['product_description'])) . "</p>";
                     echo "<p><strong>Category:</strong> " . htmlspecialchars($product['product_category']) . "</p>";
                     echo "<p><strong>Price:</strong> ₱" . number_format($product['product_price'], 2) . "</p>";
                     echo "<p><strong>Quantity:</strong> " . htmlspecialchars($product['product_quantity']) . "</p>";
 
                     if ($user_role !== 'Seller') {
                         // Display the "Reserve" button for non-sellers (Buyers)
-                        echo "<a href='../PHP/productDetails.php?product_id=" . htmlspecialchars($product['product_id']) . "' class='reserve-btn'>Reserve</a>";
+                        echo "<a href='../PHP/productDetails.php?product_id=" . htmlspecialchars($product['product_id']) . "' class='reserve-btn'>View</a>";
                     } else {
                     }
                     
