@@ -263,14 +263,6 @@ body {
     gap: 15px;
 }
 
-.product-img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-}
-
 .product-details {
     flex-grow: 1;
 }
