@@ -233,6 +233,53 @@ body {
     color: #333;
 }
 
+
+.latest-reservation {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.latest-reservation h2 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.reservation-details p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.reservation-details strong {
+    color: #6a11cb;
+}
+
+/* Style for the product image */
+.product-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.product-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.product-details {
+    flex-grow: 1;
+}
+
+.latest-reservation .reservation-details p {
+    margin: 5px 0;
+}
+
 .reserved-item-info strong {
     font-weight: bold;
 }
+
