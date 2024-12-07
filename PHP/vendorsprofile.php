@@ -64,7 +64,6 @@ $conn = null; // Close the connection
                         echo "<p><strong>Category:</strong> " . htmlspecialchars($product['product_category']) . "</p>";
                         echo "<p><strong>Price:</strong> ₱" . number_format($product['product_price'], 2) . "</p>";
                         echo "<p><strong>Quantity:</strong> " . htmlspecialchars($product['product_quantity']) . "</p>";
-                        echo "<p>" . nl2br(htmlspecialchars($product['product_description'])) . "</p>";
                         echo "</li>";
                     }
                 } else {
