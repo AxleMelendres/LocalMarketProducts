@@ -1,269 +1,182 @@
 <?php 
     require_once '../PHP/vendorConnection.php';
 
-class account {
+    class account {
 
-    private $conn;
-    private $tbl_name = "account"; 
-
-    public $id;
-    public $name;
-    public $uname;
-    public $email;
-    public $contact;
-    public $password;
-    public $purpose;
-    public $district;
-
-    public function __construct($db) {
-        $this->conn = $db;
-    }
-
-    public function getAccountById($account_id) {
-        // Prepare the query
-        $query = "SELECT * FROM account WHERE account_id = :account_id LIMIT 0, 25";
-        
-        // Prepare the statement
-        $stmt = $this->conn->prepare($query);
-
-        // Bind the parameter to the placeholder
-        $stmt->bindParam(':account_id', $account_id, PDO::PARAM_INT);
-
-        // Execute the query
-        $stmt->execute();
-
-        // Fetch the results
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        // Return the results (or handle them as needed)
-        return $results;
-    }
-
-    public function register() {
-        // Check if terms are accepted
-        if (!isset($_POST['terms']) || $_POST['terms'] !== 'accepted') {
-            die("You must agree that the information you provided is valid and correct.");
+        private $conn;
+        private $tbl_name = "account"; 
+    
+        public $id;
+        public $name;
+        public $uname;
+        public $email;
+        public $contact;
+        public $password;
+        public $purpose;
+        public $district;
+    
+        public function __construct($db) {
+            $this->conn = $db;
         }
     
-        // Get the POST data
-        $this->name = $_POST['name'];
-        $this->uname = $_POST['username'];
-        $this->email = $_POST['email'];
-        $this->contact = $_POST['contact'] ?? '';  // Default empty if not provided
-        $this->password = $_POST['password'];
-        $this->purpose = $_POST['purpose'];
-        $this->district = $_POST['district'];
-    
-        // Perform duplicate checks (username, email, contact) as in your original code...
-    
-        // Hash the password
-        $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
-    
-        // Prepare the query with named placeholders for the account insertion
-        $query = "INSERT INTO " . $this->tbl_name . " 
-                    (`full_name`, Username, Email, `Contact Number`, Password, Purpose, District) 
-                    VALUES (:name, :username, :email, :contact, :password, :purpose, :district)";
-    
-        // Prepare the statement
-        $stmt = $this->conn->prepare($query);
-    
-        // Bind the parameters to the placeholders
-        $stmt->bindParam(':name', $this->name);
-        $stmt->bindParam(':username', $this->uname);
-        $stmt->bindParam(':email', $this->email);
-        $stmt->bindParam(':contact', $this->contact);
-        $stmt->bindParam(':password', $hashedPassword);
-        $stmt->bindParam(':purpose', $this->purpose);
-        $stmt->bindParam(':district', $this->district);
-    
-        // Execute the query and check if it was successful
-        if ($stmt->execute()) {
-            // If successful, display SweetAlert and redirect
-            echo "<!DOCTYPE html>
-                <html lang='en'>
-                <head>
-                    <meta charset='UTF-8'>
-                    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-                    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
-                </head>
-                <body>
-                <script>
-                    Swal.fire({
-                        title: 'Account Created!',
-                        text: 'Your account has been successfully created.',
-                        icon: 'success',
-                        confirmButtonText: 'Login Now'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.href = '../HTML/login.html'; // Redirect to login page
-                        }
-                    });
-                </script>
-                </body>
-                </html>";
-            exit; // Stop further script execution after alert
-        } else {
-            // Output error if account insert fails
-            echo "Error: " . $stmt->errorInfo()[2];
-            return false;  // Registration failed
-        }
-    
-    
-    
-        if ($usernameStmt->rowCount() > 0) {
-            echo "<!DOCTYPE html>
-                <html lang='en'>
-                <head>
-                    <meta charset='UTF-8'>
-                    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-                    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
-                </head>
-                <body>
-                <script>
-                    Swal.fire({
-                        title: 'Error!',
-                        text: 'The username you provided already exists. Please choose a different username.',
-                        icon: 'error',
-                        confirmButtonText: 'Okay'
-                    }).then(() => {
-                        window.history.back(); // Redirect the user back to the previous page
-                    });
-                </script>
-                </body>
-                </html>";
-            return false;
-        }
-    
-        // Check for duplicate email
-        $emailQuery = "SELECT * FROM " . $this->tbl_name . " WHERE Email = :email";
-        $emailStmt = $this->conn->prepare($emailQuery);
-        $emailStmt->bindParam(':email', $this->email);
-        $emailStmt->execute();
-    
-        if ($emailStmt->rowCount() > 0) {
-            echo "<!DOCTYPE html>
-                <html lang='en'>
-                <head>
-                    <meta charset='UTF-8'>
-                    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-                    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
-                </head>
-                <body>
-                <script>
-                    Swal.fire({
-                        title: 'Error!',
-                        text: 'The email you provided already exists. Please use a different email.',
-                        icon: 'error',
-                        confirmButtonText: 'Okay'
-                    }).then(() => {
-                        window.history.back(); // Redirect the user back to the previous page
-                    });
-                </script>
-                </body>
-                </html>";
-            return false;
-        }
-    
-        // Check for duplicate contact number
-        $contactQuery = "SELECT * FROM " . $this->tbl_name . " WHERE `Contact Number` = :contact";
-        $contactStmt = $this->conn->prepare($contactQuery);
-        $contactStmt->bindParam(':contact', $this->contact);
-        $contactStmt->execute();
-    
-        if ($contactStmt->rowCount() > 0) {
-            echo "<!DOCTYPE html>
-                <html lang='en'>
-                <head>
-                    <meta charset='UTF-8'>
-                    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-                    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
-                </head>
-                <body>
-                <script>
-                    Swal.fire({
-                        title: 'Error!',
-                        text: 'The contact number you provided already exists. Please use a different contact number.',
-                        icon: 'error',
-                        confirmButtonText: 'Okay'
-                    }).then(() => {
-                        window.history.back(); // Redirect the user back to the previous page
-                    });
-                </script>
-                </body>
-                </html>";
-            return false;
-        }
-    
-    
-        // Hash the password
-        $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
-    
-        // Prepare the query with named placeholders for the account insertion
-        $query = "INSERT INTO " . $this->tbl_name . " 
-                    (`full_name`, Username, Email, `Contact Number`, Password, Purpose, District) 
-                    VALUES (:name, :username, :email, :contact, :password, :purpose, :district)";
-    
-        // Prepare the statement
-        $stmt = $this->conn->prepare($query);
-    
-        // Bind the parameters to the placeholders
-        $stmt->bindParam(':name', $this->name);
-        $stmt->bindParam(':username', $this->uname);
-        $stmt->bindParam(':email', $this->email);
-        $stmt->bindParam(':contact', $this->contact);
-        $stmt->bindParam(':password', $hashedPassword);
-        $stmt->bindParam(':purpose', $this->purpose);
-        $stmt->bindParam(':district', $this->district);
-    
-        // Execute the query and check if it was successful
-        if ($stmt->execute()) {
-            // Get the last inserted ID from the account table (which is now account_id)
-            $account_id = $this->conn->lastInsertId(); // This retrieves the newly inserted account_id
-    
-            // If the user is a seller, insert data into the vendor table
-            if ($this->purpose === "Seller") {
-                // Ensure that seller-related fields (address and description) are available
-                if (isset($_POST['address']) && isset($_POST['description'])) {
-                    // Prepare the query to insert data into the vendor table
-                    $vendorQuery = "INSERT INTO vendor 
-                                    (account_id, vendor_name, vendor_username, vendor_contact, vendor_password, vendor_address, vendor_district, vendor_description, vendor_email)
-                                    VALUES (:account_id, :vendor_name, :vendor_username, :vendor_contact, :vendor_password, :vendor_address, :vendor_district, :vendor_description, :vendor_email)";
-    
-                    // Prepare the statement for the vendor table
-                    $vendorStmt = $this->conn->prepare($vendorQuery);
-    
-                    // Bind the vendor data to the statement
-                    $vendorStmt->bindParam(':account_id', $account_id);  // Insert the correct account_id (from the account table)
-                    $vendorStmt->bindParam(':vendor_name', $this->name);
-                    $vendorStmt->bindParam(':vendor_username', $this->uname);
-                    $vendorStmt->bindParam(':vendor_contact', $this->contact);
-                    $vendorStmt->bindParam(':vendor_password', $hashedPassword);
-                    $vendorStmt->bindParam(':vendor_address', $_POST['address']);
-                    $vendorStmt->bindParam(':vendor_district', $this->district);
-                    $vendorStmt->bindParam(':vendor_description', $_POST['description']);
-                    $vendorStmt->bindParam(':vendor_email', $this->email);
-    
-                    // Execute the vendor insert
-                    if ($vendorStmt->execute()) {
-                        return true; // Vendor registration successful
-                    } else {
-                        // Output error if vendor insert fails
-                        echo "Error inserting into vendor table: " . $vendorStmt->errorInfo()[2];
-                        return false;
-                    }
-                } else {
-                    echo "Seller details (address and description) are required.";
-                    return false;  // If it's a seller but no address/description, return false
-                }
-            } else {
-                return true; // For buyers, just insert into the account table
+        public function register() {
+            // Check if terms are accepted
+            if (!isset($_POST['terms']) || $_POST['terms'] !== 'accepted') {
+                die("You must agree that the information you provided is valid and correct.");
             }
-        } else {
-            // Output error if account insert fails
-            echo "Error: " . $stmt->errorInfo()[2];
-            return false;  // Registration failed
+        
+            // Get the POST data
+            $this->name = $_POST['name'];
+            $this->uname = $_POST['username'];
+            $this->email = $_POST['email'];
+            $this->contact = $_POST['contact'] ?? '';  // Default empty if not provided
+            $this->password = $_POST['password'];
+            $this->purpose = $_POST['purpose'];
+            $this->district = $_POST['district'];
+        
+            // Check for duplicate username
+            $usernameQuery = "SELECT * FROM " . $this->tbl_name . " WHERE Username = :username";
+            $usernameStmt = $this->conn->prepare($usernameQuery);
+            $usernameStmt->bindParam(':username', $this->uname);
+            $usernameStmt->execute();
+        
+            if ($usernameStmt->rowCount() > 0) {
+                echo "<!DOCTYPE html>
+                    <html lang='en'>
+                    <head>
+                        <meta charset='UTF-8'>
+                        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+                        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+                    </head>
+                    <body>
+                    <script>
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'The username you provided already exists. Please choose a different username.',
+                            icon: 'error',
+                            confirmButtonText: 'Okay'
+                        }).then(() => {
+                            window.history.back(); // Redirect the user back to the previous page
+                        });
+                    </script>
+                    </body>
+                    </html>";
+                return false;
+            }
+    
+            // Check for duplicate email
+            $emailQuery = "SELECT * FROM " . $this->tbl_name . " WHERE Email = :email";
+            $emailStmt = $this->conn->prepare($emailQuery);
+            $emailStmt->bindParam(':email', $this->email);
+            $emailStmt->execute();
+        
+            if ($emailStmt->rowCount() > 0) {
+                echo "<!DOCTYPE html>
+                    <html lang='en'>
+                    <head>
+                        <meta charset='UTF-8'>
+                        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+                        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+                    </head>
+                    <body>
+                    <script>
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'The email you provided already exists. Please use a different email.',
+                            icon: 'error',
+                            confirmButtonText: 'Okay'
+                        }).then(() => {
+                            window.history.back(); // Redirect the user back to the previous page
+                        });
+                    </script>
+                    </body>
+                    </html>";
+                return false;
+            }
+    
+            // Check for duplicate contact number
+            $contactQuery = "SELECT * FROM " . $this->tbl_name . " WHERE `Contact Number` = :contact";
+            $contactStmt = $this->conn->prepare($contactQuery);
+            $contactStmt->bindParam(':contact', $this->contact);
+            $contactStmt->execute();
+        
+            if ($contactStmt->rowCount() > 0) {
+                echo "<!DOCTYPE html>
+                    <html lang='en'>
+                    <head>
+                        <meta charset='UTF-8'>
+                        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+                        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+                    </head>
+                    <body>
+                    <script>
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'The contact number you provided already exists. Please use a different contact number.',
+                            icon: 'error',
+                            confirmButtonText: 'Okay'
+                        }).then(() => {
+                            window.history.back(); // Redirect the user back to the previous page
+                        });
+                    </script>
+                    </body>
+                    </html>";
+                return false;
+            }
+        
+            // Hash the password
+            $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
+        
+            // Prepare the query with named placeholders for the account insertion
+            $query = "INSERT INTO " . $this->tbl_name . " 
+                        (`full_name`, Username, Email, `Contact Number`, Password, Purpose, District) 
+                        VALUES (:name, :username, :email, :contact, :password, :purpose, :district)";
+        
+            // Prepare the statement
+            $stmt = $this->conn->prepare($query);
+        
+            // Bind the parameters to the placeholders
+            $stmt->bindParam(':name', $this->name);
+            $stmt->bindParam(':username', $this->uname);
+            $stmt->bindParam(':email', $this->email);
+            $stmt->bindParam(':contact', $this->contact);
+            $stmt->bindParam(':password', $hashedPassword);
+            $stmt->bindParam(':purpose', $this->purpose);
+            $stmt->bindParam(':district', $this->district);
+        
+            // Execute the query and check if it was successful
+            if ($stmt->execute()) {
+                // If successful, display SweetAlert and redirect
+                echo "<!DOCTYPE html>
+                    <html lang='en'>
+                    <head>
+                        <meta charset='UTF-8'>
+                        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+                        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+                    </head>
+                    <body>
+                    <script>
+                        Swal.fire({
+                            title: 'Account Created!',
+                            text: 'Your account has been successfully created.',
+                            icon: 'success',
+                            confirmButtonText: 'Login Now'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = '../HTML/login.html'; // Redirect to login page
+                            }
+                        });
+                    </script>
+                    </body>
+                    </html>";
+                exit; // Stop further script execution after alert
+            } else {
+                // Output error if account insert fails
+                echo "Error: " . $stmt->errorInfo()[2];
+                return false;  // Registration failed
+            }
         }
-    }
+    
     
 
     public function login() {
