@@ -64,7 +64,6 @@ try {
                 <a href="accountSettings.php" class="edit-button">Edit Profile</a>
             </div>
             <ul class="sidebar-links">
-                <li><a href="#">Order History</a></li>
                 <li><a href="../PHP/reservedProduct.php">Reserved Items</a></li>
                 <li><a href="../PHP/accountSettings.php">Account Settings</a></li>
                 <li><a href="../PHP/HelpandSupport.php">Help & Support</a></li>

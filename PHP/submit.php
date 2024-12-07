@@ -27,8 +27,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         header("Location: ../HTML/login.html");
         exit;
-    } else {
-        echo "Registration failed!";
-    }
+    } 
 }
 ?>
